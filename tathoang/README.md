@@ -1,15 +1,23 @@
 # Minishell
 
+This is a 42's project of simulation the Shell command-line terminal, taking `Bash` as a reference.
+
 ## I - Introduction
+
 
 Understand the Project Requirements
 
-Command Execution: Running external programs (using fork, execve, etc.)
-Built-in Commands: (e.g., cd, echo, pwd, export, unset, env, exit)
-Parsing: Tokenizing input while correctly handling quotes, escapes, and special characters.
-Redirection and Pipes: Managing <, >, >>, and handling pipes.
-Signal Handling: Responding to signals (e.g., SIGINT, SIGQUIT) appropriately.
-Error Handling: Robustly detecting and managing errors and memory leaks.
+- Command Execution: Running external programs (using fork, execve, etc.)
+
+- Built-in Commands: (e.g., cd, echo, pwd, export, unset, env, exit)
+
+- Parsing: Tokenizing input while correctly handling quotes, escapes, and special characters.
+
+- Redirection and Pipes: Managing <, >, >>, and handling pipes.
+
+- Signal Handling: Responding to signals (e.g., SIGINT, SIGQUIT) appropriately.
+
+- Error Handling: Robustly detecting and managing errors and memory leaks.
 
 
 
@@ -18,7 +26,7 @@ Error Handling: Robustly detecting and managing errors and memory leaks.
 ## II - Functions:
 
 ### 1 - **The `readline`**
-- `readline`:
+- `readline`: need to `free()` after using
 
 `readline()` reads a line from the terminal and return it, using `prompt` as prompt (`NULL` prompt is accepted). The line return has the final newline removed, so only the text remains.
 
@@ -413,13 +421,9 @@ $ pwd after chdir: /home/tat-nguy/42rendu
 ```c
 #include <sys/types.h>
 #include <dirent.h>
-
 DIR	*opendir(const char *name);
-
 struct dirent	*readdir(DIR *dirp);
-
 int	closedir(DIR *dirp);
-
 ```
 
 The `opendir()` function opens a directory stream corresponding to the directory `name`, and return a pointer to the directory stream. The stream is positioned at the first entry in the directory.
