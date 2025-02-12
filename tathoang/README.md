@@ -2,6 +2,19 @@
 
 ## I - Introduction
 
+Understand the Project Requirements
+
+Command Execution: Running external programs (using fork, execve, etc.)
+Built-in Commands: (e.g., cd, echo, pwd, export, unset, env, exit)
+Parsing: Tokenizing input while correctly handling quotes, escapes, and special characters.
+Redirection and Pipes: Managing <, >, >>, and handling pipes.
+Signal Handling: Responding to signals (e.g., SIGINT, SIGQUIT) appropriately.
+Error Handling: Robustly detecting and managing errors and memory leaks.
+
+
+
+
+
 ## II - Functions:
 
 ### 1 - **The `readline`**
@@ -62,8 +75,8 @@ void	add_history (const char *line);
 ```
 
 
-
-### 2 - files
+---
+### 2 - File I/O
 
 - `access`:
 
@@ -77,6 +90,42 @@ The `mode` specifies the accessibility checks to be performed, and is either the
 
 - `write`, `open`, `read`, `close`
 
+- `stat`, `lstat`, `fstat`:
+
+```c
+#include <sys/stat.h>
+int stat(const char *restrict pathname, struct stat *restrict statbuf);
+int lstat(const char *restrict pathname, struct stat *restrict statbuf);
+int fstat(int fd, struct stat *statbuf);
+```
+
+These functions return information about a file in the structure pointed by `statbuf`.
+
+
+- `unlink`: (for `rm`)
+
+```c
+#include <unistd.h>
+int	unlink(const char *filename);
+```
+
+The `unlink()` function deletes the file name `filename`. It returns `0` on success and `-1` on error.
+
+
+
+- The `dup` & `dup2`: redirecting stardard output (for `>>`, `>`)
+
+```c
+int	dup(int	oldfd);
+int	dup2(int oldfd, int newfd);
+```
+
+The `dup()` system call creates a copy of the file descriptor `oldfd`, using the lowest-numbered unused file descriptor for the new descriptor.
+The `dup2()` system call performs the same task as `dup()`, but it uses the file descriptor number specified in `newfd`. If it was previously open (like STDOUT_FILENO), it will be silently closed before being reused.
+
+
+
+---
 ### 3 - Processes
 
 - `fork`:
@@ -161,7 +210,147 @@ On success, the PID of the child process is returned in the parent, and `0` is r
 void	exit(int status);
 ```
 
-### 4 - Directory:
+- `execve`: (for execute ./Minishell)
+
+```c
+int	execve(const char *pathname, char *const argv[], char *const envp[]);
+```
+
+The `execve()` executes the new program referred to by `pathname` (by replacing the current process), while allowing us to specify new `argv[]` and new `envp[]`.
+
+`argv[]` is an array of strings of command-line arguments (`argv[0]` should contain the filename executing). `envp[]` is an array of strings, where each entry is an environment variable in the format `KEY=VALUE`.
+
+The argument vector and environment can be accessed by the new program's main function, as:
+
+```c
+int	main(int argc, char *argv[], char *envp[]);
+```
+
+Example:
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char *argv[], char *envp[])
+{
+    int i = 0;
+
+    // Loop through environment variables
+    while (envp[i] != NULL)
+    {
+        if (strncmp(envp[i], "PATH=", 5) == 0) // Check if it's "PATH"
+        {
+            printf("PATH: %s\n", envp[i] + 5); // Print value without "PATH="
+            break;
+        }
+        i++;
+    }
+
+    return 0;
+}
+```
+```shell
+PATH: /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+```
+
+- `pipe`:
+
+```c
+int	pipe(int pipefd[2]);
+```
+
+The `pipe()` creates a pipe, a unidirectional data channel that can be used for interprocess communication. The array `pipefd[2]` is used to return two file descriptors referring to the ends of the pipe:
+
+`pipefd[0]`: refers to the read end of the pipe (data comes out here).
+`pipefd[1]`: refers to the write end of the pipe (data goes in here). 
+
+
+- `getenv`: get an environment variable (for `env`)
+
+```c
+char	*getenv(const char *name);
+```
+
+The `getenv()` function searches in the environment list to find the environment variable name, and returns a pointer to the corresponding value string.
+
+> *in C, the environment refers to a collection of* **environment variables** *that store configuration settings for processes. These variables provide system-wid information, such as paths, user details, language settings...*. 
+
+---
+### 4 - Terminal
+
+- `isatty`:
+
+```c
+int	isatty(int fd);
+```
+
+The `isatty()` tests whether `fd` is an open file descriptor referring to a terminal. It returns `1` if fd is an open file descriptor referring to a terminal, otherwise, `0` is returned with `errno`.
+
+
+- `ttyname`:
+
+```c
+char **ttyname(int fd);
+```
+
+The `ttyname()` returns a pointer to the NULL-terminated pathname of the terminal device that is open on the file descriptor `fd`, or `NULL` on error.
+
+- `ttyslot`:
+
+```c
+int	ttyslot(void);
+```
+
+The `ttyslot()` returns the index of the current user's entry in some file.
+
+
+- `ioctl`:
+
+```c
+#include <sys/ioctl.h>
+int	ioctl(int fd, unsigned long request, ...);
+```
+
+The `ioctl()` system call manipulates file descriptors, devices, and terminals at a lower level. `fd`: file descriptor (ex: terminal, device,...), `request`: the operation to perform (defined in `<sys/ioctl.h>`), `...`: additional arguments based on the request.
+
+
+- `tcsetattr`, `tcgetattr`: set and get terminal attributes
+
+```c
+#include <termios.h>
+#include <unistd.h>
+int	tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+int	tcgetattr(int fd, struct termios *termios_p);
+```
+
+The `tcsetattr()` function shall set the parameters associated with the terminal referred to by the open file descriptor `fd` from the termios structure referenced by `termios_p` with the `optional_action` (`TCSANOW`, `TCSADRAIN` or `TCSAFLUSH`).
+
+The `tcgetattr()` function shall get the parameters associated with with the terminal reffered to by `fd` and store them in the termios structure referenced by `termios_p`.
+
+- The terminal capabilities: `tgetent`, `tgetflag`, `tgetnum`, `tgetstr`, `tgoto`, `tputs`
+
+```c
+#include <termcap.h>
+int	tgetent(char *bp, const char *name);
+int	tgetflag(char *id);
+int	tgetnum(char *id);
+char	*tgetstr(char *id, char **area);
+char	*tgoto(const char *cap, int col, int row);
+int	tputs(const char *str, int affcnt, int (*putc)(int));
+```
+
+These functions are part of the `termcap` library, used for handling *terminal capabilities* (cursor movement, colors,...). Find capabilities with `id` in `**man** termcap`.
+
+`tgetent()`: Initializes termcap and loads terminal capabilities.
+`tgetflag()`: Checks if a terminal supports a boolean capability.
+`tgetnum()`: Retrieves numeric capabilities (e.g., terminal size).
+`tgetstr()`: Gets string capabilities (e.g., clear screen, cursor movement).
+`tgoto()`: Formats a cursor movement command.
+`tputs()`: Prints a termcap escape sequence safely.
+
+
+---
+### 5 - Directory:
 
 - `getcwd`: (for `pwd`)
 
@@ -219,9 +408,81 @@ $ pwd before chdir: /home/tat-nguy/42perso/42curcus/42cursus-Minishell/tathoang
 $ pwd after chdir: /home/tat-nguy/42rendu
 ```
 
+- `opendir`, `readdir`, `closedir`:
+
+```c
+#include <sys/types.h>
+#include <dirent.h>
+
+DIR	*opendir(const char *name);
+
+struct dirent	*readdir(DIR *dirp);
+
+int	closedir(DIR *dirp);
+
+```
+
+The `opendir()` function opens a directory stream corresponding to the directory `name`, and return a pointer to the directory stream. The stream is positioned at the first entry in the directory.
+
+The `readdir()` function reads a directory, returns a pointer to a `dirent` structure representing the next directory entry in the directory stream pointed to by `dirp`. It returns `NULL` on reaching the end of the directory stream or if an error occured.
+
+The `closedir()` fuction closes the directory stream associated with `dirp`. A successful call to `closedir()` also closes the underlying file descriptor associated with `dirp`. The directory stream descriptor `dirp` is not available after this call.
+
+---
+### 5 - The errors:
+
+- `strerror()`:
+
+```c
+#include <string.h>
+char	*strerror(int errnum);
+```
+
+The strerror() function returns a pointer to a string that describes the error code passed in the argument `errnum`.
+
+
+- `perror`:
+
+```c
+#include <stdio.h>
+void	perror(const char *s);
+```
+
+The `perror()` function produces a message on standard error describing the last error encountered during a call to a system or library function.
 
 
 
-## III - Psuedocode:
+## III - Planning:
+
+### 1 - Parsing & Input Handling `<tat-hoang>`
+
+#### Input & Parsing Module:
+
+- Tokenizer/Lexer: Converts the raw input into tokens (words, operators, etc.).
+- Parser: Builds a data structure (like a command tree or a list of command structs) representing the commands, arguments, redirections, and pipelines.
+
+#### Signal Handling & Error Management Module:
+
+- Setup appropriate signal handlers.
+- Ensure proper error messaging and cleanup (avoid memory leaks, etc.).
+
+### 2 - Execution & Build-in Commands `<theo>`
+
+#### Execution Module:
+
+- Command Executor: Determines whether a command is a built-in or an external command, then either executes it directly or uses fork/execve for external programs.
+- Pipes & Redirections: Set up inter-process communication and handle file descriptor redirections.
+
+#### Built-in Commands Module:
+
+- Implement the logic for built-ins (e.g., handling directory changes for cd, managing environment variables for export/unset, etc.).
+
 
 ## IV - Testing:
+
+
+
+
+---
+### References:
+- [Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
