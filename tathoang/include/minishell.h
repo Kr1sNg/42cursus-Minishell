@@ -30,6 +30,21 @@
 */
 
 
+/* command trees */
+
+// >$ echo hello && exit
+
+typedef struct s_cmd
+{
+	char			type; // $#%#@$%^&a0
+	char			*s; //cd env path...
+	struct s_cmd	*left;
+	struct s_cmd	*right;
+}	t_cmd;
+
+
+
+
 
 
 /*
