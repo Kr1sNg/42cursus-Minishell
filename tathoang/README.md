@@ -4,8 +4,114 @@ This is a 42's project of simulation the Shell command-line terminal, taking `Ba
 
 ## I - Introduction
 
+### 1 - Bash / Shell
 
-Understand the Project Requirements
+- `Bash` (*Bourne-Again SHell*) is the shell, or command language interpreter, for the GNU operating system.
+
+- a `shell` is simply a macro processor that executes commands.
+
+- `metacharacter`: A character that, when unquoted, separates words. A metacharacter is a `space`, `tab`, `newline`, or one of the following characters: `|`, `&`, `;`, `(`, `)`, `<`, or `>`.
+
+- `builtin`: A command that is implemented internally by the shell itself, rather than by an executable program somewhere in the file system.
+
+### 2 - Understand the Project Requirements
+
+The Minishell should:
+
+- Display a **promt** when waiting for a new command.
+
+- Have a working **history**.
+
+- Search and launch the right executable (based on the **PATH** variable or using a relative or an absolute path).
+
+- Not use more than **one global variable**.
+
+- Not interpret unclosed quotes or special characters as `\` or `;`.
+
+- Handle `'` (single quote) which should prevent the shell from interpreting the *metacharacters* in the quoted sequence.
+
+```shell
+>$ echo 'now we are in $PWD'
+now we are in $PWD
+```
+
+- Handle `"` (double quote) which should prevent the shell from interpreting the *metacharacters* in the quoted sequence except for `$`.
+
+```shell
+>$ echo "now we are in $PWD"
+now we are in /home/user/minishell
+
+>$ echo now we are in $PWD
+now we are in /home/user/minishell
+```
+
+- Implement **redirections**:
+	- `<` should redirect input. It reads input from a file.
+
+	- `>` should redirect output. It redirects `stdout` to a file, overwrites the file if existing or creates a new file if not.
+	```shell
+	>$ echo Hello 42 > output.txt | cat output.txt
+	Hello 42
+	```
+	
+	- `>>` should redirect output in append mode.
+	```shell
+	>$ echo Hello 42 >> output.txt | cat output.txt
+	abc
+	Hello 42
+	```
+
+	- `<<` should be given a `delimiter`, read the input until a line containing the `delimiter` is seen. However, it doen't update the history!
+	```shell
+	>$ cat << EOF
+	> this is a multi-line input
+	> in the input
+	> EOF
+	this is a multi-line input
+	in the input
+	EOF
+	```
+
+- Implement **pipes** `|`. *The output of each command in the pipeline is connected to the input of the next command via a pipe.*
+
+- Handle **environment variables** `$VARIABLE` which should expand to their values.
+```shell
+>$ echo $HOME
+/home/user
+>$ MY_VAR="Hello 42!" | echo $MY_VAR
+Hello 42!
+```
+
+- Handle `$?` which should expand to the exit status (return value) of the most recently command:
+	- `0` → Success ✅
+	- `1-255` → Error ❌
+```shell
+>$ ls nonexistent_folder
+ls: cannot access 'nonexistent_folder': No such file or directory
+>$ echo $?
+2
+>$ ls my_folder
+file.txt
+>$ echo $?
+0
+```
+
+- Handle `Ctrl-C`, `Ctrl-D`, `Ctrl-\`:
+	- `Ctrl-C` sends the `SIGINT` **Interrupt signal** to the process. It terminates the running program immediately (but not the Shell). In interactive mode, it display the prompt on a new line.
+	- `Ctrl-D` sends the `EOF` **End of File signal** to the shell.
+		- Inside a program waiting for input → Signals the end of input (useful for `cat`, `read`, `heredoc`).
+		- At an empty prompt, in interactive mode → Closes the shell (logs out).
+	- `Ctrl-\` send the `SIGQUIT` **Quit signal** to the process. If a process is running, it terminates the process and print "^\Quit (core dumped)". In intractive mode, it does nothing.
+```shell
+>$ sleep 42
+>$ ^\Quit (core dumped)
+```
+
+- The Builtins:
+	- `echo` with option `-n` (remove the \n at the end).
+	- `cd` with only a relative or absolute path.
+		- *absolute path* starts from the **root** `/` directory.
+		- *relative path* relatives to the current directory `./` or noting to go into and `..` or `../` to go out of.
 
 - Command Execution: Running external programs (using fork, execve, etc.)
 

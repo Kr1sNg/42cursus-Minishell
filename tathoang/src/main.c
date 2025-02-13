@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/12 19:25:58 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:10:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void	loop(void)
 }
 
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
-	loop();
-	return 0;
+	char	*line;
+	
+	while (argv && argc)
+	{
+		signal(SIGQUIT, SIG_IGN);
+	}
 }

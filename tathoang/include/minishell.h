@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/12 19:26:54 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:19:00 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <unistd.h> 
+# include <unistd.h>
+# include <signal.h>
 
 
 
@@ -34,13 +35,13 @@
 
 // >$ echo hello && exit
 
-typedef struct s_cmd
+typedef struct s_node
 {
-	char			type; // $#%#@$%^&a0
-	char			*s; //cd env path...
-	struct s_cmd	*left;
-	struct s_cmd	*right;
-}	t_cmd;
+	char			type; //  | || && or CMD
+	char			*args; //cd env path...
+	struct s_node	*left;
+	struct s_node	*right;
+}	t_node;
 
 
 
