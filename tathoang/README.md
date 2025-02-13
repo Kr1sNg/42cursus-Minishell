@@ -7,6 +7,8 @@ This is a 42's project of simulation the Shell command-line terminal, taking `Ba
 ### 1 - Bash / Shell
 
 - `Bash` (*Bourne-Again SHell*) is the shell, or command language interpreter, for the GNU operating system.
+	- to check which shell we are on, use `echo $0`
+	- to create child process, use `bash` or `zsh`
 
 - a `shell` is simply a macro processor that executes commands.
 
@@ -33,6 +35,8 @@ The Minishell should:
 ```shell
 >$ echo 'now we are in $PWD'
 now we are in $PWD
+>$ echo '"$USER"'
+"$USER"
 ```
 
 - Handle `"` (double quote) which should prevent the shell from interpreting the *metacharacters* in the quoted sequence except for `$`.
@@ -40,9 +44,10 @@ now we are in $PWD
 ```shell
 >$ echo "now we are in $PWD"
 now we are in /home/user/minishell
-
 >$ echo now we are in $PWD
 now we are in /home/user/minishell
+>$ echo "'$USER'"
+'tat-nguy'
 ```
 
 - Implement **redirections**:
@@ -97,11 +102,15 @@ file.txt
 ```
 
 - Handle `Ctrl-C`, `Ctrl-D`, `Ctrl-\`:
-	- `Ctrl-C` sends the `SIGINT` **Interrupt signal** to the process. It terminates the running program immediately (but not the Shell). In interactive mode, it display the prompt on a new line.
+	- `Ctrl-C` sends the `SIGINT` **Interrupt signal** to the process.
+		- It terminates the running program immediately (but not the Shell).
+		- In interactive mode, it display the prompt on a new line.
 	- `Ctrl-D` sends the `EOF` **End of File signal** to the shell.
 		- Inside a program waiting for input → Signals the end of input (useful for `cat`, `read`, `heredoc`).
 		- At an empty prompt, in interactive mode → Closes the shell (logs out).
-	- `Ctrl-\` send the `SIGQUIT` **Quit signal** to the process. If a process is running, it terminates the process and print "^\Quit (core dumped)". In intractive mode, it does nothing.
+	- `Ctrl-\` send the `SIGQUIT` **Quit signal** to the process.
+		- If a process is running, it terminates the process and print "^\Quit (core dumped)".
+		- In intractive mode, it does nothing.
 ```shell
 >$ sleep 42
 >$ ^\Quit (core dumped)
@@ -112,24 +121,46 @@ file.txt
 	- `cd` with only a relative or absolute path.
 		- *absolute path* starts from the **root** `/` directory.
 		- *relative path* relatives to the current directory `./` or noting to go into and `..` or `../` to go out of.
+	- `pwd` with no options.
+	- `export` with no options.
+		- It's used to add environment variables that are inherited by child processes.
+		- When run alone without arguments, it prints exported variables.
+	```shell
+	>$ export MY_VAR=42
+	>$ bash
+	>$ echo $MY_VAR
+	>$ 42
+	>$ exit
+	>$ unset MY_VAR
+	>$ echo $MY_VAR
+	
+	>$
+	```
 
-- Command Execution: Running external programs (using fork, execve, etc.)
+	- `unset` with no options. It removes variable from the shell environment. If that variable isn't exsist, it does nothing (no error).
 
-- Built-in Commands: (e.g., cd, echo, pwd, export, unset, env, exit)
+	- `env` with no options or arguments. It displays the environment variables in current shell session. It shows only **exported variables**, it means that variables set without `export` are not shown.
+	```shell
+	>$ MY_VAR=42
+	>$ env | grep MY_VAR
+	>$ 
+	>$ export MY_VAR
+	>$ env | grep MY_VAR
+	>$ MY_VAR=42
+	>$ unset MY_VAR
+	```
 
-- Parsing: Tokenizing input while correctly handling quotes, escapes, and special characters.
-
-- Redirection and Pipes: Managing <, >, >>, and handling pipes.
-
-- Signal Handling: Responding to signals (e.g., SIGINT, SIGQUIT) appropriately.
-
-- Error Handling: Robustly detecting and managing errors and memory leaks.
-
-
+	- `exit` with no options. It closes the current shell session (or process) and returns an exit status (default is `0`)
+	```shell
+	>$ bash
+	>$ exit
+	>$ echo $?
+	0
+	``` 
 
 
-
-## II - Functions:
+---
+## II - Functions
 
 ### 1 - **The `readline`**
 - `readline`: need to `free()` after using
@@ -464,7 +495,7 @@ These functions are part of the `termcap` library, used for handling *terminal c
 
 
 ---
-### 5 - Directory:
+### 5 - Directory
 
 - `getcwd`: (for `pwd`)
 
@@ -539,7 +570,7 @@ The `readdir()` function reads a directory, returns a pointer to a `dirent` stru
 The `closedir()` fuction closes the directory stream associated with `dirp`. A successful call to `closedir()` also closes the underlying file descriptor associated with `dirp`. The directory stream descriptor `dirp` is not available after this call.
 
 ---
-### 5 - The errors:
+### 6 - The errors
 
 - `strerror()`:
 
@@ -562,7 +593,7 @@ The `perror()` function produces a message on standard error describing the last
 
 
 
-## III - Planning:
+## III - Planning
 
 ### 1 - Parsing & Input Handling `<tat-hoang>`
 
@@ -588,11 +619,11 @@ The `perror()` function produces a message on standard error describing the last
 - Implement the logic for built-ins (e.g., handling directory changes for cd, managing environment variables for export/unset, etc.).
 
 
-## IV - Testing:
+## IV - Testing
 
 
 
 
 ---
-### References:
+### References
 - [Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
