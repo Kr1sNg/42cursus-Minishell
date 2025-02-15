@@ -10,39 +10,58 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-char	**split_line(char *line)
+#include <readline/readline.h>
+#include <readline/history.h>
+
+// char	**split_line(char *line)
+// {
+// 	int	buffer
+// }
+
+
+// void	loop(void)
+// {
+// 	char	*line;
+// 	char	**args;
+// 	int		status;
+
+// 	status = 1;
+// 	while (status)
+// 	{
+// 		printf("Minishell$ ");
+// 		line = readline();
+// 		args = split_line(line);
+// 		status = dash_execute(args);
+// 		free(line);
+// 		free(args);
+// 	}
+// }
+
+void	handler(int sig)
 {
-	int	buffer
+	(void)sig;
+	exit(EXIT_FAILURE);
 }
 
-
-void	loop(void)
+int	main(void)
 {
-	char	*line;
-	char	**args;
-	int		status;
+	static char	*input;
 
-	status = 1;
-	while (status)
+	input = (char *)NULL;
+	while (1)
 	{
-		printf("Minishell$ ");
-		line = readline();
-		args = split_line(line);
-		status = dash_execute(args);
-		free(line);
-		free(args);
+		input = readline("minishell:~ $ ");
+		if (!input)
+			break ;
+		add_history(input);
+		printf("\n\n\t%s\n", input);
+		signal(SIGINT, handler);
+		// signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal
+		// signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
 	}
-}
-
-
-int	main(int argc, char *argv[], char *envp[])
-{
-	char	*line;
-	
-	while (argv && argc)
-	{
-		signal(SIGQUIT, SIG_IGN);
-	}
+	return (0);
 }
