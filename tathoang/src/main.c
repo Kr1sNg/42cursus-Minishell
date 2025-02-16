@@ -10,58 +10,64 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//run with -lreadline
+
 #include "../include/minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// char	**split_line(char *line)
+
+// void ft_execute(char **args, char **envp)
 // {
-// 	int	buffer
-// }
-
-
-// void	loop(void)
-// {
-// 	char	*line;
-// 	char	**args;
-// 	int		status;
-
-// 	status = 1;
-// 	while (status)
+// 	pid_t pid = fork();
+// 	int	status;
+	
+// 	if (pid == 0)
 // 	{
-// 		printf("Minishell$ ");
-// 		line = readline();
-// 		args = split_line(line);
-// 		status = dash_execute(args);
-// 		free(line);
-// 		free(args);
+// 		if (execve(args[0], args, envp) == -1)
+// 		{
+// 			perror("execve");
+// 			exit(EXIT_FAILURE);
+// 		}
 // 	}
+// 	else if (pid > 0)
+// 	{
+// 		waitpid(pid, &status, 0);
+// 	}
+// 	else
+// 		perror("fork");
 // }
 
-void	handler(int sig)
+void	ft_handler(int sig)
 {
 	(void)sig;
-	exit(EXIT_FAILURE);
+	write(STDOUT_FILENO, "\n", 1); // OK ctr-C
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-int	main(void)
+int	main(int argc, char *argv[], char *env[])
 {
-	static char	*input;
+	char	*input;
 
+	(void)argc; // we don't really need it to run ./a.out
+	(void)argv;
+	signal(SIGINT, ft_handler);
+	signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal - ctr-backflash
+	signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
 	input = (char *)NULL;
 	while (1)
 	{
 		input = readline("minishell:~ $ ");
 		if (!input)
 			break ;
-		add_history(input);
-		printf("\n\n\t%s\n", input);
-		signal(SIGINT, handler);
-		// signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal
-		// signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
+		add_history(input); // to save history and move up - down cmd
+		printf("\n\t%s\n", input);
+		free(input);
 	}
 	return (0);
 }

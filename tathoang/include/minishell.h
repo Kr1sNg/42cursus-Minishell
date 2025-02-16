@@ -33,7 +33,7 @@
 
 /* command trees */
 
-// >$ echo hello && exit
+// >$ echo $USER | echo hello && ls
 
 typedef struct s_node
 {
