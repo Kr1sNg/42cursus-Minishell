@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2024/11/07 13:44:51 by tat-nguy          #+#    #+#             */
+/*   Updated: 2024/11/13 15:32:23 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	LIBRARY: N/A
+**	SYNOPSIS: write a string to the standard output
+**
+**	DESCRIPTION:
+** 	Outputs the string 's' to the standard output
+**
+**	RETURN VALUE: N/A
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+void	ft_putstr(char *s)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	unsigned int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-

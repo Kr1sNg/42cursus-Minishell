@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/13 13:10:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:38:41 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,16 @@ void	ft_handler(int sig)
 	rl_redisplay();
 }
 
+/* env[] is needed for ENV, EXPORT, UNSET */
+
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*input;
+	t_token	*tokens;
 
-	(void)argc; // we don't really need it to run ./a.out
-	(void)argv;
+	//ft_copy_env
+	(void)argc; // we don't really need it rightnow
+	(void)argv; // we don't really need it rightnow
 	signal(SIGINT, ft_handler);
 	signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal - ctr-backflash
 	signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
@@ -66,8 +70,11 @@ int	main(int argc, char *argv[], char *env[])
 		if (!input)
 			break ;
 		add_history(input); // to save history and move up - down cmd
-		printf("\n\t%s\n", input);
+		tokens = ft_tokenize(input);
+		ft_print_token(tokens);
+		//ft_execute(tokens);
 		free(input);
+		ft_free_token(tokens);
 	}
 	return (0);
 }

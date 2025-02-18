@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2024/11/13 15:16:26 by tat-nguy          #+#    #+#             */
+/*   Updated: 2024/12/02 19:05:24 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	LIBRARY: N/A
+**	SYNOPSIS: write a character to the standard output
+**
+**	DESCRIPTION:
+** 	Outputs the character 'c' to the the standard output
+**
+**	RETURN VALUE: N/A
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+void	ft_putchar(int c)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	write(1, &c, 1);
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-

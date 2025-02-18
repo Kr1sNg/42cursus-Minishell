@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2024/11/08 12:21:55 by tat-nguy          #+#    #+#             */
+/*   Updated: 2024/11/09 11:57:46 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	LIBRARY: N/A
+**	SYNOPSIS: apply function to all the node of linked list
+**  
+**	DESCRIPTION:
+** 	Iterates the list 'lst' and applies the function 'f' on the data of
+**  each node.
+**    
+**	RETURN VALUE: N/A
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (current && *current)
-		*current = (*current)->next;
+	if (!lst || !f)
+		return ;
+	while (lst != NULL)
+	{
+		f(lst->data);
+		lst = lst->next;
+	}
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-

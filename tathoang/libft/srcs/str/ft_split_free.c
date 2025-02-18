@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2025/01/08 21:31:41 by tat-nguy          #+#    #+#             */
+/*   Updated: 2025/01/08 21:55:12 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	NOTICE: Need to use ft_split_free() after using ft_split()
+**
+**	LIBRARY: N/A
+**	SYNOPSIS: free all allocated memory after using function splits
+**
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+void	ft_split_free(char **arrs)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	size_t	i;
+
+	i = 0;
+	if (!arrs)
+		return ;
+	while (arrs[i] != NULL)
+	{
+		free(arrs[i]);
+		i++;
+	}
+	free(arrs);
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-

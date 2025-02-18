@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2024/11/08 09:17:34 by tat-nguy          #+#    #+#             */
+/*   Updated: 2024/11/09 11:56:23 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	LIBRARY: N/A
+**	SYNOPSIS: count the number of nodes in a list
+**
+**	RETURN VALUE:
+**	The length of the list
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+int	ft_lstsize(t_list *lst)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	int	count;
+
+	count = 0;
+	while (lst != NULL)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/13 13:19:00 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:45:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 ** :::::::::::::::::::::::::::::::::* HEADERS *:::::::::::::::::::::::::::::: **
 */
 
+# include "../libft/includes/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -35,13 +36,35 @@
 
 // >$ echo $USER | echo hello && ls
 
-typedef struct s_node
+typedef enum e_node_type
 {
-	char			type; //  | || && or CMD
-	char			*args; //cd env path...
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
+	NODE_CMD,
+	NODE_PIPE, // |
+	NODE_AND, // &&
+	NODE_OR, // ||
+}	t_node_type;
+
+/* structure of Abstract Syntax Tree
+	- each node represents either a command or an operator that combines commands
+	- using recursive desent parser */
+typedef struct s_ast
+{
+	t_node_type	type;
+	char		**argv; // only used if type == NODE_CMD
+	struct s_ast	*left; // left subtree (first cmd)
+	struct s_ast	*right; // right subtree (second)
+	// redirections also ?
+};
+
+
+typedef struct s_token
+{
+	// t_type			type; //  | || && or CMD
+	char			*cmd; // 
+	char			*option; // path/ -n / 
+	// struct s_token	*left;
+	struct s_token	*next;
+}	t_token;
 
 
 
@@ -52,9 +75,21 @@ typedef struct s_node
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
 */
 
+/* tokenize */
+
+t_token	*ft_tokenize(char *input);
+t_token	*ft_create_token(char *input);
+void	ft_token_add_back(t_token **head, char *input);
+void	ft_free_token(t_token *head);
+
+void	ft_print_token(t_token *head);
 
 
+/* parsing */
 
+
+/* signal */
+void	ft_handler(int sig);
 
 
 #endif

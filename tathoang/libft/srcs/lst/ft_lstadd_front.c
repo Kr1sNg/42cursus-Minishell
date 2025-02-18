@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 19:04:09 by tat-nguy         ###   ########.fr       */
+/*   Created: 2024/11/08 08:53:21 by tat-nguy          #+#    #+#             */
+/*   Updated: 2024/11/09 11:53:22 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+/*
+**	LIBRARY: N/A
+**	SYNOPSIS: add node to the beginning of the linked list
+**
+**	RETURN VALUE: N/A
+*/
 
+#include "../../includes/libft.h"
 
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	if (new)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
 }
-
-
-int ft_parsing(t_token *token)
-{
-	
-}
-
-
