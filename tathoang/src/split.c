@@ -12,23 +12,6 @@
 
 #include "include/minishell.h"
 
-void	ft_quote(char *input)
-{
-	int		i;
-	int		start = 0;
-	int		end = 0;
 
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '"')
-		{
-			i++;
-			while ((input[i]) && input[i] != '"')
-				i++;
-		}
-
-	}
-}
-
+void	ft_split
 
