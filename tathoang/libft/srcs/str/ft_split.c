@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:22:15 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/01/08 21:31:56 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:20:32 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,6 @@ static	char	*ft_strdup_s(const char *s, char c)
 	return (dup);
 }
 
-static	void	*free_strs(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i])
-		free(strs[i++]);
-	free(strs);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;
@@ -109,7 +98,7 @@ char	**ft_split(char const *s, char c)
 		{
 			arrs[j] = ft_strdup_s(s + i, c);
 			if (arrs[j] == NULL)
-				return (free_strs(arrs));
+				return (ft_split_free(arrs), NULL);
 			j++;
 			while (s[i] != '\0' && s[i] != c)
 				i++;

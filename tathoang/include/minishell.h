@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 18:45:40 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:43:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_ast
 	struct s_ast	*left; // left subtree (first cmd)
 	struct s_ast	*right; // right subtree (second)
 	// redirections also ?
-};
+}	t_ast;
 
 
 typedef struct s_token

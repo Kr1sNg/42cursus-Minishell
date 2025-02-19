@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:09:12 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/01/10 14:20:30 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:14:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_putstr(char *s);
 
 void	ft_split_free(char **arrs);
 char	**ft_split(char const *s, char c);
+char	**ft_split_charset(char const *s, char *charset);
 char	*ft_strcat(char *dest, const char *src);
 char	*ft_strchr(const char *str, int c);
 int		ft_strcmp(const char *s1, const char *s2);

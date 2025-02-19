@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/18 18:13:08 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:32:04 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_token	*ft_tokenize(char *input)
 
 	tokens = NULL;
 	i = 0;
-	cmd = ft_split(input, ' ');
+	cmd = ft_split_charset(input, " \n\t\v\r");
 	if (!cmd)
 		return (NULL);
 	while (cmd[i])

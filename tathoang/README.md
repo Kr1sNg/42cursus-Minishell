@@ -12,9 +12,24 @@ This is a 42's project of simulation the Shell command-line terminal, taking `Ba
 
 - a `shell` is simply a macro processor that executes commands.
 
-- `metacharacter`: A character that, when unquoted, separates words. A metacharacter is a `space`, `tab`, `newline`, or one of the following characters: `|`, `&`, `;`, `(`, `)`, `<`, or `>`.
+- `POSIX`: A family of open system standards based on Unix. Bash is primarily concerned with the Shell and Utilities portion of the POSIX 1003.1 standard.
 
 - `builtin`: A command that is implemented internally by the shell itself, rather than by an executable program somewhere in the file system.
+
+- `control operator`: A token that performs a control function. It is a newline or one of the following: `||`, `&&`, `|`, `(`, `)` or `&`, `;`, `;;`, `;&`, `;;&`, `|&` (not used in this project).
+
+- `exit status` or `return status`: The value returned by a command to its caller. The value is restricted to eight bits, so the maximum value is 255.
+
+- `filename`: A string of characters used to identify a file.
+
+- `metacharacter`: A character that, when unquoted, separates words. A metacharacter is a `space`, `tab`, `newline`, or one of the following characters: `|`, `&`, `;`, `(`, `)`, `<`, or `>`.
+
+- `signal`: A mechanism by which a process may be notified by the kernel of an event occurring in the system.
+
+- `token`: A sequence of characters considered a single unit by the shell. It is either a word or an operator.
+
+- `word`: A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters. 
+
 
 ### 2 - Understand the Project Requirements
 
@@ -51,7 +66,7 @@ now we are in /home/user/minishell
 ```
 
 - Implement **redirections**:
-	- `<` should redirect input. It reads input from a file.
+	- `<` should redirect input. It redirects `stdin` to read input from a file.
 
 	- `>` should redirect output. It redirects `stdout` to a file, overwrites the file if existing or creates a new file if not.
 	```shell
@@ -87,7 +102,7 @@ now we are in /home/user/minishell
 Hello 42!
 ```
 
-- Handle `$?` which should expand to the exit status (return value) of the most recently command:
+- Handle `$?` which should expand to the exit status (return value) of the previous command:
 	- `0` → Success ✅
 	- `1-255` → Error ❌
 ```shell
@@ -157,6 +172,29 @@ file.txt
 	>$ echo $?
 	0
 	``` 
+
+- Bonus part:
+	- `&&` *double ampersand*: the shell will interpret `&&` as a **logical AND**, meaning that the second command is executed only if the first one **succeeds** (return a `0` exit status)
+	
+	```bash
+	>$ echo first && echo second
+	>$ first
+	>$ second
+	>$ cd nodir && echo first
+	>$ bash: cd: nodir: No such file or directory
+	```
+
+	- `||` *double vertical bar*: it represents a **logical OR**, meaning that the second command is executed only when the first command **fails** (return a non-zero exit status)
+	
+	```bash
+	>$ echo first || echo second
+	>$ first
+	>$ cd nodir || echo first
+	>$ bash: cd: nodir: No such file or directory
+	>$ first
+	```
+
+
 
 
 ---
@@ -601,6 +639,25 @@ The `perror()` function produces a message on standard error describing the last
 
 - Tokenizer/Lexer: Converts the raw input into tokens (words, operators, etc.).
 - Parser: Builds a data structure (like a command tree or a list of command structs) representing the commands, arguments, redirections, and pipelines.
+	- Grammar Design: Divides the command line into components where each operator has a defined precedence.
+	Grammar with [Extended Backus-Naur Form (EBNF)](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
+	
+	```go
+	command_line	::= expression	//::= means that symbol on left must be replaced with expression on right
+	expression		::= pipeline { ("&&" | "||") expression } // {} means zero or more times
+	pipeline		::= execute { "|" pipeline }	// | means 'or'
+	execute			::= [ redirection ] builtin [ redirections ] // [] means optional (non or once)
+	
+	builtin			::= word { word }
+	redirections	::= redir redirections | ε // ε means empty, meaning that if we have one redirections, we can have another one and so on or none at all
+	redir			::= "<" word | ">" word | ">>" word | "<<" word
+	```
+
+	- Recursive Descent Parser: 
+		- Write a function for each non-terminal.
+		- Combine the parsed pieces into an AST (binary tree) where internal nodes represent operators and leaves represent simple commands.
+		- Use recursion to naturally capture the structure dictated by operator precedence and associativity.
+
 
 #### Signal Handling & Error Management Module:
 
