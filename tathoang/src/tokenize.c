@@ -6,20 +6,27 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/19 14:32:04 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:12:58 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// /* add type of token */
-// t_type	ft_add_type(t_token *token, char *input)
-// {
-// 	if 
-// }
+// builtin: echo, cd, pwd, export, unset, env, exit
+// quote: " ", ' '
+// open: $
+// operation: |, ||, &&
+// redirect: >, <, >>, <<
+// option: -n
 
 
-/* create a new token node */
+// echo "    hello   "
+
+
+/* split cmd, word, operations */
+
+
+/* create a new token node and add its type */
 t_token	*ft_create_token(char *input)
 {
 	t_token	*new;
@@ -80,16 +87,16 @@ t_token	*ft_tokenize(char *input)
 {
 	t_token	*tokens;
 	int		i;
-	char 	**cmd;
+	char 	**words;
 
 	tokens = NULL;
 	i = 0;
-	cmd = ft_split_charset(input, " \n\t\v\r");
-	if (!cmd)
+	words = ft_split_tokens(input);
+	if (!words)
 		return (NULL);
-	while (cmd[i])
+	while (words[i])
 	{
-		ft_token_add_back(&tokens, cmd[i]);
+		ft_token_add_back(&tokens, words[i]);
 		i++;
 	}
 	return (tokens);
