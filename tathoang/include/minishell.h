@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/20 21:45:09 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:05:02 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,23 @@ typedef enum e_node_type
 typedef enum e_token_type
 {
 	TEXT, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit 0
-	OPERATION, //|, ||, && 1
-	REDIRECT, // >, <, >>, << 2
-	QUOTE, // " ", ' ' 3
+	PARENTHESIS, // ( ) 1
+	OPERATOR, //|, ||, && 2
+	REDIRECT, // >, <, >>, << 3
+	QUOTE, // "  ", ' ' 4
 }	t_token_type;
 
 /* structure of Abstract Syntax Tree
 	- each node represents either a command or an operator that combines commands
 	- using recursive desent parser */
-typedef struct s_ast
+typedef struct s_tree
 {
 	t_node_type	type;
 	char		**argv; // only used if type == NODE_CMD
-	struct s_ast	*left; // left subtree (first cmd)
-	struct s_ast	*right; // right subtree (second)
+	struct s_tree	*left; // left subtree (first cmd)
+	struct s_tree	*right; // right subtree (second)
 	// redirections also ?
-}	t_ast;
+}	t_tree;
 
 
 typedef struct s_token

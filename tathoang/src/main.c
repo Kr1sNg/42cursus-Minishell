@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/19 16:43:20 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:57:30 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	main(int argc, char *argv[], char *env[])
 		add_history(input); // to save history and move up - down cmd
 		tokens = ft_tokenize(input);
 		ft_print_token(tokens);
-		//ft_execute(tokens);
+		// ft_parsing(tokens);
+		// ft_execute => walk the tree and execute
+
+		
 		free(input);
 		ft_free_token(tokens);
 	}

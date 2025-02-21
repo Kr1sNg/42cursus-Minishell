@@ -6,15 +6,17 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:29:23 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/20 21:52:09 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:44:44 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/* these functions are to split command line into tokens */
+
 /* echo "   hello ||&&  ' '   " |  echo    hi&&pwd   $WORD >>text
 => echo$
-=>    hello ||&&  ' '   $
+=> "   hello ||&&  ' '   "$
 => |$
 => echo$
 => hi$
@@ -29,6 +31,8 @@
 // is_space(char c) => libft
 
 // | || > >> < << &&
+
+
 static int	is_operator(char *s)
 {	
 	if ((s[0] == '|' || s[0] == '>' || s[0] == '<') && s[1])
@@ -40,6 +44,8 @@ static int	is_operator(char *s)
 		else
 			return (ft_error_input(-42), -42);
 	}
+	else if (s[0] == '(' || s[0] == ')')
+		return (1);
 	else if (s[0] == '&' && s[1])
 	{
 		if (s[1] == s[0])
@@ -129,26 +135,6 @@ static int	count_letter(char *str)
 	return (i);
 }
 
-static char *ft_dup_quote(char *s)
-{
-	int		i;
-	int		len;
-	char	*arr;
-
-	len = count_letter(s) - 2;
-	arr = malloc(sizeof(char) * (len + 1));
-	if (!arr)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		arr[i] = s[i + 1];
-		i++;
-	}
-	arr[i] = '\0';
-	return (arr);
-}
-
 static char	*ft_strdup_s(char *src)
 {
 	int		i;
@@ -156,8 +142,8 @@ static char	*ft_strdup_s(char *src)
 	char	*arr;
 
 	i = 0;
-	if (is_quote(src[0]))
-		return (ft_dup_quote(src));
+	// if (is_quote(src[0]))
+	// 	return (ft_dup_quote(src));
 	len = count_letter(src);
 	arr = malloc(sizeof(char) * (len + 1));
 	if (!arr)
@@ -214,23 +200,23 @@ char	**ft_split_tokens(char *str)
 }
 
 
-
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	char **arrs;
-// 	char *str = "echo \"   hello ||&&  \' \'   \" |  echo    hi&&pwd   $WORD";
-// 	int i = 0;
-// 	arrs = ft_split_tokens(str);
-// 	if (!arrs)
-// 		return (1);
-// 	while (arrs[i] != NULL)
-// 	{
-// 		printf("%s\n", arrs[i]);
-// 		free(arrs[i]);
-// 		i++;
-// 	}
-// 	free(arrs);
-// 	return (0);
-// }
-
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char **arrs;
+	char *str = "echo \"   hello ||&&  \' \'   \" |  echo    hi&&pwd   $WORD";
+	int i = 0;
+	arrs = ft_split_tokens(str);
+	if (!arrs)
+		return (1);
+	while (arrs[i] != NULL)
+	{
+		printf("%s\n", arrs[i]);
+		free(arrs[i]);
+		i++;
+	}
+	free(arrs);
+	return (0);
+}
+*/
