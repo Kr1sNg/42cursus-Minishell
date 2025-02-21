@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:32:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/21 01:40:41 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/21 13:57:43 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ int main(int ac, char **av, char **env)
 	t_infos	infos;
 
 	infos.env = cmd_create_env(env);
-	cmd_env(infos.env);
-	infos.env = cmd_export(infos.env, "test");
-	cmd_env(infos.env);
-	infos.env = cmd_unset(infos.env, "test");
-	cmd_env(infos.env);
+	cmd_export(infos.env, NULL);
     return (0);
 }
