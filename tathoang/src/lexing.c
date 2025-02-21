@@ -12,5 +12,23 @@
 
 #include "include/minishell.h"
 
+/*	
+	OPERATION, //|, ||, && 1
+	REDIRECT, // >, <, >>, << 2
+	QUOTE, // " ", ' ' 3
+	TEXT, BUILTIN, OPTION // -n, text, echo, cd, pwd, export, unset, env, exit 0
+*/
 
-void	
+
+int	ft_token_type(char *s)
+{
+	if (*s == '|' || *s == '&')
+		return (OPERATION);
+	else if (*s == '>' || *s == '<')
+		return (REDIRECT);
+	else if (*s == '\'' || *s == '\"')
+		return (QUOTE);
+	else
+		return (TEXT);
+}
+

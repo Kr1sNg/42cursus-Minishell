@@ -35,7 +35,7 @@ t_token	*ft_create_token(char *input)
 	if (!new)
 		return (NULL);
 	new->cmd = ft_strdup(input);
-	new->option = NULL;
+	new->type = ft_token_type(input);
 	new->next = NULL;
 	return (new);
 }

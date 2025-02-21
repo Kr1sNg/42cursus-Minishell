@@ -45,22 +45,13 @@ typedef enum e_node_type
 	NODE_OR, // ||
 }	t_node_type;
 
-// builtin: echo, cd, pwd, export, unset, env, exit
-// quote: " ", ' '
-// open: $
-// operation: |, ||, &&
-// redirect: >, <, >>, <<
-// option: -n
-
 
 typedef enum e_token_type
 {
-	BUILTIN, // echo, cd, pwd, export, unset, env, exit
-	OPERATION, //|, ||, &&
-	REDIRECT, // >, <, >>, <<
-	TEXT, // text, quote,...
-	EXTEND, // $
-	OPTION, //-n (only echo)
+	TEXT, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit 0
+	OPERATION, //|, ||, && 1
+	REDIRECT, // >, <, >>, << 2
+	QUOTE, // " ", ' ' 3
 }	t_token_type;
 
 /* structure of Abstract Syntax Tree
@@ -79,8 +70,7 @@ typedef struct s_ast
 typedef struct s_token
 {
 	char			*cmd; // 
-	char			*option; // path/ -n / 
-	// struct s_token	*left;
+	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
 
@@ -105,6 +95,10 @@ void	ft_token_add_back(t_token **head, char *input);
 void	ft_free_token(t_token *head);
 
 void	ft_print_token(t_token *head);
+
+/* lexing */
+
+int	ft_token_type(char *s);
 
 /* parsing */
 
