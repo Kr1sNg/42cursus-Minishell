@@ -6,7 +6,7 @@
 #    By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:04:41 by tbahin            #+#    #+#              #
-#    Updated: 2025/02/21 01:24:22 by tbahin           ###   ########.fr        #
+#    Updated: 2025/02/22 21:15:43 by tbahin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ INCLUDE = ./includes/
 CC = cc
 CFLAG = -Wall -Wextra -Werror -g
 
-SRCS =./srcs/buildins.c ./srcs/main.c
+SRCS =./srcs/buildins.c ./srcs/main.c ./srcs/export_cmd/cmd_export.c \
+./srcs/export_cmd/cmd_export_no_args.c ./srcs/export_cmd/cmd_export_args.c \
+./srcs/unset_cmd/cmd_unset.c
 
 OBJS = ${SRCS:.c=.o}
 

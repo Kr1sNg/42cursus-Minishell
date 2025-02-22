@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy_test.c                                   :+:      :+:    :+:   */
+/*   cmd_export_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 17:36:50 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/21 01:36:38 by tbahin           ###   ########.fr       */
+/*   Created: 2025/02/22 18:29:34 by tbahin            #+#    #+#             */
+/*   Updated: 2025/02/22 22:01:03 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "libft.h"
+#include "../../includes/buildins.h"
 
-char	*ft_strcpy_test(char *dest, const char *src, size_t len)
+int		ft_valide_export_cmd(char *cmd)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	while (i < len)
+	while(cmd[i])
 	{
-		dest[i] = src[i];
+		if (cmd[i] > 32 && cmd[i] <= 126)
+			return (0);
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (1);
 }
 
-/*
-int	main(void)
+char	*check_list_export(char *cmd, char **list)
 {
-	const char	*src = "HELLO";
-	char		dest[6];
-	ft_strlcpy(dest, src, 6);
-	printf("%s", dest);
-	return (0);
-}*/
+	int	i;
+
+	i = 0;
+	if (!list)
+		return (ft_strdup(cmd));
+	while (list[i])
+	{
+		if (ft_strcmp(list[i], cmd) == 61)
+		{
+			return (ft_strdup(list[i]));
+		}
+		i++;
+	}
+	return (ft_strdup(cmd));
+}

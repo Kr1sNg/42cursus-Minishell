@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:14:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/21 01:36:55 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/22 18:54:11 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t	ft_strlen_n(const char *str);
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *s, const void *src, size_t n);
-char	*ft_strcpy_test(char *dest, const char *src, size_t len);
+char	*ft_strcpy(char *dest, const char *src, size_t len);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_toupper(int c);
