@@ -643,14 +643,27 @@ The `perror()` function produces a message on standard error describing the last
 	Grammar with [Extended Backus-Naur Form (EBNF)](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
 	
 	```go
-	command_line	::= expression	//::= means that symbol on left must be replaced with expression on right
-	expression		::= pipeline { ("&&" | "||") expression } // {} means zero or more times
-	pipeline		::= execute { "|" pipeline }	// | means 'or'
-	execute			::= [ redirection ] builtin [ redirections ] // [] means optional (non or once)
-	
-	builtin			::= word { word }
-	redirections	::= redir redirections | ε // ε means empty, meaning that if we have one redirections, we can have another one and so on or none at all
-	redir			::= "<" word | ">" word | ">>" word | "<<" word
+	// [...] means None or once
+	// {...} means Zero or more times
+
+	<COMMAND_LINE>    	::= <EXPRESSION>
+	<EXPRESSION>      	::= <LOGICAL_EXPR>
+	<LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
+	<PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
+	<SIMPLE_EXPR>     	::= <COMMAND> 
+						| "(" <EXPRESSION> ")"
+	<COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
+	<CMD_WORDS>       	::= <WORD> { <WORD> }
+						| <ASSIGNMENT_WORD> { <WORD> }
+	<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
+	<REDIRECTION>     	::= ">"  <FILENAME>
+						| "<"  <FILENAME>
+						| ">>" <FILENAME>
+						| "<<" <HERE_END>
+	<ASSIGNMENT_WORD>	::= <WORD> "=" <WORD>
+	<FILENAME>			::= <WORD>
+	<HERE_END>			::= <WORD>
+
 	```
 
 	- Recursive Descent Parser: 

@@ -10,42 +10,81 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
-// echo -> hi ->  || -> pwd
-// token->token->token->token->NULL
-//=> read token, -> take  until see the node?
-// => execute node ???
+/*
+// [...] means None or once
+// {...} means Zero or more times
 
+<COMMAND_LINE>    	::= <EXPRESSION>
+<EXPRESSION>      	::= <LOGICAL_EXPR>
+<LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
+<PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
+<SIMPLE_EXPR>     	::= <COMMAND> 
+                    | "(" <EXPRESSION> ")"
+<COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
+<CMD_WORDS>       	::= <WORD> { <WORD> }
+                    | <ASSIGNMENT_WORD> { <WORD> }
+<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
+<REDIRECTION>     	::= (">" | "<" | ">>") <FILENAME>
+                    | "<<" <HERE_END>
+<ASSIGNMENT_WORD>	::= <WORD> "=" <WORD>
+<FILENAME>			::= <WORD>
+<HERE_END>			::= <WORD>
+<WORD>				::= <WORD>
+```
+*/
 
-
-/* one token look-ahead */
-void	ft_next_token(t_token **current)
+/* create new node */
+t_tree	*ft_new_tree_node(t_node_type type)
 {
-	if (current && *current)
-		*current = (*current)->next;
+	t_tree	*node;
+
+	node = malloc(sizeof(t_tree));
+	if (!node)
+		return NULL;
+	node->type = type;
+	node->argv = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	return (node);
 }
 
-t_tree	ft_parse_cmd(t_token *head)
+/* at the top level */
+
+t_tree	*ft_parse_cmd_line(t_token **head)
 {
-	t_tree	*cmd;
-	t_token	*end;
-	
-	end = head;
-	while (end)
-		end = head->next;
-	cmd = ft_parse_line(&head, end);
-	
-	
+	return (ft_parse_expr(head)); 	
 }
 
-
-int ft_parse_exec(t_token *token)
+t_tree *ft_parse_expr(t_token **head)
 {
-	
+	return (ft_parse_logical_expr(head));
 }
 
-int	ft_parse_redir(t_token *token);
+/* logical expr is a pipe expr optionally followed by
+zero or more logical operators && || and another pipe expr */
+
+t_tree	*ft_parse_logical_expr(t_token **head);
+{
+	t_tree	*node;
+	t_tree	*left;
+	t_tree	*right;
+	t_token	*tmp;
+
+	tmp = *head;
+	left = ft_parse_pipe_expr(tmp);
+	while (*tmp && tmp->type == OPERATOR)
+	{
+		tmp = head->next;
+		right = ft_parse_pipe_expr(tmp);
+		node = new_ast_node(NODE_AND || NODE_OR)
+
+
+
+
+}
+
 
 t_tree ft_parse_pipe(t_token **start, t_token *end) // return pointer to tree
 {
