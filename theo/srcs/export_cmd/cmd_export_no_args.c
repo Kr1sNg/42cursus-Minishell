@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:21:00 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/22 22:26:51 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*var_export_only(char *line)
 	i = 0;
 	check = 0;
 	dest = malloc((ft_strlen(line) + 3) * sizeof(char));
-	while(line[i - check])
+	while (line[i - check])
 	{
 		if (check == 0 && i > 0 && line[i - 1] == '=')
 		{
@@ -45,7 +45,7 @@ char	*var_export_only(char *line)
 
 void	ft_swap(char **str, char **str2)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *str;
 	*str = *str2;
@@ -61,7 +61,7 @@ char	**ft_sort_a(char **env)
 	i = 0;
 	j = 0;
 	check = 1;
-	while(env[i])
+	while (env[i])
 	{
 		j = i;
 		while (env[j])
@@ -73,14 +73,14 @@ char	**ft_sort_a(char **env)
 		i++;
 	}
 	return (env);
-};
+}
 
 char	*convert_line_export(char *line)
 {
 	char	*dest;
 	char	*src_mdf;
 	int		i;
-	
+
 	i = 0;
 	src_mdf = var_export_only(line);
 	dest = ft_strjoin("declare -x ", src_mdf);

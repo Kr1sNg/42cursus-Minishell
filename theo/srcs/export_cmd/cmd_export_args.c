@@ -6,18 +6,34 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:29:34 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:01:03 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 13:13:42 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/buildins.h"
 
-int		ft_valide_export_cmd(char *cmd)
+int	check_egal(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	while(cmd[i])
+	if (!cmd)
+		return (1);
+	while (cmd[i])
+	{
+		if (cmd[i] == '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_valide_export_cmd(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
 	{
 		if (cmd[i] > 32 && cmd[i] <= 126)
 			return (0);

@@ -6,28 +6,11 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:03:23 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 13:17:49 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/buildins.h"
-
-
-int		check_egal(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd)
-		return (1);
-	while (cmd[i])
-	{
-		if (cmd[i] == '=')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 char	**cmd_add_export(char **env, char *cmd)
 {
@@ -46,7 +29,7 @@ char	**cmd_add_export(char **env, char *cmd)
 	{
 		env_cpy[j] = (char *)malloc((ft_strlen(env[j]) + 1) * sizeof(char));
 		k = 0;
-		while(env[j][k])
+		while (env[j][k])
 		{
 			env_cpy[j][k] = env[j][k];
 			k++;
@@ -76,7 +59,7 @@ char	**cmd_add_env(char **env, char *cmd)
 	{
 		env_cpy[j] = (char *)malloc((ft_strlen(env[j]) + 1) * sizeof(char));
 		k = 0;
-		while(env[j][k])
+		while (env[j][k])
 		{
 			env_cpy[j][k] = env[j][k];
 			k++;
@@ -111,7 +94,7 @@ void	cmd_export(t_infos *infos, char *cmd)
 			free_tab(infos->env);
 			infos->env = env_cpy;
 		}
-		env_cpy =  cmd_add_export(infos->export, cpy_cmd);
+		env_cpy = cmd_add_export(infos->export, cpy_cmd);
 		free_tab(infos->export);
 		infos->export = env_cpy;
 		free(cpy_cmd);
@@ -121,4 +104,18 @@ void	cmd_export(t_infos *infos, char *cmd)
 void	cmd_create_export(t_infos *infos)
 {
 	infos->export = ft_print_sort_env(infos->env);
+}
+
+void	ft_exec_export(char **cmd, t_infos *infos)
+{
+	int	i;
+	
+	i = 1;
+	if (!cmd[1])
+		cmd_export(infos, NULL);
+	while(cmd[i])
+	{
+		cmd_export(infos, cmd[i]);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:02:44 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 13:13:56 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	**ft_print_sort_env(char **env);
 char	**ft_sort_a(char **env);
 char	*check_list_export(char *cmd, char **list);
 int		ft_valide_export_cmd(char *cmd);
+int	check_egal(char *cmd);
 
 #endif
