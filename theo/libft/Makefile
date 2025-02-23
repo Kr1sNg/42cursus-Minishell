@@ -16,7 +16,7 @@ ft_cprints.c ft_iprints.c ft_lowxprints.c\
 ft_pprints.c ft_printf.c ft_sprints.c ft_uprints.c ft_upxprints.c\
 ft_putchar_fd.c ft_putstr_fd.c ft_itoa.c ft_strlen.c\
 get_next_line.c get_next_line_utils.c ft_strncmp.c\
-ft_strlen_n.c ft_strcpy.c
+ft_strlen_n.c ft_strcpy.c ft_strlen_egal.c
 
 BONUS = ft_lstnew.c ft_lstadd_front.c\
 ft_lstsize.c ft_lstlast.c\

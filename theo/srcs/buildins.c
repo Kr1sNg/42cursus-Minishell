@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:02:29 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:20:17 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 21:33:56 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_strlen_name_env(char *str)
 	return (i);
 }
 
-void	cmd_env(char **env)
+void	ft_exec_env(char **env)
 {
 	int	i;
 
@@ -74,19 +74,4 @@ void	cmd_create_env(t_infos *infos, char **env)
 	}
 	env_cpy[i] = NULL;
 	infos->env = env_cpy;
-}
-
-void	cmd_pwd(void)
-{
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-		printf("%s", pwd);
-}
-
-void	cmd_cd(char *str)
-{
-	chdir(str);
 }

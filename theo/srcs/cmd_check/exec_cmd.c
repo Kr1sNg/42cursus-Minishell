@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/23 13:36:14 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 21:39:04 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ void	ft_exec_buildins(char **cmd, t_infos *infos)
 		ft_exec_export(cmd, infos);
 	if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
 		ft_exec_unset(cmd, infos);
+	if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
+		ft_exec_env(infos->env);
+	if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
+		ft_exec_cd(cmd[0], infos);
+	if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
+		ft_exec_pwd();
 }
 
 void	ft_exec_cmd(char **cmd, t_infos *infos)

@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:14:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:18:30 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:58:55 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int		ft_printf(int fd, const char *format, ...);
 size_t	ft_sprints(int fd, char *str);
 size_t	ft_uprints(int fd, unsigned int number);
 int		ft_upxprints(int fd, int number);
+size_t	ft_strlen_egal(const char *str);
 
 #endif

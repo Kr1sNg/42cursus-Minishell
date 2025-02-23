@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 12:58:38 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/23 19:32:07 by tbahin           ###   ########.fr       */
+/*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
+/*   Updated: 2025/02/23 22:14:47 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/exec.h"
+#include "../includes/buildins.h"
 
-#ifndef EXEC_H
-# define EXEC_H
+void	ft_exec_pwd(void)
+{
+	char	*pwd;
 
-#include "../libft/libft.h"
-#include "buildins.h"
-#include "pipex.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
+	pwd = NULL;
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+		printf("%s\n", pwd);
+	free(pwd);
+}
 
-int	ft_check_valide_cmd(char *cmd, t_infos infos);
-void	ft_manage_pipe(char **cmd, char **env);
-void	ft_child(char **cmd, char **env);
+void	ft_exec_cd(char *str, t_infos *infos)
+{
+	char	*line;
+	char	*pwd;
 
-#endif
+	chdir(str);
+	pwd = getcwd(NULL, 0);
+	line = ft_strjoin("PWD=",pwd );
+	cmd_export(infos, line);
+	free(pwd);
+	free(line);
+}

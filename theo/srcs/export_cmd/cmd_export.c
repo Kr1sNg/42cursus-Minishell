@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/23 13:17:49 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/23 22:28:32 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,48 @@ char	**cmd_add_env(char **env, char *cmd)
 	return (env_cpy);
 }
 
+int	check_env_var(char *cmd, t_infos *infos, int free_old)
+{
+	int		i;
+	char	*line;
+	char	*oldline;
+	int		check;
+
+	i = 0;
+	check = 0;
+	while (infos->env[i])
+	{
+		if (ft_strncmp(cmd, infos->env[i], ft_strlen_egal(cmd)) == 0)
+		{
+			line = infos->env[i];
+			infos->env[i] = ft_strdup(cmd);
+			if (ft_strncmp(cmd, "PWD", ft_strlen_egal("PWD")) == 0)
+			{
+				oldline = ft_strjoin("OLD", line);
+				check_env_var(oldline, infos, 1);
+			}
+			free(line);
+			check = 1;
+		}
+		if (ft_strncmp(cmd, &infos->export[i][11], ft_strlen_egal(cmd)) == 0)
+		{
+			line = infos->export[i];
+			infos->export[i] = ft_strjoin("declare -x ", cmd);
+			if (ft_strncmp(cmd, "PWD", ft_strlen_egal("PWD")) == 0)
+			{
+				oldline = ft_strjoin("OLD", line);
+				check_env_var(oldline, infos, 1);
+			}
+			free(line);
+			check = 1;
+		}
+		i++;
+	}
+	if (free_old == 1)
+		free(cmd);
+	return (check);
+}
+
 void	cmd_export(t_infos *infos, char *cmd)
 {
 	char	**env_cpy;
@@ -81,13 +123,18 @@ void	cmd_export(t_infos *infos, char *cmd)
 	if (!cmd)
 	{
 		ft_sort_a(infos->export);
-		cmd_env(infos->export);
+		ft_exec_env(infos->export);
 	}
 	else if (ft_valide_export_cmd(cmd) == 1)
 		return ;
 	else
 	{
 		cpy_cmd = check_list_export(cmd, infos->list_export);
+		if (check_env_var(cpy_cmd, infos, 0) == 1)
+		{
+			free(cpy_cmd);
+			return ;
+		}
 		if (check_egal(cpy_cmd) == 0)
 		{
 			env_cpy = cmd_add_env(infos->env, cpy_cmd);
@@ -106,7 +153,7 @@ void	cmd_create_export(t_infos *infos)
 	infos->export = ft_print_sort_env(infos->env);
 }
 
-void	ft_exec_export(char **cmd, t_infos *infos)
+void	ft_exec_export(t_infos *infos, char **cmd)
 {
 	int	i;
 	
