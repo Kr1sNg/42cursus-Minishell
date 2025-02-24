@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/20 21:12:58 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:25:13 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,25 @@
 /* split cmd, word, operations */
 
 
-/* create a new token node and add its type */
-t_token	*ft_create_token(char *input)
+/* after spliting words, create nodes for each tokens and add its type */
+t_token	*ft_create_token(char *word)
 {
 	t_token	*new;
 	
-	new = malloc(sizeof(t_token));
+	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->cmd = ft_strdup(input);
-	new->type = ft_token_type(input);
-	new->next = NULL;
+	new->word = ft_strdup(word);
+	new->type = ft_token_type(word);
 	return (new);
 }
 /* add cmd/argument to the list */
-void	ft_token_add_back(t_token **head, char *input)
+void	ft_token_add_back(t_token **head, char *word)
 {
 	t_token	*new;
 	t_token	*curr;
 
-	new = ft_create_token(input);
+	new = ft_create_token(word);
 	if (!new)
 		return ;
 	if (!*head)
@@ -67,7 +66,7 @@ void	ft_free_token(t_token *head)
 	{
 		tmp = head;
 		head = head->next;
-		free(tmp->cmd);
+		free(tmp->word);
 		free(tmp);
 	}
 }
@@ -77,7 +76,7 @@ void	ft_print_token(t_token *head)
 {
 	while (head)
 	{
-		printf("token: [%s]\n", head->cmd);
+		printf("token: [%s]\n", head->word);
 		head = head->next;
 	}
 }

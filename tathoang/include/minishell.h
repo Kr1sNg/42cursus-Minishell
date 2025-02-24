@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/21 14:05:02 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:05:49 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,52 +33,94 @@
 */
 
 
-/* command trees */
-
-// >$ echo $USER | echo hello && ls
-
-typedef enum e_node_type
-{
-	NODE_CMD,
-	NODE_PIPE, // |
-	NODE_AND, // &&
-	NODE_OR, // ||
-}	t_node_type;
-
+/* tokenizer */
 
 typedef enum e_token_type
 {
-	TEXT, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit 0
-	PARENTHESIS, // ( ) 1
-	OPERATOR, //|, ||, && 2
-	REDIRECT, // >, <, >>, << 3
-	QUOTE, // "  ", ' ' 4
+	TK_WORD, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit 0
+	TK_SUBSHELL_OPEN, // (
+	TK_SUBSHELL_CLOSE, // )
+	TK_AND, // &&
+	TK_OR, // ||
+	TK_PIPE, // |
+	TK_REDIR_IN, // <
+	TK_REDIR_OUT, // >
+	TK_APPEND_OUT, // >>
+	TK_HEREDOC, // <<
+	TK_DQUOTE, // "all the words in double quote"
+	TK_SQUOTE, // 'all the words in single quote'
 }	t_token_type;
-
-/* structure of Abstract Syntax Tree
-	- each node represents either a command or an operator that combines commands
-	- using recursive desent parser */
-typedef struct s_tree
-{
-	t_node_type	type;
-	char		**argv; // only used if type == NODE_CMD
-	struct s_tree	*left; // left subtree (first cmd)
-	struct s_tree	*right; // right subtree (second)
-	// redirections also ?
-}	t_tree;
 
 
 typedef struct s_token
 {
-	char			*cmd; // 
 	t_token_type	type;
+	char			*word;
 	struct s_token	*next;
 }	t_token;
 
 
+/* command trees */
 
+typedef enum e_ast_type
+{
+	AST_CMD, // commands
+	AST_SUBSHELL, // inside parenthesis ( )
+	AST_LOGICAL, // || or &&
+	AST_PIPE, // |
+	AST_REDIRECT, // > < >> <<
+}	t_ast_type;
 
+/* structure of Abstract Syntax Tree
+	- each node represents either a command or an operator that combines commands
+	- using recursive desent parser */
 
+typedef struct s_ast_cmd
+{
+	t_ast		*cmd;
+	char		**args;
+}	t_ast_cmd;
+
+typedef struct s_ast_subshell
+{
+	t_ast		*child;
+}	t_ast_subshell;
+
+typedef struct s_ast_logical
+{
+	t_token			*logical;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}	t_ast_logical;
+
+typedef struct s_ast_pipeline
+{
+	t_token			*pipe;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}	t_ast_pipeline;
+
+typedef struct s_ast_redirect
+{
+	t_token			*redirect;
+	struct s_ast	*child;
+	char			*filename;
+}	t_ast_redirect;
+
+// union: only one value in union exist.
+
+typedef struct s_ast
+{
+	t_ast_type		type;
+	union u_ast_data
+	{
+		t_ast_cmd		cmd;
+		t_ast_subshell	subshell;
+		t_ast_logical	logical;
+		t_ast_pipeline	pipeline;
+		t_ast_redirect	redirect;
+	} t_ast_data;	
+}	t_ast;
 
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **

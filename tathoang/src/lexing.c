@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/21 13:51:14 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:17:06 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,31 @@
 */
 
 
-int	ft_token_type(char *s)
+t_token_type	ft_token_type(char *word)
 {
-	if (*s == '(' || *s == ')')
-		return (PARENTHESIS);
-	else if (*s == '|' || *s == '&')
-		return (OPERATOR);
-	else if (*s == '>' || *s == '<')
-		return (REDIRECT);
-	else if (*s == '\'' || *s == '\"')
-		return (QUOTE);
+	if (*word == '(')
+		return (TK_SUBSHELL_OPEN);
+	else if (*word == ')')
+		return (TK_SUBSHELL_CLOSE);
+	else if (ft_strlen(word) == 2 && *word == '&')
+		return (TK_AND);
+	else if (ft_strlen(word) == 2 && *word == '|')
+		return (TK_OR);
+	else if (ft_strlen(word) == 1 && *word == '|')
+		return (TK_PIPE);
+	else if (ft_strlen(word) == 1 && *word == '<')
+		return (TK_REDIR_IN);
+	else if (ft_strlen(word) == 1 && *word == '>')
+		return (TK_REDIR_OUT);
+	else if (ft_strlen(word) == 2 && *word == '>')
+		return (TK_APPEND_OUT);
+	else if (ft_strlen(word) == 2 && *word == '<')
+		return (TK_HEREDOC);
+	else if (*word == '\"')
+		return (TK_DQUOTE);
+	else if (*word == '\'')
+		return (TK_SQUOTE);
 	else
-		return (TEXT);
+		return (TK_WORD);
 }
 

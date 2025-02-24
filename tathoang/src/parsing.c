@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/21 17:10:34 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:06:05 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 // [...] means None or once
 // {...} means Zero or more times
 
-<COMMAND_LINE>    	::= <EXPRESSION>
-<EXPRESSION>      	::= <LOGICAL_EXPR>
+<COMMAND_LINE>      ::= <LOGICAL_EXPR>
 <LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
 <PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
 <SIMPLE_EXPR>     	::= <COMMAND> 
-                    | "(" <EXPRESSION> ")"
+                    | "(" <LOGICAL_EXPR> ")"
 <COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
 <CMD_WORDS>       	::= <WORD> { <WORD> }
                     | <ASSIGNMENT_WORD> { <WORD> }
@@ -36,25 +35,22 @@
 */
 
 /* create new node */
-t_tree	*ft_new_tree_node(t_node_type type)
+void	ft_new_ast_node(t_ast **node, t_ast_type type)
 {
-	t_tree	*node;
-
-	node = malloc(sizeof(t_tree));
-	if (!node)
+	*node = ft_calloc(1, sizeof(t_ast));
+	if (!(*node))
 		return NULL;
-	node->type = type;
-	node->argv = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
+	(*node)->type = type;
 }
 
-/* at the top level */
 
-t_tree	*ft_parse_cmd_line(t_token **head)
+t_ast	*ft_create_ast_cmd(char	**argv)
 {
-	return (ft_parse_expr(head)); 	
+	t_ast	*node;
+
+	ft_new_ast_node(&node, AST_CMD);
+	node->t_ast_data.cmd.args = argv;  // why?
+	return (node);
 }
 
 t_tree *ft_parse_expr(t_token **head)
