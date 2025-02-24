@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:32:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/02/23 22:39:16 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/02/24 12:02:15 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	main(int ac, char **av, char **env)
 	cmd_create_env(&infos, env);
 	cmd_create_export(&infos);
 	ft_exec_env(infos.env);
-	cmd_export(&infos, NULL);
-	ft_exec_pwd();
-	ft_exec_cd("../../..", &infos);
+	cmd_export(&infos, NULL);;
+	cmd_export(&infos, "test");
 	ft_exec_env(infos.env);
 	cmd_export(&infos, NULL);
-	ft_exec_pwd();
+	cmd_unset(&infos, "test");
+	ft_exec_env(infos.env);
+	cmd_export(&infos, NULL);
 	free_tab(infos.export);
 	free_tab(infos.env);
 	return (0);
