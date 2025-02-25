@@ -43,7 +43,7 @@ void	ft_new_ast_node(t_ast **node, t_ast_type type)
 	(*node)->type = type;
 }
 
-
+/* create node for tree based on the type of node */
 t_ast	*ft_create_ast_cmd(char	**argv)
 {
 	t_ast	*node;
@@ -53,52 +53,51 @@ t_ast	*ft_create_ast_cmd(char	**argv)
 	return (node);
 }
 
-t_tree *ft_parse_expr(t_token **head)
+t_ast *ft_create_ast_subshell(t_ast *child)
 {
-	return (ft_parse_logical_expr(head));
+	t_ast	*node;
+
+	if (!child)
+		return (ft_error_input(TK_SUBSHELL_OPEN), NULL); // error need to check
+	ft_new_ast_node(&node, AST_SUBSHELL);
+	node->t_ast_data.subshell.child = child;
+	return (node);
 }
 
-/* logical expr is a pipe expr optionally followed by
-zero or more logical operators && || and another pipe expr */
-
-t_tree	*ft_parse_logical_expr(t_token **head);
+t_ast	*ft_create_ast_redirection(t_token_type direction, t_token *tk_filename, t_ast *child)
 {
-	t_tree	*node;
-	t_tree	*left;
-	t_tree	*right;
-	t_token	*tmp;
+	t_ast	*node;
 
-	tmp = *head;
-	left = ft_parse_pipe_expr(tmp);
-	while (*tmp && tmp->type == OPERATOR)
-	{
-		tmp = head->next;
-		right = ft_parse_pipe_expr(tmp);
-		node = new_ast_node(NODE_AND || NODE_OR)
-
-
-
-
+	if (!tk_filename || tk_filename->type != TK_WORD)
+		return (ft_error_input(TK_REDIR_IN), NULL); //need check error value
+	ft_new_ast_node(&node, AST_REDIRECT);
+	node->t_ast_data.redirect.direction = direction;
+	node->t_ast_data.redirect.filename = tk_filename;
+	node->t_ast_data.redirect.child = child;
+	return (node);
 }
 
-
-t_tree ft_parse_pipe(t_token **start, t_token *end) // return pointer to tree
+t_ast *ft_create_ast_pipeline(t_ast *left, t_ast *right) 
 {
-	t_tree	*new_node;
-	
-	new_node = ft_parse_exec(start, end);
-	if ()
-	
+	t_ast	*node;
+
+	if (!left || !right)
+		return (ft_error_input(TK_PIPE), NULL); // need check error value
+	ft_new_ast_node(&node, AST_PIPE);
+	node->t_ast_data.pipeline.left = left;
+	node->t_ast_data.pipeline.right = right;
+	return (node);
 }
 
-int ft_parse_line(t_token *token);
+t_ast	*ft_create_ast_logical(t_token_type operator, t_ast *left, t_ast *right)
+{
+	t_ast	*node;
 
-int ft_parse_block(t_token *token)
-
-
-/*
-- differnt kinds of node: EXEC (non-terminal symbol), BLOCK, 
-
-- parseblock read in '(' recursive call parseline, scan ')' and call parsedirs
-
-*/
+	if (!left || !right)
+		return (ft_error_input(TK_AND), NULL); // need check error value
+	ft_new_ast_node(&node, AST_LOGICAL);
+	node->t_ast_data.logical.logical = operator;
+	node->t_ast_data.logical.left = left;
+	node->t_ast_data.logical.right = right;
+	return (node);
+}

@@ -25,6 +25,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 
 
@@ -37,7 +39,7 @@
 
 typedef enum e_token_type
 {
-	TK_WORD, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit 0
+	TK_WORD, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit
 	TK_SUBSHELL_OPEN, // (
 	TK_SUBSHELL_CLOSE, // )
 	TK_AND, // &&
@@ -88,21 +90,20 @@ typedef struct s_ast_subshell
 
 typedef struct s_ast_logical
 {
-	t_token			*logical;
+	t_token_type	*logical; // && or ||
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast_logical;
 
 typedef struct s_ast_pipeline
 {
-	t_token			*pipe;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast_pipeline;
 
 typedef struct s_ast_redirect
 {
-	t_token			*redirect;
+	t_token_type	direction; // TK_REDIR_IN, TK_REDIR_OUT, TK_APPEND_OUT, or TK_HEREDOC
 	struct s_ast	*child;
 	char			*filename;
 }	t_ast_redirect;
