@@ -15,7 +15,7 @@
 /* converts tokens list into an abstract syntax tree */
 
 /* converts all token TK_WORD into ast node AST_CMD */
-t_ast	*ft_parse_cmd_word(t_token **token)
+t_ast	*ft_parse_cmd(t_token **token)
 {
     t_token *current;
     int     argc;
@@ -42,13 +42,6 @@ t_ast	*ft_parse_cmd_word(t_token **token)
     return (ft_create_ast_cmd(argv));
 }
 
-t_ast   *ft_parse_cmd(t_token **token)
-{
-    t_token *current;
-
-
-
-}
 
 /* convert (all content inside parenthesis) into AST_SUBSHELL */
 
@@ -80,10 +73,12 @@ t_ast   *ft_parse_pipeline(t_token **token)
     t_ast   *right;
 
     left = ft_parse_redirection(token);
+    right = NULL;
     while (*token && (*token)->type == TK_PIPE)
     {
         *token = (*token)->next;
         right = ft_parse_redirection(token);
+        left = ft_create
 
     }
 }
@@ -92,8 +87,6 @@ t_ast   *ft_parse_pipeline(t_token **token)
 
 t_ast   *ft_parse_redirection(t_token **token)
 {
-    t_ast   *avant;
-    t_ast   *apres;
     t_ast   *command;
 
     avant = 
