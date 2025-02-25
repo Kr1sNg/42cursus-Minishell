@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing2.c                                         :+:      :+:    :+:   */
+/*   parser_support.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/25 21:07:00 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:22:02 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/* converts tokens list into an abstract syntax tree */
+/* parsing support functions */
 
-
-
-
-// < file1 echo hello (>> file.txt)
-
-t_ast   *ft_parse_redirection(t_token **token)
+t_token *ft_next_token(t_parser *parser)
 {
-    t_ast   *command;
+    static t_token eof;
+    
+    if (parser->index < parser->token_count)
+        return (&parser->tokens[parser->index++]);
+    eof.type = TK_EOF;
+    eof.word = NULL;
+    eof.next = NULL;
+    return (&eof);
+}
 
-    avant = 
+t_token *ft_peek_token(t_parser *parser)
+{
+    static t_token eof;
+    
+    if (parser->index < parser->token_count)
+        return (&parser->tokens[parser->index]);
+    eof.type = TK_EOF;
+    eof.word = NULL;
+    eof.next = NULL;
+    return (&eof);
 }

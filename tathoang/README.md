@@ -646,23 +646,21 @@ The `perror()` function produces a message on standard error describing the last
 	// [...] means None or once
 	// {...} means Zero or more times
 
-	<COMMAND_LINE>    	::= <EXPRESSION>
-	<EXPRESSION>      	::= <LOGICAL_EXPR>
+	<COMMAND_LINE>    	::= <LOGICAL_EXPR>
 	<LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
 	<PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
 	<SIMPLE_EXPR>     	::= <COMMAND> 
-						| "(" <EXPRESSION> ")"
+						| "(" <LOGICAL_EXPR> ")"
 	<COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
 	<CMD_WORDS>       	::= <WORD> { <WORD> }
 						| <ASSIGNMENT_WORD> { <WORD> }
 	<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
-	<REDIRECTION>     	::= ">"  <FILENAME>
-						| "<"  <FILENAME>
-						| ">>" <FILENAME>
+	<REDIRECTION>     	::= (">" | "<" | ">>") <FILENAME>
 						| "<<" <HERE_END>
 	<ASSIGNMENT_WORD>	::= <WORD> "=" <WORD>
 	<FILENAME>			::= <WORD>
 	<HERE_END>			::= <WORD>
+	<WORD>				::= <WORD>
 
 	```
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/24 11:25:13 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:30:17 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,20 @@ void	ft_print_token(t_token *head)
 }
 
 /* put cmd/arg into list */
-t_token	*ft_tokenize(char *input)
+t_token	*ft_tokenize(char *input, int *token_count)
 {
 	t_token	*tokens;
-	int		i;
 	char 	**words;
 
 	tokens = NULL;
-	i = 0;
+	*token_count = 0;
 	words = ft_split_tokens(input);
 	if (!words)
 		return (NULL);
-	while (words[i])
+	while (words[*token_count])
 	{
-		ft_token_add_back(&tokens, words[i]);
-		i++;
+		ft_token_add_back(&tokens, words[*token_count]);
+		(*token_count)++;
 	}
 	return (tokens);
 }

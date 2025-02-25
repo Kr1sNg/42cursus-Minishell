@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing1.c                                         :+:      :+:    :+:   */
+/*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/24 12:56:43 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:47:38 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 // [...] means None or once
 // {...} means Zero or more times
 
-<COMMAND_LINE>    	::= <LOGICAL_EXPR>
-<LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
-<PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
-<SIMPLE_EXPR>     	::= <COMMAND> 
-                    | "(" <LOGICAL_EXPR> ")"
+<COMMAND_LINE>    	::= <LOGICAL>
+<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> } 
+<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
+<EXPRESSION>     	::= <COMMAND> 
+                    | "(" <LOGICAL> ")"
 <COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
 <CMD_WORDS>       	::= <WORD> { <WORD> }
                     | <ASSIGNMENT_WORD> { <WORD> }
@@ -34,9 +34,3 @@
 ```
 */
 
-/* converts tokens list into an abstract syntax tree */
-
-int	ft_parse(t_token *token_list, t_ast **ast)
-{
-    *ast = ft_parse_logical(token);
-}
