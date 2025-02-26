@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 18:15:31 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:03:05 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_new_ast_node(t_ast **node, t_ast_type type)
 {
 	*node = ft_calloc(1, sizeof(t_ast));
 	if (!(*node))
-		return NULL;
+		return ;
 	(*node)->type = type;
 }
 
@@ -78,8 +78,8 @@ t_ast	*ft_create_ast_pipeline(t_ast *left, t_ast *right)
 	if (!left || !right)
 		return (ft_error_input(TK_PIPE), NULL); // need check error value
 	ft_new_ast_node(&node, AST_PIPEEXPR);
-	node->u_ast_data.pipeline.left = left;
-	node->u_ast_data.pipeline.right = right;
+	node->u_ast_data.pipeexpr.left = left;
+	node->u_ast_data.pipeexpr.right = right;
 	return (node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 18:14:06 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:02:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 /* start to convert tokens list into an abstract syntax tree */
 
 // <COMMAND_LINE>    	::= <LOGICAL>
-t_ast	*ft_parse(t_token **token)
+t_ast	*ft_parse(t_token *token)
 {
     t_ast   *ast;
     
-    ast = ft_parse_logical(token);
-    if (*token) //extra token after command line
+    ast = ft_parse_logical(&token);
+    if (token) //extra token after command line
     {
-        ft_free_logical(ast); //TODO
+        //ft_free_logical(ast); //TODO
         return (ft_error_input(200), NULL);
     }
     return (ast);
@@ -35,15 +35,15 @@ t_ast   *ft_parse_logical(t_token **token)
     t_ast           *left;
     t_ast           *right;
 
-    left = ft_parse_pipeline(token);
+    left = ft_parse_pipeexpr(token);
     while ((*token) && ((*token)->type == TK_AND || (*token)->type == TK_OR))
     {
         logical = (*token)->type;
         *token = (*token)->next;
-        right = ft_parse_pipeline(token);
+        right = ft_parse_pipeexpr(token);
         if (!right)
         {
-            ft_free_logical(left);
+            //ft_free_logical(left); //TODO
             return (ft_error_syntax("&& or ||"), NULL);
         }
         left = ft_create_ast_logical(logical, left, right);
@@ -51,8 +51,8 @@ t_ast   *ft_parse_logical(t_token **token)
     return (left);
 }
 
-//<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
-t_ast   *ft_parse_pipeline(t_token **token)
+//<PIPEEXPR>       	::= <EXPRESSION> { "|" <EXPRESSION> }
+t_ast   *ft_parse_pipeexpr(t_token **token)
 {
     t_ast   *left;
     t_ast   *right;
@@ -158,14 +158,14 @@ t_ast   *ft_parse_redirect(t_token **token) //t_ast list of redirect
         *token = (*token)->next;
         if (!(*token) || (*token)->type != TK_WORD)
         {
-            ft_free_ast_lst(head);
+            //ft_free_ast_lst(head); //TODO
             return (ft_error_input(-300), NULL);
         }
         target = ft_strdup((*token)->word);
         curr = ft_create_ast_redirect(direction, target);
         if (!curr)
         {
-            ft_free_ast_lst(head);
+            //ft_free_ast_lst(head); //TODO
             return (ft_error_input(-300), NULL);
         }
         if (!head)

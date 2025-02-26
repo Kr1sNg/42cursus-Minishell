@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 15:23:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:02:58 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ void	ft_free_token(t_token *head)
 /* for debug and test */
 void	ft_print_token(t_token *head)
 {
+	printf("token:");
 	while (head)
 	{
-		printf("token: [%s] - type: [%i]\n", head->word, head->type);
+		printf("- [%s] ", head->word);
 		head = head->next;
 	}
+	printf("\n");
 }
 
 /* put cmd/arg into list */

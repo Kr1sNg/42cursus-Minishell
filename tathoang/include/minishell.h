@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 18:22:01 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:18:15 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ typedef struct s_token
 }	t_token;
 
 
-/* parsing support */
-typedef struct s_parser
-{
-	t_token	*tokens;
-	int		index;
-	int		token_count;
-}	t_parser;
+// /* parsing support */
+// typedef struct s_parser
+// {
+// 	t_token	*tokens;
+// 	int		index;
+// 	int		token_count;
+// }	t_parser;
 
 
 /* command trees */
@@ -122,11 +122,11 @@ typedef struct s_ast_subshell
 // }	t_ast_expression;
 
 //<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
-typedef struct s_ast_pipeline
+typedef struct s_ast_pipeexpr
 {
 	struct s_ast	*left;
 	struct s_ast	*right;
-}	t_ast_pipeline;
+}	t_ast_pipeexpr;
 
 //<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> } 
 typedef struct s_ast_logical
@@ -148,7 +148,7 @@ typedef struct s_ast
 		t_ast_command		command;
 		t_ast_subshell		subshell;
 		//t_ast_expression	expression;
-		t_ast_pipeline		pipeline;
+		t_ast_pipeexpr		pipeexpr;
 		t_ast_logical		logical;		
 	} u_ast_data;
 }	t_ast;
@@ -173,7 +173,6 @@ void	ft_free_token(t_token *head);
 void	ft_print_token(t_token *head);
 
 /* lexing */
-
 t_token_type	ft_token_type(char *word);
 
 /* parsing */
@@ -182,21 +181,25 @@ void	ft_new_ast_node(t_ast **node, t_ast_type type);
 t_ast	*ft_create_ast_redirect(t_token_type direction, char *target);
 t_ast	*ft_create_ast_words(char **args);
 t_ast	*ft_create_ast_command(t_ast *ahead, t_ast *cmd_words, t_ast *behind);
-t_ast	*ft_create_ast_expression(t_ast *child);
+t_ast	*ft_create_ast_subshell(t_ast *logical, t_ast *redir_list);
 t_ast	*ft_create_ast_pipeline(t_ast *left, t_ast *right) ;
 t_ast	*ft_create_ast_logical(t_token_type logical, t_ast *left, t_ast *right);
 
 // parsing through level of node
-t_ast	*ft_parse(t_token **token);
+t_ast	*ft_parse(t_token *token);
 t_ast   *ft_parse_logical(t_token **token);
-t_ast   *ft_parse_pipeline(t_token **token);
+t_ast   *ft_parse_pipeexpr(t_token **token);
 t_ast   *ft_parse_expression(t_token **token);
 t_ast   *ft_parse_command(t_token **token);
+t_ast   *ft_parse_subshell(t_token **token);
 t_ast   *ft_parse_words(t_token **token);
 t_ast   *ft_parse_redirect(t_token **token);
 
 // free ast node
 
+
+// utils support
+void	ft_redir_list_add(t_ast **head, t_ast *new);
 
 
 /* signal */
@@ -207,6 +210,15 @@ void	ft_handler(int sig);
 void	ft_error_input(int er);
 void	ft_error_syntax(char *s);
 
+/* execute follow the tree */
+int	ft_execute(t_ast *ast);
+int	ft_exe_logical(t_ast_logical *ast);
 
+// --just for testing ast rightnow--
+int	ft_exe_pipeexpr(t_ast_pipeexpr *ast);
+int ft_exe_subshell(t_ast_subshell *ast);
+int ft_exe_command(t_ast_command *ast);
+int	ft_exe_words(t_ast_words *ast);
+int	ft_exe_redirect(t_ast_redirect *ast);
 
 #endif
