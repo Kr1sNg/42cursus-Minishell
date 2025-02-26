@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing3.c                                         :+:      :+:    :+:   */
+/*   free_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/25 15:47:38 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:39:19 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,32 @@
 // {...} means Zero or more times
 
 <COMMAND_LINE>    	::= <LOGICAL>
-<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> } 
-<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
-<EXPRESSION>     	::= <COMMAND> 
-                    | "(" <LOGICAL> ")"
-<COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
+<LOGICAL>       	::= <PIPEEXPR> { ("&&" | "||") <PIPEEXPR> } 
+<PIPEEXPR>       	::= <EXPRESSION> { "|" <EXPRESSION> }
+<EXPRESSION>     	::= <COMMAND>
+                    | <SUBSHELL>
+                    
+<COMMAND>         	::= [ <REDIR_LIST> ] <CMD_WORDS> [ <REDIR_LIST> ]
+<SUBSHELL>          ::= "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+
 <CMD_WORDS>       	::= <WORD> { <WORD> }
-                    | <ASSIGNMENT_WORD> { <WORD> }
 <REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
-<REDIRECTION>     	::= (">" | "<" | ">>") <FILENAME>
-                    | "<<" <HERE_END>
-<ASSIGNMENT_WORD>	::= <WORD> "=" <WORD>
-<FILENAME>			::= <WORD>
-<HERE_END>			::= <WORD>
+
+<REDIRECTION>     	::= (">" | "<" | ">>") <WORD>
+                    | "<<" <WORD>
 <WORD>				::= <WORD>
 ```
 */
 
+/*
+
+
+
+            | 
+        && ||        wc -l
+    ls      pwd
+
+[(ls && pwd)] | (wc -l)
+[ls] && [pwd[]
+
+*/

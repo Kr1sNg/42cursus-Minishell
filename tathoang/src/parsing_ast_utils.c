@@ -6,25 +6,27 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/25 21:00:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:45:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 /* support function of ft_parse_command */
-void	ft_redirect_list_add(t_ast_redirect **head, t_ast_redirect *new)
+void	ft_redir_list_add(t_ast **head, t_ast *new)
 {
-	t_ast_redirect	*tmp;
+	t_ast	*tmp;
 	
-	if (!head)
+	if (!new)
+		return ;
+	if (!(*head))
 		*head = new;
 	else
 	{
 		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		while (tmp->u_ast_data.redirect.next)
+			tmp = tmp->u_ast_data.redirect.next;
+		tmp->u_ast_data.redirect.next = new;
 	}
 }
 

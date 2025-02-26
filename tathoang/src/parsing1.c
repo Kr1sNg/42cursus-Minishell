@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/25 21:22:00 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:14:06 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /* start to convert tokens list into an abstract syntax tree */
 
 // <COMMAND_LINE>    	::= <LOGICAL>
-t_ast	*ft_parse(t_token *token)
+t_ast	*ft_parse(t_token **token)
 {
     t_ast   *ast;
     
-    ast = ft_parse_logical(&token);
-    if (token) //extra token after command line
+    ast = ft_parse_logical(token);
+    if (*token) //extra token after command line
     {
         ft_free_logical(ast); //TODO
         return (ft_error_input(200), NULL);
@@ -35,14 +35,17 @@ t_ast   *ft_parse_logical(t_token **token)
     t_ast           *left;
     t_ast           *right;
 
-    left = ft_parse_pipeline(token); //TODO
-    logical = TK_EOF;
-    right = NULL;
+    left = ft_parse_pipeline(token);
     while ((*token) && ((*token)->type == TK_AND || (*token)->type == TK_OR))
     {
         logical = (*token)->type;
         *token = (*token)->next;
         right = ft_parse_pipeline(token);
+        if (!right)
+        {
+            ft_free_logical(left);
+            return (ft_error_syntax("&& or ||"), NULL);
+        }
         left = ft_create_ast_logical(logical, left, right);
     }
     return (left);
@@ -66,53 +69,48 @@ t_ast   *ft_parse_pipeline(t_token **token)
 }
 
 //<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
-//                  | "(" <LOGICAL> ")" -> type PARENTHESE
+//                  | <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
 t_ast   *ft_parse_expression(t_token **token)
 {   
-    t_ast   *expr;
-    
     if (*token && (*token)->type == TK_SUBSHELL_OPEN)
-    {
-        *token = (*token)->next;
-        expr = ft_parse_logical(token);
-        if (*token && (*token)->type == TK_SUBSHELL_CLOSE)
-        {
-            *token = (*token)->next;
-            if (*token && (*token)->type == TK_WORD)
-                return (ft_error_input(-200), NULL); // need to check and clear
-            return (ft_create_ast_expression(expr));
-        }
-        else if (*token == NULL)
-            return (ft_error_input(-200), NULL); // need to check and clear
-    }
+        return (ft_parse_subshell(token));
     return (ft_parse_command(token));
 }
 
 //<COMMAND>         	::= [ <REDIR_LIST> ] <CMD_WORDS> [ <REDIR_LIST> ]
 t_ast   *ft_parse_command(t_token **token)
 {
-    t_ast_command   *cmd;
-    t_ast_redirect  *redir;
+    t_ast  *ahead;
+    t_ast  *cmd_words;
+    t_ast  *behind;
 
-    cmd = ft_calloc(1, sizeof(t_ast_command));
-    if (!cmd)
-        return (NULL);
-    while (*token && ((*token)->type == TK_REDIR_IN || (*token)->type == TK_REDIR_OUT
-            || (*token)->type == TK_APPEND_OUT || (*token)->type == TK_HEREDOC))
+    ahead = ft_parse_redirect(token);
+    cmd_words = ft_parse_words(token);
+    if (!cmd_words)
+        return (ft_error_input(-200), NULL);
+    behind = ft_parse_redirect(token);
+    return (ft_create_ast_command(ahead, cmd_words, behind));
+}
+
+//<SUBSHELL>          ::= "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+t_ast   *ft_parse_subshell(t_token **token)
+{
+    t_ast   *logical;
+    t_ast   *redir_list;
+
+    redir_list = NULL;
+    if (*token && (*token)->type == TK_SUBSHELL_OPEN)
     {
-        redir = ft_parse_redirect(token); //TODO must have token = token->next
-        ft_redirect_list_add(&(cmd->redirect_list), redir);
+        *token = (*token)->next;
+        logical = ft_parse_logical(token);
+        if (!logical || !*token || (*token)->type != TK_SUBSHELL_CLOSE)
+            return (ft_error_syntax("("), NULL);
+        *token = (*token)->next;
+        if (*token)
+            redir_list = ft_parse_redirect(token);
+        return (ft_create_ast_subshell(logical, redir_list));
     }
-    cmd->cmd_words = ft_parse_words(token);
-    if (!cmd->cmd_words)
-        return (ft_error_input(-210), NULL);
-    while (*token && ((*token)->type == TK_REDIR_IN || (*token)->type == TK_REDIR_OUT
-            || (*token)->type == TK_APPEND_OUT || (*token)->type == TK_HEREDOC))
-    {
-        redir = ft_parse_redirect(token); //TODO
-        ft_redirect_list_add(&(cmd->redirect_list), redir);
-    }
-    return (cmd); //t_ast_command not t_ast !!
+    return (ft_error_syntax("("), NULL);
 }
 
 //<CMD_WORDS>       	::= <WORD> { <WORD> }
@@ -136,26 +134,49 @@ t_ast   *ft_parse_words(t_token **token)
     i = 0;
     while (i < argc)
     {
-        args[i++] = (*token)->word;
+        args[i++] = ft_strdup((*token)->word);
         *token = (*token)->next;
     }
     args[argc] = NULL;
     return (ft_create_ast_words(args));
 }
 
-t_ast   *ft_parse_redirect(t_token **token)
-{
-    t_ast   *redir;
+//<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
 
-    redir = NULL;
+t_ast   *ft_parse_redirect(t_token **token) //t_ast list of redirect
+{
+    t_ast           *head;
+    t_ast           *curr;
+    t_token_type    direction;
+    char            *target;
+
+    head = NULL;
     while (*token && ((*token)->type == TK_REDIR_IN || (*token)->type == TK_REDIR_OUT
             || (*token)->type == TK_APPEND_OUT || (*token)->type == TK_HEREDOC))
     {
-        redir->type = AST_REDIRECT;
-        redir->u_ast_data.redirect.direction = (*token)->type;
-        redir->u_ast_data.redirect.target = (*token)->next->word;
-        if 
-    }        
-} ????????????????????????????????????????
+        direction = (*token)->type;
+        *token = (*token)->next;
+        if (!(*token) || (*token)->type != TK_WORD)
+        {
+            ft_free_ast_lst(head);
+            return (ft_error_input(-300), NULL);
+        }
+        target = ft_strdup((*token)->word);
+        curr = ft_create_ast_redirect(direction, target);
+        if (!curr)
+        {
+            ft_free_ast_lst(head);
+            return (ft_error_input(-300), NULL);
+        }
+        if (!head)
+            head = curr;
+        else
+            ft_redir_list_add(&head, curr);
+        (*token) = (*token)->next;
+    }
+    return (head);
+}
+
+
 
 

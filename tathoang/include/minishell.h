@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/25 21:05:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:22:01 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@
 # include <readline/history.h>
 
 
-
 /*
 ** :::::::::::::::::::::::::::* STRUCT DECLARATION *::::::::::::::::::::::::: **
 */
-
 
 /* tokenizer */
 
@@ -77,10 +75,11 @@ typedef enum e_ast_type
 {
 	AST_REDIRECT, // > < >> <<
 	AST_WORDS, // words: echo, hello,...
-	AST_COMMAND, // words + redirect
-	AST_EXPRESSION, // command (+ parenthesis)
-	AST_PIPELINE, // |
-	AST_LOGICAL, // || or &&	
+	AST_COMMAND, // redirect + words + redirect
+	AST_SUBSHELL, // "(logical)" + redirect
+	//AST_EXPRESSION, // command (or subshell)
+	AST_PIPEEXPR, // cmd1 | cmd2
+	AST_LOGICAL, // pipe1 || pipe2 or &&	
 }	t_ast_type;
 
 /* structure of Abstract Syntax Tree
@@ -88,15 +87,14 @@ typedef enum e_ast_type
 	- using recursive desent parser */
 
 //<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
-typedef struct s_ast_redirect
+typedef struct s_ast_redirect //node of redirect_list
 {
-	t_token_type			direction; // TK_REDIR_IN, TK_REDIR_OUT, TK_APPEND_OUT, or TK_HEREDOC
-	char					*target; // filename or hereend
-	struct s_ast_redirect	*next;
+	t_token_type	direction; // TK_REDIR_IN, TK_REDIR_OUT, TK_APPEND_OUT, or TK_HEREDOC
+	char			*target; // filename or hereend
+	struct s_ast	*next; // redirect_list
 }	t_ast_redirect;
 
 //<CMD_WORDS>       	::= <WORD> { <WORD> }
-//                    | <ASSIGNMENT_WORD> { <WORD> }
 typedef struct s_ast_words
 {
 	char	**args;
@@ -107,14 +105,21 @@ typedef struct s_ast_command
 {
 	struct s_ast	*cmd_words;
 	struct s_ast	*redirect_list; // list of redirect
-} t_ast_command;
+}	t_ast_command;
 
-//<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
-//                  | "(" <LOGICAL> ")" -> type PARENTHESE
-typedef struct s_ast_expression
+//<SUBSHELL>          ::= "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+typedef struct s_ast_subshell
 {
-	struct s_ast	*logical; // only for PARENTHESIS else we use direct ust_command
-}	t_ast_expression;
+	struct s_ast	*logical;
+	struct s_ast	*redirect_list;
+}	t_ast_subshell;
+
+// ///<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
+// 						| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+// typedef struct s_ast_expression
+// {
+// 	struct s_ast	*logical; // only for PARENTHESIS else we use direct ust_command
+// }	t_ast_expression;
 
 //<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
 typedef struct s_ast_pipeline
@@ -141,11 +146,14 @@ typedef struct s_ast
 		t_ast_redirect		redirect;
 		t_ast_words			cmd_words;
 		t_ast_command		command;
-		t_ast_expression	expression;
+		t_ast_subshell		subshell;
+		//t_ast_expression	expression;
 		t_ast_pipeline		pipeline;
 		t_ast_logical		logical;		
 	} u_ast_data;
 }	t_ast;
+
+
 
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
@@ -166,12 +174,30 @@ void	ft_print_token(t_token *head);
 
 /* lexing */
 
-int	ft_token_type(char *s);
+t_token_type	ft_token_type(char *word);
 
 /* parsing */
-// - parsing support functions:
-t_token	*ft_next_token(t_parser *parser);
-t_token	*ft_peek_token(t_parser *parser);
+// create ast node
+void	ft_new_ast_node(t_ast **node, t_ast_type type);
+t_ast	*ft_create_ast_redirect(t_token_type direction, char *target);
+t_ast	*ft_create_ast_words(char **args);
+t_ast	*ft_create_ast_command(t_ast *ahead, t_ast *cmd_words, t_ast *behind);
+t_ast	*ft_create_ast_expression(t_ast *child);
+t_ast	*ft_create_ast_pipeline(t_ast *left, t_ast *right) ;
+t_ast	*ft_create_ast_logical(t_token_type logical, t_ast *left, t_ast *right);
+
+// parsing through level of node
+t_ast	*ft_parse(t_token **token);
+t_ast   *ft_parse_logical(t_token **token);
+t_ast   *ft_parse_pipeline(t_token **token);
+t_ast   *ft_parse_expression(t_token **token);
+t_ast   *ft_parse_command(t_token **token);
+t_ast   *ft_parse_words(t_token **token);
+t_ast   *ft_parse_redirect(t_token **token);
+
+// free ast node
+
+
 
 /* signal */
 void	ft_handler(int sig);
@@ -179,6 +205,7 @@ void	ft_handler(int sig);
 
 /* error */
 void	ft_error_input(int er);
+void	ft_error_syntax(char *s);
 
 
 
