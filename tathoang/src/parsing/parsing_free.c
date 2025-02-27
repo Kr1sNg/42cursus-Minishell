@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 19:06:11 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:52:22 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@ void    ft_free_ast(t_ast *ast)
     if (!ast)
         return ;
     ft_free_logical(ast);
+    // if (ast->type == AST_LOGICAL)
+	// 	ft_free_logical(ast);
+	// else if (ast->type == AST_PIPEEXPR)
+	//  	ft_free_pipeexpr(ast);
+	// else if	(ast->type == AST_EXPRESSION)
+	// 	ft_free_expression(ast);
+	// else if (ast->type == AST_SUBSHELL)
+	// 	ft_free_subshell(ast);
+	// else if (ast->type == AST_COMMAND)
+	// 	ft_free_command(ast);
+	// else if (ast->type == AST_WORDS)
+	// 	ft_free_words(ast);
+	// else if (ast->type == AST_REDIRECT)
+	// 	ft_free_redir_list(ast);
 }
 
 void    ft_free_logical(t_ast *ast)
@@ -27,18 +41,18 @@ void    ft_free_logical(t_ast *ast)
         ft_free_pipeexpr(ast->u_ast_data.logical.left);
     if (ast->u_ast_data.logical.right)
         ft_free_pipeexpr(ast->u_ast_data.logical.right);
-    free(ast);
+    //free(ast);
 }
 
 void    ft_free_pipeexpr(t_ast *ast)
 {
     if (!ast)
         return ;
-    // if (ast->left)
-    //     ft_free_expression(ast->left);
-    // if (ast->right)
-    //     ft_free_expression(ast->right);
-    free(ast);
+    if (ast->u_ast_data.pipeexpr.left)
+        ft_free_expression(ast->u_ast_data.pipeexpr.left);
+    if (ast->u_ast_data.pipeexpr.right)
+        ft_free_expression(ast->u_ast_data.pipeexpr.right);
+    //free(ast);
 }
 
 void    ft_free_expression(t_ast *ast)
@@ -47,13 +61,14 @@ void    ft_free_expression(t_ast *ast)
         return ;
     printf("\tfree_expression\n\n");
     printf("\ttype in expression: %i\n\n", ast->type);
-    if (ast->u_ast_data.subshell.logical) //3
-        ft_free_subshell(ast);
-    else
-    {
-        printf("\ttype in expression2: %i\n\n", ast->type);
-        ft_free_command(ast);
+    if (ast->u_ast_data.expression.command)
+        ft_free_command(ast->u_ast_data.expression.command);
+    else //3
+    {   
+        // printf("type here: %i\n", ast->type);
+        ft_free_ast(ast->u_ast_data.expression.subshell);
     }
+    //free(ast);
 }
 
 void    ft_free_subshell(t_ast *ast)
@@ -76,6 +91,7 @@ void    ft_free_command(t_ast *ast)
         ft_free_words(ast->u_ast_data.command.cmd_words);
     if (ast->u_ast_data.command.redirect_list)
         ft_free_redir_list(ast->u_ast_data.command.redirect_list);
+    write(1, "bon\n\n", 5);
     //free(ast);
 }
 

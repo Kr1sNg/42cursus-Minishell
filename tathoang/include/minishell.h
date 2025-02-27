@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 19:12:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:03:07 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_ast_subshell
 //						| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
 typedef struct s_ast_expression
 {
-	bool				parenthesis; // 1 - COMMAND or 0 - SUBSHELL
+	bool				parenthesis; // false - COMMAND or true - SUBSHELL
 	union 
 	{
 		struct s_ast	*command;
