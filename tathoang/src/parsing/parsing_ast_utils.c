@@ -6,13 +6,15 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 19:48:49 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:24:08 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 /* support function of ft_parse_command */
+
+// to add new rediction into redirection_list
 void	ft_redir_list_add(t_ast **head, t_ast *new)
 {
 	t_ast	*tmp;
@@ -30,30 +32,6 @@ void	ft_redir_list_add(t_ast **head, t_ast *new)
 	}
 }
 
-/* support function of ft_parse_words, to check if these is '=' in WORDS */
-// bool	ft_words_assign(char *words)
-// {
-// 	int	i;
-// 	int	j;
-	
-// 	i = 0;
-// 	while (words[i] && words[i] != '=')
-// 	{
-// 		printf("%c\n", words[i]);
-// 		i++;
-// 	}
-// 	printf("index i: %i\n", i);
-// 	printf("%c\n", words[5]);
-// 	printf("%c\n", words[i + 1]);
-// 	if (i == 0 || words[i + 1] == '\0')
-// 		return (false);
-// 	j = 0;
-// 	while (j < i)
-// 	{
-// 		if (!ft_isalnum(words[j]) && words[j] != '_' && words[j] != '$') // example USER=TAT_HOANG
-// 			return (false);
-// 		j++;
-// 	}
-// 	printf("index j: %i\n", j);
-// 	return (true);
-// }
+// to free rediction list
+
+

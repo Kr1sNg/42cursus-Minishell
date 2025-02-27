@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 20:03:05 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:22:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,18 @@ t_ast	*ft_create_ast_redirect(t_token_type direction, char *target)
 	return (node);
 }
 
+// check here cmd[0] need to be cmd!!!
+
 t_ast	*ft_create_ast_words(char **args)
 {
 	t_ast	*node;
-
+	
+	// if (!(*args)) // || check_cmd (args[0])
+	// {
+	// 	if (args[0])
+	// 		ft_error_command(args[0]);
+	// 	return (NULL);
+	// }
 	ft_new_ast_node(&node, AST_WORDS);
 	node->u_ast_data.cmd_words.args = args;
 	return (node);

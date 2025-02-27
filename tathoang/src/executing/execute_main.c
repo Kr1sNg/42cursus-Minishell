@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 21:40:52 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:20:38 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_execute(t_ast *ast)
 
 	if (!ast)
 		return (EXIT_FAILURE);
-	// if (ast->type == AST_COMMAND || ast->type == AST_REDIRECT)
+	// if (ast->type == AST_WORDS || ast->type == AST_REDIRECT)
 	// 	printf("AST_CMD or AST_REDIRECT\n");
 	if (ast->type == AST_LOGICAL)
 		status = ft_exe_logical(&ast->u_ast_data.logical);

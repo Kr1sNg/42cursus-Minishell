@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/26 21:18:15 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:34:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 
 /*
 ** :::::::::::::::::::::::::::* STRUCT DECLARATION *::::::::::::::::::::::::: **
@@ -104,7 +103,7 @@ typedef struct s_ast_words
 typedef struct s_ast_command
 {
 	struct s_ast	*cmd_words;
-	struct s_ast	*redirect_list; // list of redirect
+	struct s_ast	*redirect_list; // list of redirect both ahead and behind
 }	t_ast_command;
 
 //<SUBSHELL>          ::= "(" <LOGICAL> ")" [ <REDIR_LIST> ]
@@ -136,7 +135,6 @@ typedef struct s_ast_logical
 	struct s_ast	*right;
 }	t_ast_logical;
 
-//<COMMAND_LINE>    	::= <LOGICAL>
 // union: only one value in union exist.
 typedef struct s_ast
 {
@@ -196,6 +194,9 @@ t_ast   *ft_parse_words(t_token **token);
 t_ast   *ft_parse_redirect(t_token **token);
 
 // free ast node
+
+
+void	ft_free_redir_list(t_ast *redir_list);
 
 
 // utils support
