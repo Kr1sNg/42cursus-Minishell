@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:45:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:06:11 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void    ft_free_ast(t_ast *ast)
 {
@@ -23,8 +23,10 @@ void    ft_free_logical(t_ast *ast)
 {
     if (!ast)
         return ;
-    ft_free_pipeexpr(ast->u_ast_data.logical.left);
-    ft_free_pipeexpr(ast->u_ast_data.logical.right);
+    if (ast->u_ast_data.logical.left)
+        ft_free_pipeexpr(ast->u_ast_data.logical.left);
+    if (ast->u_ast_data.logical.right)
+        ft_free_pipeexpr(ast->u_ast_data.logical.right);
     free(ast);
 }
 
@@ -32,8 +34,10 @@ void    ft_free_pipeexpr(t_ast *ast)
 {
     if (!ast)
         return ;
-    ft_free_expression(ast->u_ast_data.pipeexpr.left);
-    ft_free_expresssion(ast->u_ast_data.pipeexpr.right);
+    // if (ast->left)
+    //     ft_free_expression(ast->left);
+    // if (ast->right)
+    //     ft_free_expression(ast->right);
     free(ast);
 }
 
@@ -41,28 +45,38 @@ void    ft_free_expression(t_ast *ast)
 {
     if (!ast)
         return ;
-    if (ast->type == AST_SUBSHELL)
+    printf("\tfree_expression\n\n");
+    printf("\ttype in expression: %i\n\n", ast->type);
+    if (ast->u_ast_data.subshell.logical) //3
         ft_free_subshell(ast);
     else
+    {
+        printf("\ttype in expression2: %i\n\n", ast->type);
         ft_free_command(ast);
+    }
 }
 
 void    ft_free_subshell(t_ast *ast)
 {
     if (!ast)
         return ;
-    ft_free_logical(ast->u_ast_data.subshell.logical);
-    ft_free_redir_list(ast->u_ast_data.subshell.redirect_list);
-    free(ast);
+    write(1, "bon\n\n", 5);
+    if (ast->u_ast_data.subshell.logical)
+        ft_free_logical(ast->u_ast_data.subshell.logical);
+    if (ast->u_ast_data.subshell.redirect_list)
+        ft_free_redir_list(ast->u_ast_data.subshell.redirect_list);
+    //free(ast);
 }
 
 void    ft_free_command(t_ast *ast)
 {
     if (!ast)
         return ;
-    ft_free_words(ast->u_ast_data.command.cmd_words);
-    ft_free_redir_list(ast->u_ast_data.command.redirect_list);
-    free(ast);
+    if (ast->u_ast_data.command.cmd_words)
+        ft_free_words(ast->u_ast_data.command.cmd_words);
+    if (ast->u_ast_data.command.redirect_list)
+        ft_free_redir_list(ast->u_ast_data.command.redirect_list);
+    //free(ast);
 }
 
 void    ft_free_words(t_ast *words)
@@ -72,13 +86,15 @@ void    ft_free_words(t_ast *words)
     if (!words)
         return ;
     i = 0;
-    while (words->u_ast_data.cmd_words.args[i])
+    while (words->u_ast_data.cmd_words.args && words->u_ast_data.cmd_words.args[i])
     {
+        write(1, "oui\n\n", 5);
+        
         free(words->u_ast_data.cmd_words.args[i]);
         i++;
     }
     free(words->u_ast_data.cmd_words.args);
-    free(words);
+    // free(words);
 }
 
 void	ft_free_redir_list(t_ast *redir_list)
@@ -95,6 +111,6 @@ void	ft_free_redir_list(t_ast *redir_list)
 		redir_list = redir_list->u_ast_data.redirect.next;
 		free(tmp);
 	}
-    free(redir_list);
+    //free(redir_list);
 }
 

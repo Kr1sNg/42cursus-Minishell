@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:43:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:54:14 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /* PARSING GRAMMAR
 // [...] means Zero or once
@@ -94,7 +94,7 @@ t_ast   *ft_parse_pipeexpr(t_token **token)
             return (ft_error_syntax("|"), NULL); //need free before
         }
         right = ft_parse_expression(token);
-        left = ft_create_ast_pipeline(left, right);
+        left = ft_create_ast_pipeexpr(left, right);
     }
     return (left);
 }
@@ -103,8 +103,18 @@ t_ast   *ft_parse_pipeexpr(t_token **token)
 //                  | <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
 t_ast   *ft_parse_expression(t_token **token)
 {   
+    t_ast       *expression;
+    
     if (*token && (*token)->type == TK_SUBSHELL_OPEN)
-        return (ft_parse_subshell(token));
+    {
+        expression = ft_parse_subshell(token);
+        return (ft_create_ast_expression(expression, true));
+    }
+    else
+    {
+        expression = ft_parse_command(token);
+        return (ft_create_ast_expression(expression, false));
+    }
     return (ft_parse_command(token));
 }
 

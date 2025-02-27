@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:34:53 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:12:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef enum e_ast_type
 	AST_WORDS, // words: echo, hello,...
 	AST_COMMAND, // redirect + words + redirect
 	AST_SUBSHELL, // "(logical)" + redirect
-	//AST_EXPRESSION, // command (or subshell)
+	AST_EXPRESSION, // command (or subshell)
 	AST_PIPEEXPR, // cmd1 | cmd2
 	AST_LOGICAL, // pipe1 || pipe2 or &&	
 }	t_ast_type;
@@ -113,12 +113,17 @@ typedef struct s_ast_subshell
 	struct s_ast	*redirect_list;
 }	t_ast_subshell;
 
-// ///<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
-// 						| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
-// typedef struct s_ast_expression
-// {
-// 	struct s_ast	*logical; // only for PARENTHESIS else we use direct ust_command
-// }	t_ast_expression;
+///<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
+//						| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+typedef struct s_ast_expression
+{
+	bool				parenthesis; // 1 - COMMAND or 0 - SUBSHELL
+	union 
+	{
+		struct s_ast	*command;
+		struct s_ast	*subshell; // only for PARENTHESIS else we use direct ust_command
+	};
+}	t_ast_expression;
 
 //<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
 typedef struct s_ast_pipeexpr
@@ -145,7 +150,7 @@ typedef struct s_ast
 		t_ast_words			cmd_words;
 		t_ast_command		command;
 		t_ast_subshell		subshell;
-		//t_ast_expression	expression;
+		t_ast_expression	expression;
 		t_ast_pipeexpr		pipeexpr;
 		t_ast_logical		logical;		
 	} u_ast_data;
@@ -180,7 +185,8 @@ t_ast	*ft_create_ast_redirect(t_token_type direction, char *target);
 t_ast	*ft_create_ast_words(char **args);
 t_ast	*ft_create_ast_command(t_ast *ahead, t_ast *cmd_words, t_ast *behind);
 t_ast	*ft_create_ast_subshell(t_ast *logical, t_ast *redir_list);
-t_ast	*ft_create_ast_pipeline(t_ast *left, t_ast *right) ;
+t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis);
+t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right) ;
 t_ast	*ft_create_ast_logical(t_token_type logical, t_ast *left, t_ast *right);
 
 // parsing through level of node
@@ -194,8 +200,13 @@ t_ast   *ft_parse_words(t_token **token);
 t_ast   *ft_parse_redirect(t_token **token);
 
 // free ast node
-
-
+void    ft_free_ast(t_ast *ast);
+void    ft_free_logical(t_ast *ast);
+void    ft_free_pipeexpr(t_ast *ast);
+void    ft_free_expression(t_ast *ast);
+void    ft_free_subshell(t_ast *ast);
+void    ft_free_command(t_ast *ast);
+void    ft_free_words(t_ast *words);
 void	ft_free_redir_list(t_ast *redir_list);
 
 
@@ -214,12 +225,13 @@ void	ft_error_syntax(char *s);
 /* execute follow the tree */
 int	ft_execute(t_ast *ast);
 int	ft_exe_logical(t_ast_logical *ast);
+int ft_exe_expression(t_ast_expression *ast);
 
 // --just for testing ast rightnow--
 int	ft_exe_pipeexpr(t_ast_pipeexpr *ast);
 int ft_exe_subshell(t_ast_subshell *ast);
 int ft_exe_command(t_ast_command *ast);
 int	ft_exe_words(t_ast_words *ast);
-int	ft_exe_redirect(t_ast_redirect *ast);
+int	ft_exe_redirect(t_ast *ast);
 
 #endif

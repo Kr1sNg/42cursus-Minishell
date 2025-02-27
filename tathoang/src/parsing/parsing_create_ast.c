@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 12:22:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:53:58 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /* create new node */
 void	ft_new_ast_node(t_ast **node, t_ast_type type)
@@ -28,7 +28,7 @@ t_ast	*ft_create_ast_redirect(t_token_type direction, char *target)
 	t_ast	*node;
 
 	if (!target)
-		return (ft_error_input(-300), NULL); //need check error value
+		return (ft_error_syntax("newline"), NULL);
 	ft_new_ast_node(&node, AST_REDIRECT);
 	node->u_ast_data.redirect.direction = direction;
 	node->u_ast_data.redirect.target = target;
@@ -42,12 +42,6 @@ t_ast	*ft_create_ast_words(char **args)
 {
 	t_ast	*node;
 	
-	// if (!(*args)) // || check_cmd (args[0])
-	// {
-	// 	if (args[0])
-	// 		ft_error_command(args[0]);
-	// 	return (NULL);
-	// }
 	ft_new_ast_node(&node, AST_WORDS);
 	node->u_ast_data.cmd_words.args = args;
 	return (node);
@@ -79,7 +73,27 @@ t_ast	*ft_create_ast_subshell(t_ast *logical, t_ast *redir_list)
 	return (node);
 }
 
-t_ast	*ft_create_ast_pipeline(t_ast *left, t_ast *right)
+t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis)
+{
+	t_ast	*node;
+	
+	if (!expression)
+		return (ft_error_input(100), NULL);
+	ft_new_ast_node(&node, AST_EXPRESSION);
+	if (parenthesis == true)
+	{
+		node->u_ast_data.expression.parenthesis = true;
+		node->u_ast_data.expression.subshell = expression;
+	}
+	else
+	{
+		node->u_ast_data.expression.parenthesis = false;
+		node->u_ast_data.expression.command = expression;
+	}
+	return (node);
+}
+
+t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
