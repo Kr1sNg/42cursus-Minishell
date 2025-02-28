@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:51:44 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:51:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	ft_redir_list_add(t_ast **head, t_ast *new)
 	else
 	{
 		tmp = *head;
-		while (tmp->u_ast_data.redirect.next)
-			tmp = tmp->u_ast_data.redirect.next;
-		tmp->u_ast_data.redirect.next = new;
+		while (tmp->redirect->next)
+			tmp = tmp->redirect->next;
+		tmp->redirect->next = new;
 	}
 }
 

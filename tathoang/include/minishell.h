@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 20:03:07 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:53:27 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct s_ast_pipeexpr
 //<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> } 
 typedef struct s_ast_logical
 {
-	t_token_type	logical; // && or ||
+	t_token_type	operator; // && or ||
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast_logical;
@@ -146,14 +146,14 @@ typedef struct s_ast
 	t_ast_type		type;
 	union
 	{
-		t_ast_redirect		redirect;
-		t_ast_words			cmd_words;
-		t_ast_command		command;
-		t_ast_subshell		subshell;
-		t_ast_expression	expression;
-		t_ast_pipeexpr		pipeexpr;
-		t_ast_logical		logical;		
-	} u_ast_data;
+		t_ast_redirect		*redirect;
+		t_ast_words			*cmd_words;
+		t_ast_command		*command;
+		t_ast_subshell		*subshell;
+		t_ast_expression	*expression;
+		t_ast_pipeexpr		*pipeexpr;
+		t_ast_logical		*logical;		
+	};
 }	t_ast;
 
 

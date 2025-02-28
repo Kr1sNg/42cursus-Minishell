@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 18:54:14 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:13:52 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_ast	*ft_parse(t_token *token)
 {
     t_ast   *ast;
     
+    printf("ft_pars\n\n");
     ast = ft_parse_logical(&token);
     if (token) //extra token after command line
     {
@@ -52,7 +53,7 @@ t_ast	*ft_parse(t_token *token)
 //<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> }
 t_ast   *ft_parse_logical(t_token **token)
 {
-    t_token_type    logical;
+    t_token_type    operator;
     t_ast           *left;
     t_ast           *right;
     char            c;
@@ -61,7 +62,7 @@ t_ast   *ft_parse_logical(t_token **token)
     while ((*token) && ((*token)->type == TK_AND || (*token)->type == TK_OR))
     {
         c = (*token)->word[0];
-        logical = (*token)->type;
+        operator = (*token)->type;
         *token = (*token)->next;
         right = ft_parse_pipeexpr(token);
         if (!right)
@@ -72,7 +73,7 @@ t_ast   *ft_parse_logical(t_token **token)
             else
                 return (ft_error_syntax("&&"), NULL);
         }
-        left = ft_create_ast_logical(logical, left, right);
+        left = ft_create_ast_logical(operator, left, right);
     }
     return (left);
 }
@@ -115,7 +116,7 @@ t_ast   *ft_parse_expression(t_token **token)
         expression = ft_parse_command(token);
         return (ft_create_ast_expression(expression, false));
     }
-    return (ft_parse_command(token));
+    return (ft_error_syntax("("), NULL);
 }
 
 //<COMMAND>         	::= [ <REDIR_LIST> ] <CMD_WORDS> [ <REDIR_LIST> ]

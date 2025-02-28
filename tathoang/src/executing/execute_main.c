@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 20:15:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:15:08 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ int	ft_execute(t_ast *ast)
 	// if (ast->type == AST_WORDS || ast->type == AST_REDIRECT)
 	// 	printf("AST_CMD or AST_REDIRECT\n");
 	if (ast->type == AST_LOGICAL)
-		status = ft_exe_logical(&ast->u_ast_data.logical);
+		status = ft_exe_logical(ast->logical);
 	else if (ast->type == AST_PIPEEXPR)
-	 	status = ft_exe_pipeexpr(&ast->u_ast_data.pipeexpr);
+	 	status = ft_exe_pipeexpr(ast->pipeexpr);
 	else if	(ast->type == AST_EXPRESSION)
-		status = ft_exe_expression(&ast->u_ast_data.expression);
+		status = ft_exe_expression(ast->expression);
 	else if (ast->type == AST_SUBSHELL)
-		status = ft_exe_subshell(&ast->u_ast_data.subshell);
+		status = ft_exe_subshell(ast->subshell);
 	else if (ast->type == AST_COMMAND)
-		status = ft_exe_command(&ast->u_ast_data.command);
+		status = ft_exe_command(ast->command);
 	else if (ast->type == AST_WORDS)
-		status = ft_exe_words(&ast->u_ast_data.cmd_words);
+		status = ft_exe_words(ast->cmd_words);
 	else if (ast->type == AST_REDIRECT)
 		status = ft_exe_redirect(ast);
 	// else
@@ -53,7 +53,7 @@ int	ft_exe_logical(t_ast_logical *ast)
 	printf("1 - LOGICAL LEVEL\n"); //
 	printf(" 1-left of logical\n"); //
 	left_status = ft_execute(ast->left);
-	if (ast->logical == TK_AND)
+	if (ast->operator == TK_AND)
 	{
 		printf(" 1- AND &&\n"); //
 		if (left_status == EXIT_SUCCESS)
@@ -64,7 +64,7 @@ int	ft_exe_logical(t_ast_logical *ast)
 		}
 		return (left_status);
 	}
-	else if (ast->logical == TK_OR)
+	else if (ast->operator == TK_OR)
 	{
 		printf(" 1- OR ||\n"); //
 		if (left_status != EXIT_SUCCESS)
@@ -164,8 +164,8 @@ int	ft_exe_redirect(t_ast *ast)
 	{
 		while (ast)
 		{
-			printf("\t\t\t\t 5-target_file: {%s}\n", ast->u_ast_data.redirect.target);
-			ast = ast->u_ast_data.redirect.next;
+			printf("\t\t\t\t 5-target_file: {%s}\n", ast->redirect->target);
+			ast = ast->redirect->next;
 		}
 	}
 	return (EXIT_SUCCESS);
