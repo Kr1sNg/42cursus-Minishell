@@ -108,6 +108,7 @@ t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis)
 	if (!expression)
 		return (ft_error_input(100), NULL);
 	ft_new_ast_node(&node, AST_EXPRESSION);
+	printf("**Expression Created type: %i\n", node->type);
 	if (node)
 	{
 		node->expression = ft_calloc(1, sizeof(*node->expression));
@@ -117,11 +118,15 @@ t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis)
 		{
 			node->expression->parenthesis = true;
 			node->expression->subshell = expression;
+			node->expression->command = NULL;
+			printf("** Expression Created subshell type: %i\n", node->type);
 		}
 		else
 		{
 			node->expression->parenthesis = false;
 			node->expression->command = expression;
+			node->expression->subshell = NULL;
+			printf("** Expression Created command type: %i\n", node->type);
 		}
 	}
 	return (node);
