@@ -118,8 +118,8 @@ typedef struct s_ast_subshell
 typedef struct s_ast_expression
 {
 	bool				parenthesis; // false - COMMAND or true - SUBSHELL
-	struct s_ast	*command;
-	struct s_ast	*subshell; // only for PARENTHESIS else we use direct ust_command
+	struct s_ast	*cmd_or_sub;
+	//struct s_ast	*subshell; // only for PARENTHESIS else we use direct ust_command
 }	t_ast_expression;
 
 //<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }

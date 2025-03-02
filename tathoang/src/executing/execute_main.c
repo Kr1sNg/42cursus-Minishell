@@ -102,10 +102,10 @@ int ft_exe_expression(t_ast_expression *ast)
 	int	status;
 
 	printf("\t\t3- EXPRESSION LEVEL\n");
-	if (ast->parenthesis)
-		status = ft_execute(ast->subshell);
-	else
-		status = ft_execute(ast->command);
+	// if (ast->parenthesis)
+		status = ft_execute(ast->cmd_or_sub);
+	// else
+	// 	status = ft_execute(ast->command);
 	return (EXIT_SUCCESS);
 }
 
