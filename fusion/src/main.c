@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/01 18:55:00 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/01 23:57:21 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	main(int argc, char *argv[], char *env[])
 		status = ft_execute(ast, &infos); // => walk the tree and execute
 		ft_free_ast(ast);
 		ft_free_token(tokens);
-		
 		free(input);
 	}
 	return (0);

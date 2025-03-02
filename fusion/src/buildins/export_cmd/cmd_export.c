@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 19:45:52 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/02 01:43:27 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,21 +120,26 @@ void	cmd_export(t_env *infos, char *cmd)
 	char	*cpy_cmd;
 
 	env_cpy = NULL;
+	printf("DEBUG");
 	if (!cmd)
 	{
 		ft_sort_a(infos->export);
 		ft_exec_env(infos->export);
-	}
-	else if (ft_valide_export_cmd(cmd) == 1)
-		return ;
+	}	
+	// else if (ft_valide_export_cmd(cmd) == 1)
+	// 	return ;
 	else
 	{
-		cpy_cmd = check_list_export(cmd, infos->list_export);
+		// printf("%s", infos->list_export);
+		// cpy_cmd = check_list_export(cmd, infos->list_export);
+		// printf("DEBUG");
+		cpy_cmd = ft_strdup(cmd);
 		if (check_env_var(cpy_cmd, infos, 0) == 1)
 		{
 			free(cpy_cmd);
 			return ;
 		}
+		printf("DEBUG");
 		if (check_egal(cpy_cmd) == 0)
 		{
 			env_cpy = cmd_add_env(infos->env, cpy_cmd);
