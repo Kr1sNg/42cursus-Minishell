@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 20:57:39 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/02 11:16:14 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_exec_env(char **env);
 void	ft_exec_pwd(void);
 void	ft_exec_cd(char **cmd, t_env *infos);
 void	ft_exec_unset(char **cmd, t_env *infos);
+void	ft_display_export(char **env);
 int		ft_strlen_name_env(char *str);
 int		check_egal(char *cmd);
 char	**cmd_env_unset(char **env, char *cmd);

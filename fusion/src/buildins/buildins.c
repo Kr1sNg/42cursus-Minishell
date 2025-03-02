@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:02:29 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 17:59:00 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/02 11:20:46 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,34 @@ void	ft_exec_env(char **env)
 	while (env[i])
 	{
 		printf("%s\n", env[i]);
+		i++;
+	}
+}
+
+void	ft_display_export(char **env)
+{
+	int	i;
+	int	j;
+	int	check;
+
+	i = 0;
+	j = 0;
+	check = 0;
+	while (env[i])
+	{
+		j = 0;
+		check = 0;
+		while(env[i][j])
+		{
+			if (env[i][j] == '\"' && env[i][j + 1])
+			{
+				if (check++ > 0)
+					printf("\\");
+			}
+			printf("%c", env[i][j]);
+			j++;
+		}
+		printf("\n");
 		i++;
 	}
 }
