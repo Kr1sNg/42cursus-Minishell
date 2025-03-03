@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/28 20:53:27 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:53:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef enum e_token_type
 	TK_HEREDOC, // <<
 	TK_DQUOTE, // "all the words in double quote"
 	TK_SQUOTE, // 'all the words in single quote'
-	TK_EOF,  // avoid error for next_token and peek_token
+	// TK_EOF,  // avoid error for next_token and peek_token
 }	t_token_type;
 
 typedef struct s_token

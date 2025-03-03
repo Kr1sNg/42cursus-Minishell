@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:29:23 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:51:44 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:26:13 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,13 @@ char	**ft_split_tokens(char *str)
 	char	c;
 
 	i = 0;
-	j = 0;
-	arrs = malloc(sizeof(char *) * (count_words(str) + 1));
+	j = count_words(str);
+	if (j <= 0)
+		return (NULL);
+	arrs = malloc(sizeof(char *) * (j + 1));
 	if (!arrs)
 		return (NULL);
+	j = 0;
 	while (str[i])
 	{
 		while (str[i] && ft_isspace(str[i]))
@@ -181,23 +184,22 @@ char	**ft_split_tokens(char *str)
 }
 
 
-/*
-#include <stdio.h>
-int	main(void)
-{
-	char **arrs;
-	char *str = "echo \"   hello ||&&  \' \'   \" |  echo    hi&&pwd   $WORD";
-	int i = 0;
-	arrs = ft_split_tokens(str);
-	if (!arrs)
-		return (1);
-	while (arrs[i] != NULL)
-	{
-		printf("%s\n", arrs[i]);
-		free(arrs[i]);
-		i++;
-	}
-	free(arrs);
-	return (0);
-}
-*/
+
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	char **arrs;
+// 	char *str = "echo \"   hello ||&&  \' \'   \" |  echo    hi&&pwd   $WORD";
+// 	int i = 0;
+// 	arrs = ft_split_tokens(str);
+// 	if (!arrs)
+// 		return (1);
+// 	while (arrs[i] != NULL)
+// 	{
+// 		printf("%s\n", arrs[i]);
+// 		free(arrs[i]);
+// 		i++;
+// 	}
+// 	free(arrs);
+// 	return (0);
+// }
