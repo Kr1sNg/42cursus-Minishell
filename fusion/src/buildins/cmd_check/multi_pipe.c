@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../include/buildins.h"
+#include "../../../include/minishell.h"
 
 void	ft_child(char **cmd, char **env)
 {
