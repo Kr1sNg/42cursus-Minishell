@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/01 23:57:21 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:10:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //run with -lreadline
 
-#include "../include/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../../include/minishell.h"
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <sys/wait.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
 
 
 // void ft_execute(char **args, char **envp)

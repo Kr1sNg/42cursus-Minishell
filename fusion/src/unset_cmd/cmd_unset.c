@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:09:17 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 18:01:08 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:10:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 char	**cmd_env_unset(char **env, char *cmd)
 {

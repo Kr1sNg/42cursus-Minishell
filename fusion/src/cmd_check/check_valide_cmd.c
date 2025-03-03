@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_valide_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:36:36 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 00:50:14 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:08:59 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 int	ft_check_buildins(char *cmd)
 {

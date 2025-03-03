@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:02:37 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 17:26:20 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:09:02 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 int	ft_space(char c)
 {

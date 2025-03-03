@@ -3,46 +3,56 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+         #
+#    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:04:41 by tbahin            #+#    #+#              #
-#    Updated: 2025/03/01 20:35:00 by tbahin           ###   ########.fr        #
+#    Updated: 2025/03/03 21:53:59 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME 		= minishell
 
-INCLUDE = ./includes/
+# Libft
+LIBFT_DIR	= ./libft
+LIBFT		= $(LIBFT_DIR)/libft.a
 
-CC = cc
-CFLAG = -Wall -Wextra -Werror
+# Source Files
+DIR_SRCS	= src
+SUBDIRS		= main buildins cmd_check errors executing export_cmd lexing \
+				parsing redirect signal unset_cmd 
+SRCS_DIRS	= $(foreach dir, $(SUBDIRS), $(addprefix $(DIR_SRCS)/, $(dir)))
+SRCS		= $(foreach dir, $(SRCS_DIRS), $(wildcard $(dir)/*.c))
 
-SRCS =./src/main.c ./src/errors/error_input.c ./src/executing/execute_main.c ./src/lexing/lexing.c ./src/lexing/lexing_split_token.c \
-./src/lexing/tokenize.c ./src/parsing/parsing_ast_utils.c ./src/parsing/parsing_free.c ./src/parsing/parsing_main.c ./src/parsing/parsing_support.c \
-./src/parsing/test_parsing.c ./src/parsing/parsing_create_ast.c ./src/signal/signal_hander.c ./src/buildins/buildins.c \
-./src/buildins/export_cmd/cmd_export.c ./src/buildins/export_cmd/cmd_export_no_args.c ./src/buildins/export_cmd/cmd_export_args.c \
-./src/buildins/unset_cmd/cmd_unset.c ./src/buildins/cd_cmd.c ./src/buildins/cmd_check/exec_cmd.c ./src/buildins/cmd_check/multi_pipe.c\
-./src/buildins/cmd_check/outils.c ./src/buildins/cmd_check/parsing.c ./src/buildins/cmd_check/check_valide_cmd.c \
+# Object Files
+OBJS		= $(SRCS:.c=.o)
 
-OBJS = ${SRCS:.c=.o}
+# Include and Flags
+INCLUDE		= -I include -I/opt/homebrew/opt/readline/include
+LDFLAGS     = -L/opt/homebrew/opt/readline/lib -lreadline
+# CFLAGS		= -Wall -Wextra -Werror
+CC			= cc
+RM			= rm -rf
 
-all : ${NAME} 
+# Target
+all : $(LIBFT) $(NAME)
 
-${NAME} : $(OBJS)
-	make -C ./libft
-	$(CC) ${CFLAGS} -o $(NAME) $(OBJS) -L./libft -lft -lreadline
+$(LIBFT):
+	@$(MAKE) -s -C $(LIBFT_DIR)
 
-%.o: %.c
-	$(CC) ${CFLAGS} -I $(INCLUDE) -c $< -o $@
+$(NAME) : $(OBJS)
+	@$(CC) $(CFLAGS) $(INCLUDE) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS)
 
-clean :
-	rm -f ${OBJS}
-	make clean -C ./libft
+# Clean
+clean:
+	@$(RM) $(OBJS)
+	@$(MAKE) -s -C $(LIBFT_DIR) clean
 
-fclean : clean
-	rm -f ${NAME}
-	make fclean -C ./libft
+fclean:	clean
+	@$(RM) $(NAME)
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean
 
-re : fclean all
+re: fclean all
 
-.phony : all clean fclean re bonus
+bonus: re
+
+.PHONY : all clean fclean re bonus

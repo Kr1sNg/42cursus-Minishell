@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_no_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 17:25:38 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:09:26 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 char	*var_export_only(char *line)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:29:34 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/01 17:25:31 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:09:23 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 int	check_egal(char *cmd)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/02 11:16:14 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:38:54 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILDINS_H
 
 # include "../libft/includes/libft.h"
+# include "minishell.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -24,21 +25,21 @@ typedef struct s_init
 	int	j;
 	int	k;
 	int	l;
-}				t_init;
+}	t_init;
 
 typedef struct s_env
 {
 	char **env;
 	char **export;
 	char **list_export;
-}				t_env;
+}	t_env;
 
 typedef struct s_args
 {
 	char	*path;
 	char	**cmd;
 	char	**env;
-}		t_args;
+}	t_args;
 
 void	cmd_create_env(t_env *infos, char **env);
 void	cmd_create_export(t_env *infos);

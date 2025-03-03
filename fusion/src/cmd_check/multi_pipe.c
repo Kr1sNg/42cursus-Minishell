@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 09:31:19 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/02 10:37:25 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 21:09:08 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/buildins.h"
+#include "../../include/buildins.h"
 
 void	ft_child(char **cmd, char **env)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 01:27:52 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 22:14:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/buildins.h"
 /* execute parsing - Recursive descent parser  */
 
 int	ft_execute(t_ast *ast, t_env *env)
@@ -23,17 +24,17 @@ int	ft_execute(t_ast *ast, t_env *env)
 	// if (ast->type == AST_WORDS || ast->type == AST_REDIRECT)
 	// 	printf("AST_CMD or AST_REDIRECT\n");
 	if (ast->type == AST_LOGICAL)
-		status = ft_exe_logical(&ast->u_ast_data.logical, env);
+		status = ft_exe_logical(ast->logical, env);
 	else if (ast->type == AST_PIPEEXPR)
-	 	status = ft_exe_pipeexpr(&ast->u_ast_data.pipeexpr, env);
+	 	status = ft_exe_pipeexpr(ast->pipeexpr, env);
 	else if	(ast->type == AST_EXPRESSION)
-		status = ft_exe_expression(&ast->u_ast_data.expression, env);
+		status = ft_exe_expression(ast->expression, env);
 	else if (ast->type == AST_SUBSHELL)
-		status = ft_exe_subshell(&ast->u_ast_data.subshell, env);
+		status = ft_exe_subshell(ast->subshell, env);
 	else if (ast->type == AST_COMMAND)
-		status = ft_exe_command(&ast->u_ast_data.command, env);
+		status = ft_exe_command(ast->command, env);
 	else if (ast->type == AST_WORDS)
-		status = ft_exe_words(&ast->u_ast_data.cmd_words, env);
+		status = ft_exe_words(ast->cmd_words, env);
 	else if (ast->type == AST_REDIRECT)
 		status = ft_exe_redirect(ast);
 	// else
@@ -52,7 +53,7 @@ int	ft_exe_logical(t_ast_logical *ast, t_env *env)
 	// printf("1 - LOGICAL LEVEL\n"); //
 	// printf(" 1-left of logical\n"); //
 	left_status = ft_execute(ast->left, env);
-	if (ast->logical == TK_AND)
+	if (ast->operator == TK_AND)
 	{
 		// printf(" 1- AND &&\n"); //
 		if (left_status == EXIT_SUCCESS)
@@ -63,7 +64,7 @@ int	ft_exe_logical(t_ast_logical *ast, t_env *env)
 		}
 		return (left_status);
 	}
-	else if (ast->logical == TK_OR)
+	else if (ast->operator == TK_OR)
 	{
 		// printf(" 1- OR ||\n"); //
 		if (left_status != EXIT_SUCCESS)
@@ -122,9 +123,9 @@ int ft_exe_expression(t_ast_expression *ast, t_env *env)
 
 	// printf("\t\t3- EXPRESSION LEVEL\n");
 	if (ast->parenthesis)
-		status = ft_execute(ast->subshell, env);
+		status = ft_execute(ast->cmd_or_sub, env);
 	else
-		status = ft_execute(ast->command, env);
+		status = ft_execute(ast->cmd_or_sub, env);
 	return (EXIT_SUCCESS);
 }
 
@@ -185,7 +186,7 @@ int	ft_exe_redirect(t_ast *ast)
 		while (ast)
 		{
 			// printf("\t\t\t\t 5-target_file: {%s}\n", ast->u_ast_data.redirect.target);
-			ast = ast->u_ast_data.redirect.next;
+			ast = ast->redirect->next;
 		}
 	}
 	return (EXIT_SUCCESS);
