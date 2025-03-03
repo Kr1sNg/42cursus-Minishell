@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/02 10:46:53 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/03 00:52:36 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ void	ft_exec_execve(char **cmd, char **env)
 
 void	ft_exec_buildins(char **cmd, t_env *infos)
 {
-	if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "export", ft_strlen("export")) == 0)
 		ft_exec_export(cmd, infos);
-	if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "unset", ft_strlen("unset")) == 0)
 		ft_exec_unset(cmd, infos);
-	if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "env", ft_strlen("env")) == 0)
 		ft_exec_env(infos->env);
-	if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "cd", ft_strlen("cd")) == 0)
 		ft_exec_cd(cmd, infos);
-	if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "pwd", ft_strlen("pwd")) == 0)
 		ft_exec_pwd();
-	if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
+	if (ft_strncmp(cmd[0], "exit", ft_strlen("exit")) == 0)
 		exit(0);
 }
 
