@@ -1,47 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_cmd.c                                           :+:      :+:    :+:   */
+/*   cd_no_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 16:55:00 by theo             ###   ########.fr       */
+/*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
+/*   Updated: 2025/03/03 16:26:07 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/buildins.h"
 
-void	ft_exec_pwd(void)
+char	*value_env(char *name, t_env *infos)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-		printf("%s\n", pwd);
-	free(pwd);
-}
-
-void	ft_exec_cd(char **cmd, t_env *infos)
-{
+	int		i;
 	char	*line;
-	char	*pwd;
-	char	*user;
-	char	*acces;
 
-	if (!cmd[1])
+	i = 0;
+	while (infos->env[i])
 	{
-		user = value_env("USER", infos);
-		acces = ft_strjoin("/home/", user);
-		chdir(acces);
-		free(acces);
+		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name)) == 0)
+		{
+			line = strdup(infos->env[i]);
+			while(*line != '=')
+				line++;
+			line++;
+			return (line);
+		}
+		i++;
 	}
-	else
-		chdir(cmd[1]);
-	pwd = getcwd(NULL, 0);
-	line = ft_strjoin("PWD=",pwd );
-	cmd_export(infos, line);
-	free(pwd);
-	free(line);
+	return (NULL);
 }
