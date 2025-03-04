@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 20:55:10 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:22:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char *argv[], char *env[])
 		ast = ft_parse(tokens);
 		status = ft_execute(ast); // => walk the tree and execute
 		ft_free_ast(ast);
-		ft_free_token(tokens);
+		ft_free_token(tokens); //262 unfree
 		
 		free(input);
 	}

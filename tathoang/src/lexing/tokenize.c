@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 15:51:44 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:15:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_token	*ft_tokenize(char *input)
 	i = 0;
 	while (words[i])
 		ft_token_add_back(&tokens, words[i++]);
+	ft_split_free(words);
 	return (tokens);
 }
 

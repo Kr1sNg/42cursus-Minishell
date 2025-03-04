@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 18:54:14 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:15:47 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,17 @@ t_ast	*ft_parse(t_token *token)
 {
     t_ast   *ast;
     
+    printf("ft_pars\n\n");
     ast = ft_parse_logical(&token);
     if (token) //extra token after command line
     {
-        ft_free_logical(ast);
-        return (ft_error_syntax(token->word), NULL);
+        if (token->type == TK_REDIR_IN || token->type == TK_REDIR_OUT
+            || token->type == TK_APPEND_OUT || token->type == TK_HEREDOC)
+            ft_error_syntax("newline");
+        else
+            ft_error_syntax(token->word);
+        ft_free_ast(ast);
+        return (NULL);
     }
     return (ast);
 }
@@ -52,7 +58,7 @@ t_ast	*ft_parse(t_token *token)
 //<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> }
 t_ast   *ft_parse_logical(t_token **token)
 {
-    t_token_type    logical;
+    t_token_type    operator;
     t_ast           *left;
     t_ast           *right;
     char            c;
@@ -61,18 +67,18 @@ t_ast   *ft_parse_logical(t_token **token)
     while ((*token) && ((*token)->type == TK_AND || (*token)->type == TK_OR))
     {
         c = (*token)->word[0];
-        logical = (*token)->type;
+        operator = (*token)->type;
         *token = (*token)->next;
         right = ft_parse_pipeexpr(token);
         if (!right)
         {
-            ft_free_pipeexpr(left);
+            ft_free_ast(left);
             if (c == '|')
                 return (ft_error_syntax("||"), NULL);
             else
                 return (ft_error_syntax("&&"), NULL);
         }
-        left = ft_create_ast_logical(logical, left, right);
+        left = ft_create_ast_logical(operator, left, right);
     }
     return (left);
 }
@@ -90,7 +96,7 @@ t_ast   *ft_parse_pipeexpr(t_token **token)
         *token = (*token)->next;
         if (!(*token))
         {
-            ft_free_expression(left);
+            ft_free_ast(left);
             return (ft_error_syntax("|"), NULL); //need free before
         }
         right = ft_parse_expression(token);
@@ -115,7 +121,7 @@ t_ast   *ft_parse_expression(t_token **token)
         expression = ft_parse_command(token);
         return (ft_create_ast_expression(expression, false));
     }
-    return (ft_parse_command(token));
+    return (ft_error_syntax("("), NULL);
 }
 
 //<COMMAND>         	::= [ <REDIR_LIST> ] <CMD_WORDS> [ <REDIR_LIST> ]
@@ -129,8 +135,8 @@ t_ast   *ft_parse_command(t_token **token)
     cmd_words = ft_parse_words(token);
     if (!cmd_words)
     {
-        ft_free_redir_list(ahead);  // need to check how to run only ">> file1"
-        return (ft_error_syntax("error in parse command"), NULL);
+        ft_free_ast(ahead);  // need to check how to run only ">> file1" ?
+        return (NULL); // if there's no command words, it means we've returned "command not found: args[0]"
     }
     behind = ft_parse_redirect(token);
     return (ft_create_ast_command(ahead, cmd_words, behind));
@@ -149,7 +155,7 @@ t_ast   *ft_parse_subshell(t_token **token)
         logical = ft_parse_logical(token);
         if (!logical || !*token || (*token)->type != TK_SUBSHELL_CLOSE)
         {
-            ft_free_logical(logical);
+            ft_free_ast(logical);
             return (ft_error_syntax("("), NULL);
         }
         *token = (*token)->next;
@@ -170,7 +176,7 @@ t_ast   *ft_parse_words(t_token **token)
 
     current = *token;
     argc = 0;
-    while (current && current->type == TK_WORD)
+    while (current && (current->type == TK_WORD || current->type == TK_DQUOTE || current->type == TK_SQUOTE))
     {
         argc++;
         current = current->next;
@@ -200,22 +206,25 @@ t_ast   *ft_parse_redirect(t_token **token) //t_ast list of redirect
     char            *target;
 
     head = NULL;
-    while (*token && ((*token)->type == TK_REDIR_IN || (*token)->type == TK_REDIR_OUT
+    while (*token && (*token)->next && ((*token)->type == TK_REDIR_IN || (*token)->type == TK_REDIR_OUT
             || (*token)->type == TK_APPEND_OUT || (*token)->type == TK_HEREDOC))
     {
         direction = (*token)->type;
         *token = (*token)->next;
         if (!(*token) || (*token)->type != TK_WORD)
         {
-            ft_free_redir_list(head);
-            return (ft_error_syntax((*token)->word), NULL);
+            ft_free_ast(head);
+            return (ft_error_syntax("newline"), NULL);
         }
         target = ft_strdup((*token)->word);
+        if (!target)
+            return (NULL);
         curr = ft_create_ast_redirect(direction, target);
         if (!curr)
         {
-            ft_free_redir_list(head);
-            return (ft_error_syntax((*token)->word), NULL);
+            free(target);
+            ft_free_ast(head);
+            return (ft_error_syntax("newline"), NULL);
         }
         if (!head)
             head = curr;

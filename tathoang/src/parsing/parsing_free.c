@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/27 20:52:22 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:21:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,61 @@ void    ft_free_ast(t_ast *ast)
 {
     if (!ast)
         return ;
-    ft_free_logical(ast);
-    // if (ast->type == AST_LOGICAL)
-	// 	ft_free_logical(ast);
-	// else if (ast->type == AST_PIPEEXPR)
-	//  	ft_free_pipeexpr(ast);
-	// else if	(ast->type == AST_EXPRESSION)
-	// 	ft_free_expression(ast);
-	// else if (ast->type == AST_SUBSHELL)
-	// 	ft_free_subshell(ast);
-	// else if (ast->type == AST_COMMAND)
-	// 	ft_free_command(ast);
-	// else if (ast->type == AST_WORDS)
-	// 	ft_free_words(ast);
-	// else if (ast->type == AST_REDIRECT)
-	// 	ft_free_redir_list(ast);
+    if (ast->type == AST_LOGICAL)
+		ft_free_logical(ast);
+	else if (ast->type == AST_PIPEEXPR)
+	 	ft_free_pipeexpr(ast);
+	else if	(ast->type == AST_EXPRESSION)
+		ft_free_expression(ast);
+	else if (ast->type == AST_SUBSHELL)
+		ft_free_subshell(ast);
+	else if (ast->type == AST_COMMAND)
+		ft_free_command(ast);
+	else if (ast->type == AST_WORDS)
+		ft_free_words(ast);
+	else if (ast->type == AST_REDIRECT)
+		ft_free_redir_list(ast);
+    else
+        free(ast);
 }
 
 void    ft_free_logical(t_ast *ast)
 {
     if (!ast)
         return ;
-    if (ast->u_ast_data.logical.left)
-        ft_free_pipeexpr(ast->u_ast_data.logical.left);
-    if (ast->u_ast_data.logical.right)
-        ft_free_pipeexpr(ast->u_ast_data.logical.right);
-    //free(ast);
+    if (ast->logical->left)
+    {
+        ft_free_ast(ast->logical->left);
+        printf("free ast logical left\n");
+    }
+    if (ast->logical->right)
+    {
+        ft_free_ast(ast->logical->right);
+        printf("free ast logical right\n");
+    }
+    free(ast->logical);
+    free(ast);
+    printf("free ast logical\n");
 }
 
 void    ft_free_pipeexpr(t_ast *ast)
 {
     if (!ast)
         return ;
-    if (ast->u_ast_data.pipeexpr.left)
-        ft_free_expression(ast->u_ast_data.pipeexpr.left);
-    if (ast->u_ast_data.pipeexpr.right)
-        ft_free_expression(ast->u_ast_data.pipeexpr.right);
-    //free(ast);
+    if (ast->pipeexpr->left)
+    {
+        printf("\tin piperxpr type left 1: %i\n", ast->pipeexpr->left->type);
+        ft_free_ast(ast->pipeexpr->left);
+        printf("free pipeexpr left\n");
+    }
+    if (ast->pipeexpr->right)
+    {
+        ft_free_ast(ast->pipeexpr->right);
+        printf("free pipeexpr right\n");
+    }
+    free(ast->pipeexpr);
+    free(ast);
+    printf("free pipeexpr\n");
 }
 
 void    ft_free_expression(t_ast *ast)
@@ -60,39 +78,41 @@ void    ft_free_expression(t_ast *ast)
     if (!ast)
         return ;
     printf("\tfree_expression\n\n");
-    printf("\ttype in expression: %i\n\n", ast->type);
-    if (ast->u_ast_data.expression.command)
-        ft_free_command(ast->u_ast_data.expression.command);
-    else //3
-    {   
-        // printf("type here: %i\n", ast->type);
-        ft_free_ast(ast->u_ast_data.expression.subshell);
+    if (ast->type)
+    {
+        printf("4* expression type: %i \n\n", ast->type);
+        ft_free_ast(ast->expression->cmd_or_sub);
     }
-    //free(ast);
+    free(ast->expression);
+    free(ast);
 }
 
 void    ft_free_subshell(t_ast *ast)
 {
     if (!ast)
         return ;
-    write(1, "bon\n\n", 5);
-    if (ast->u_ast_data.subshell.logical)
-        ft_free_logical(ast->u_ast_data.subshell.logical);
-    if (ast->u_ast_data.subshell.redirect_list)
-        ft_free_redir_list(ast->u_ast_data.subshell.redirect_list);
-    //free(ast);
+    printf("free subshell\n");
+    if (ast->subshell->logical)
+        ft_free_ast(ast->subshell->logical);
+    if (ast->subshell->redirect_list)
+        ft_free_ast(ast->subshell->redirect_list);
+    free(ast->subshell);
+    free(ast);
+    printf("free subshell\n");
 }
 
 void    ft_free_command(t_ast *ast)
 {
     if (!ast)
         return ;
-    if (ast->u_ast_data.command.cmd_words)
-        ft_free_words(ast->u_ast_data.command.cmd_words);
-    if (ast->u_ast_data.command.redirect_list)
-        ft_free_redir_list(ast->u_ast_data.command.redirect_list);
-    write(1, "bon\n\n", 5);
-    //free(ast);
+    printf("free command\n");
+    if (ast->command->cmd_words)
+        ft_free_ast(ast->command->cmd_words);
+    if (ast->command->redirect_list)
+        ft_free_ast(ast->command->redirect_list);
+    free(ast->command);
+    free(ast);
+    printf("free command\n");
 }
 
 void    ft_free_words(t_ast *words)
@@ -101,32 +121,43 @@ void    ft_free_words(t_ast *words)
     
     if (!words)
         return ;
+    printf("free words\n");
     i = 0;
-    while (words->u_ast_data.cmd_words.args && words->u_ast_data.cmd_words.args[i])
+    while (words->cmd_words->args && words->cmd_words->args[i])
     {
         write(1, "oui\n\n", 5);
-        
-        free(words->u_ast_data.cmd_words.args[i]);
+        free(words->cmd_words->args[i]);
         i++;
     }
-    free(words->u_ast_data.cmd_words.args);
-    // free(words);
+    free(words->cmd_words->args);
+    free(words->cmd_words);
+    free(words);
+    printf("free words\n");
 }
 
 void	ft_free_redir_list(t_ast *redir_list)
 {
-	t_ast	*tmp;
-
-	if (!redir_list)
-		return ;
-	while (redir_list)
+	t_ast	*curr;
+    t_ast   *next;
+    t_ast   *tmp;
+    
+    curr = redir_list;
+	while (curr)
 	{
-		tmp = redir_list;
-		if (!tmp->u_ast_data.redirect.target)
-			free(tmp->u_ast_data.redirect.target);
-		redir_list = redir_list->u_ast_data.redirect.next;
+        next = NULL;
+        if (curr->redirect)
+        {
+            free(curr->redirect->target);
+            if (curr->redirect->next)
+                next = curr->redirect->next;
+            free(curr->redirect);
+        }
+		tmp = curr;
+		curr = next;
 		free(tmp);
 	}
-    //free(redir_list);
+    // free(redir_list->redirect);
+    // free(redir_list);
+    printf("free redir2\n");
 }
 
