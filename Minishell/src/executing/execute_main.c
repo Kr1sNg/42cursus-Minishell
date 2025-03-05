@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/05 08:35:02 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:57:35 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 		// printf("\t\t\t 4-builtin {%s}\n", ast->args[i++]);
 		// while (ast->args[i])
 		// 	printf("\t\t\t 4-text: {%s}\n", ast->args[i++]);
-		ft_exec_cmd(ast->args, env);
+		return(ft_exec_cmd(ast->args, env));
 	}
 	return (EXIT_SUCCESS);
 }
