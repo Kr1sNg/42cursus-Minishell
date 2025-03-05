@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 20:15:47 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:07:09 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_ast	*ft_parse(t_token *token)
 {
     t_ast   *ast;
     
-    printf("ft_pars\n\n");
+    // printf("ft_pars\n\n");
     ast = ft_parse_logical(&token);
     if (token) //extra token after command line
     {

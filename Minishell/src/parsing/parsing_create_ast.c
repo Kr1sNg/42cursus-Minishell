@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 20:09:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:06:56 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ t_ast	*ft_create_ast_words(char **args)
 	t_ast	*node;
 	
 	ft_new_ast_node(&node, AST_WORDS);
-	printf("we pass here\n\n");
-	printf("node type ok: %i\n\n", node->type);
+	// printf("we pass here\n\n");
+	// printf("node type ok: %i\n\n", node->type);
 	if (node)
 	{
-		printf("node exist\n\n");
+		// printf("node exist\n\n");
 		node->cmd_words = ft_calloc(1, sizeof(*node->cmd_words));
 		if (!node->cmd_words)
 			return (free(node), NULL);
 	}
 	node->cmd_words->args = args; //FAUL
-	printf("word: %s\n\n", node->cmd_words->args[0]);
+	// printf("word: %s\n\n", node->cmd_words->args[0]);
 	return (node);
 }
 
@@ -108,7 +108,7 @@ t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis)
 	if (!expression)
 		return (ft_error_input(100), NULL);
 	ft_new_ast_node(&node, AST_EXPRESSION);
-	printf("**Expression Created type: %i\n", node->type);
+	// printf("**Expression Created type: %i\n", node->type);
 	if (node)
 	{
 		node->expression = ft_calloc(1, sizeof(*node->expression));
@@ -118,15 +118,13 @@ t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis)
 		{
 			node->expression->parenthesis = true;
 			node->expression->cmd_or_sub = expression;
-			// node->expression->command = NULL;
-			printf("** Expression Created subshell type: %i\n", node->type);
+			// printf("** Expression Created subshell type: %i\n", node->type);
 		}
 		else
 		{
 			node->expression->parenthesis = false;
 			node->expression->cmd_or_sub = expression;
-			// node->expression->subshell = NULL;
-			printf("** Expression Created command type: %i\n", node->type);
+			// printf("** Expression Created command type: %i\n", node->type);
 		}
 	}
 	return (node);

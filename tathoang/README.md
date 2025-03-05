@@ -399,7 +399,7 @@ void	exit(int status);
 int	execve(const char *pathname, char *const argv[], char *const envp[]);
 ```
 
-The `execve()` executes the new program referred to by `pathname` (by replacing the current process), while allowing us to specify new `argv[]` and new `envp[]`.
+The `execve()` executes the new program referred to by `pathname` (by replacing totally the current process, when it terminates, it terminates also the main process), while allowing us to specify new `argv[]` and new `envp[]`.
 
 `argv[]` is an array of strings of command-line arguments (`argv[0]` should contain the filename executing). `envp[]` is an array of strings, where each entry is an environment variable in the format `KEY=VALUE`.
 
