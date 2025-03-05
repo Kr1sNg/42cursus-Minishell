@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/05 18:58:57 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 19:58:14 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	ft_exec_buildins(char **cmd, t_env *infos)
 		return(ft_exec_pwd());
 	if (ft_strncmp(cmd[0], "exit", ft_strlen("exit0")) == 0)
 		exit(0);
+	// if (ft_strncmp(cmd[0], "true", ft_strlen("true0")) == 0)
+	// 	return(ft_true_false("true"));
+	// if (ft_strncmp(cmd[0], "false", ft_strlen("false0")) == 0)
+	// 	return(ft_true_false("false"));
 }
 
 int	ft_exec_cmd(char **cmd, t_env *infos)

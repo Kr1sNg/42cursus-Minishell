@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/05 09:13:48 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 20:32:51 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char *argv[], char *env[])
 			break ;
 		add_history(input); // to save history and move up - down cmd
 		tokens = ft_tokenize(input);
-		ft_print_token(tokens);
+		// ft_print_token(tokens);
 		ast = ft_parse(tokens);
 		pid = fork();
 		if (pid == 0)

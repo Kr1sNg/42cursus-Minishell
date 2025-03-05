@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_valide_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:36:36 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/05 10:37:13 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 20:26:13 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int	ft_check_buildins(char *cmd)
 		return (1);
 	if (ft_strncmp(cmd, "exit", ft_strlen("exit0")) == 0)
 		return (1);
+	// if (ft_strncmp(cmd, "true", ft_strlen("true0")) == 0)
+	// 	return (1);
+	// if (ft_strncmp(cmd, "false", ft_strlen("false0")) == 0)
+	// 	return (1);
 	return (0);
 }
 

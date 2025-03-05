@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 09:31:19 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/05 18:43:48 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 20:01:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,6 @@ int	ft_manage_pipe(char **cmd, char **env)
 		wait(&status);
 		return (status);
 	}
+	return (0);
 }
+
