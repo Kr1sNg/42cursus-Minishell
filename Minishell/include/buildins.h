@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/04 16:50:52 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:58:15 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int		check_egal(char *cmd);
 void	ft_swap(char **str, char **str2);
 
 int		ft_check_valide_cmd(char *cmd, t_env infos);
-void	ft_manage_pipe(char **cmd, char **env);
 void	ft_child(char **cmd, char **env);
 
 char	*ft_getenv(char *name, char **env);
@@ -76,9 +75,11 @@ char	*ft_strcat_pipex(char *dest, char *src);
 int		ft_open(char *name, int rw);
 char	*ft_findname(char *name);
 void	ft_free_tab(char **tab);
-void	ft_manage_pipe(char **cmd, char **env);
+int		ft_manage_pipe(char **cmd, char **env);
 void	ft_child(char **cmd, char **env);
-void	ft_exec_cmd(char **cmd, t_env *infos);
+int		ft_exec_cmd(char **cmd, t_env *infos);
 char	*value_env(char *name, t_env *infos);
+void	ft_exec_echo(char **cmd, t_env *infos);
+void	ft_var_env(char *str, t_env *infos);
 
 #endif

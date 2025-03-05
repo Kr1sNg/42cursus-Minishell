@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/05 16:10:35 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:12:07 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,20 @@ int ft_exe_expression(t_ast_expression *ast, t_env *env)
 int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 {
 	int	status;
-
+	pid_t	pid;
+	
+	pid = fork();
 	// printf("\t\t 3-option A: (SUBSHELL)\n");
 	if (ast->logical)
 	{
 		// printf("\t\t 3a subshell - logical\n");
-		status = ft_execute(ast->logical, env);
+		pid = fork();
+		if (pid == 0)
+		{
+			status = ft_execute(ast->logical, env);
+			exit(status);
+		}
+		wait(NULL);
 	}	
 	if (ast->redirect_list)
 	{
@@ -173,7 +181,7 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 		// printf("\t\t\t 4-builtin {%s}\n", ast->args[i++]);
 		// while (ast->args[i])
 		// 	printf("\t\t\t 4-text: {%s}\n", ast->args[i++]);
-		ft_exec_cmd(ast->args, env);
+		return(ft_exec_cmd(ast->args, env));
 	}
 	return (EXIT_SUCCESS);
 }
