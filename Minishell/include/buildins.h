@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/05 19:42:17 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:13:00 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ void	ft_exec_echo(char **cmd, t_env *infos);
 void	ft_var_env(char *str, t_env *infos);
 
 
-int		ft_true_false(char *t);
+// int		ft_true_false(char *t);
 
 #endif
