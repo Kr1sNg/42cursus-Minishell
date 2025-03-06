@@ -27,10 +27,10 @@ SRCS		= $(foreach dir, $(SRCS_DIRS), $(wildcard $(dir)/*.c))
 OBJS		= $(SRCS:.c=.o)
 
 # Include and Flags
-INCLUDE		= -I include -I/opt/homebrew/opt/readline/include
+INCLUDE		= -Iinclude
 LDFLAGS     = -L/opt/homebrew/opt/readline/lib -lreadline
 # CFLAGS		= -Wall -Wextra -Werror
-CC			= cc
+CC			= cc -I/opt/homebrew/opt/readline/include
 RM			= rm -rf
 
 # Target
