@@ -54,13 +54,13 @@ void	ft_swap(char **str, char **str2)
 
 char	**ft_sort_a(char **env)
 {
-	int	check;
+	// int	check;
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	check = 1;
+	// check = 1;
 	while (env[i])
 	{
 		j = i;
@@ -79,9 +79,9 @@ char	*convert_line_export(char *line)
 {
 	char	*dest;
 	char	*src_mdf;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	src_mdf = var_export_only(line);
 	dest = ft_strjoin("declare -x ", src_mdf);
 	dest[ft_strlen(src_mdf) + 11] = '\0';

@@ -29,7 +29,7 @@ OBJS		= $(SRCS:.c=.o)
 # Include and Flags
 INCLUDE		= -Iinclude
 LDFLAGS     = -L/opt/homebrew/opt/readline/lib -lreadline
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 CC			= cc -I/opt/homebrew/opt/readline/include
 RM			= rm -rf
 

@@ -36,7 +36,7 @@ void	ft_echodouble(char *str, t_env *infos)
 	}
 }
 
-void	ft_echosimple(char *str, t_env *infos)
+void	ft_echosimple(char *str)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ void	ft_exec_echo(char **cmd, t_env *infos)
 	while(cmd[i])
 	{
 		if (cmd[i][0] == '\'')
-			ft_echosimple(cmd[i], infos);
+			ft_echosimple(cmd[i]);
 		else if (cmd[i][0] == '\"')
 			ft_echodouble(cmd[i], infos);
 		else

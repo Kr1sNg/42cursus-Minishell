@@ -32,7 +32,11 @@ void	ft_exec_buildins(char **cmd, t_env *infos)
 	if (ft_strncmp(cmd[0], "pwd", ft_strlen("pwd0")) == 0)
 		return(ft_exec_pwd());
 	if (ft_strncmp(cmd[0], "exit", ft_strlen("exit0")) == 0)
+	{
+		printf("exit\n");
 		exit(0);
+	}
+		// return(ft_exit(0));
 	// if (ft_strncmp(cmd[0], "true", ft_strlen("true0")) == 0)
 	// 	return(ft_true_false("true"));
 	// if (ft_strncmp(cmd[0], "false", ft_strlen("false0")) == 0)
@@ -42,7 +46,7 @@ void	ft_exec_buildins(char **cmd, t_env *infos)
 int	ft_exec_cmd(char **cmd, t_env *infos)
 {
 	int	type_cmd;
-	int	status;
+	// int	status;
 
 	type_cmd = ft_check_valide_cmd(cmd[0], *infos);
 	if (type_cmd == 0)

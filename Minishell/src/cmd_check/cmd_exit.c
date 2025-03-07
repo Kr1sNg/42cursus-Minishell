@@ -12,3 +12,11 @@
 
 #include "../../include/buildins.h"
 
+// int	ft_exit(int status)
+// {
+// 	status = 0;
+	
+// 	printf("exit");
+// 	exit(status);
+// 	return (0);
+// }

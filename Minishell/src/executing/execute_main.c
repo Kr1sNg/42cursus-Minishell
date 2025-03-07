@@ -85,6 +85,7 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 	pid_t	pid_left;
 	pid_t	pid_right;
 
+	status = 1;
 	if (pipe(fd) == -1)
 		return (-42);
 	// printf("\t2 - PIPEEXPR level\n");

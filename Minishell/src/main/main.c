@@ -70,7 +70,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_ast	*ast;
 	int		status;
 	t_env	infos;
-	pid_t	pid;
+	// pid_t	pid;
 	//ft_copy_env
 	// (void)argc; // we don't really need it rightnow
 	// (void)argv; // we don't really need it rightnow
@@ -95,5 +95,5 @@ int	main(int argc, char *argv[], char *env[])
 	}
 	free_tab(infos.env);
 	free_tab(infos.export);
-	return (0);
+	return (status);
 }
