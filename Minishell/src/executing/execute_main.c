@@ -79,41 +79,50 @@ int	ft_exe_logical(t_ast_logical *ast, t_env *env)
 
 int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 {
-	int left_status;
-	int	right_status;
+	int status;
+	// int	right_status;
 	int		fd[2];
-	pid_t	pid;
+	pid_t	pid_left;
+	pid_t	pid_right;
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+		return (-42);
 	// printf("\t2 - PIPEEXPR level\n");
-	pid = fork();
-	if (pid == 0)
+	pid_left = fork();
+	if (pid_left == -1)
+		return (-42);
+	if (pid_left == 0)
 	{
 		if (ast->left)
 		{
 			close(fd[0]);
-			dup2(fd[1], 1);
+			dup2(fd[1], STDOUT_FILENO);
 			// printf("\t 2-pipe Left\n");
-			left_status = ft_execute(ast->left, env);
+			status = ft_execute(ast->left, env);
 			close(fd[1]);
 		}
-		exit(left_status);
+		exit(status);
 	}
-	else
+	pid_right = fork();
+	if (pid_right == -1)
+		return (-42);
+	if (pid_right == 0)
 	{
 		if (ast->right)
 		{
-			wait(&left_status);
 			close(fd[1]);
-			dup2(1, 1);
-			// printf("\t 2-pipe Right\n");
-			dup2(fd[0], 0);
-			right_status = ft_execute(ast->right, env);
+			dup2(fd[0], STDIN_FILENO);
+			status = ft_execute(ast->right, env);
 			close(fd[0]);
-			dup2(0, 0);
 		}
+		exit(status);
 	}
-	return (EXIT_SUCCESS);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid_left, NULL, 0);
+	waitpid(pid_right, NULL, 0);
+
+	return (status);
 }
 
 int ft_exe_expression(t_ast_expression *ast, t_env *env)

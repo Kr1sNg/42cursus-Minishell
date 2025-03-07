@@ -88,21 +88,10 @@ int	main(int argc, char *argv[], char *env[])
 		tokens = ft_tokenize(input);
 		// ft_print_token(tokens);
 		ast = ft_parse(tokens);
-		pid = fork();
-		if (pid == 0)
-		{
-			status = ft_execute(ast, &infos); // => walk the tree and execute
-			free_tab(infos.env);
-			free_tab(infos.export);
-			ft_free_ast(ast);
-			ft_free_token(tokens);
-			free(input);
-			exit(status);
-		}
-			wait(NULL);
-			ft_free_ast(ast);
-			ft_free_token(tokens);
-			free(input);
+		status = ft_execute(ast, &infos);
+		ft_free_ast(ast);
+		ft_free_token(tokens);
+		free(input);
 	}
 	free_tab(infos.env);
 	free_tab(infos.export);
