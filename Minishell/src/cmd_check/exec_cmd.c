@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:39:26 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/08 21:48:51 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	ft_exec_execve(char **cmd, char **env)
 int	ft_exec_buildins(char **cmd, t_env *infos)
 {
 	if (ft_strncmp(cmd[0], "echo", ft_strlen("echo0")) == 0)
-		ft_exec_echo(cmd, infos);
+		return(ft_exec_echo(cmd, infos));
 	if (ft_strncmp(cmd[0], "export", ft_strlen("export0")) == 0)
-		ft_exec_export(cmd, infos);
+		return(ft_exec_export(cmd, infos));
 	if (ft_strncmp(cmd[0], "unset", ft_strlen("unset0")) == 0)
-		ft_exec_unset(cmd, infos);
+		return(ft_exec_unset(cmd, infos));
 	if (ft_strncmp(cmd[0], "env", ft_strlen("env0")) == 0)
 		return(ft_exec_env(cmd, infos->env));
 	if (ft_strncmp(cmd[0], "cd", ft_strlen("cd0")) == 0)

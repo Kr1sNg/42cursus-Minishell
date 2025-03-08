@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:37:29 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/08 21:50:07 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		ft_exec_env(char **cmd, char **env);
 int		ft_exec_pwd(void);
 int		ft_exec_cd(char **cmd, t_env *infos);
 int		ft_exec_unset(char **cmd, t_env *infos);
+int		ft_exec_echo(char **cmd, t_env *infos);
 void	ft_display_export(char **env);
 int		ft_strlen_name_env(char *str);
 int		check_egal(char *cmd);
@@ -79,7 +80,6 @@ int		ft_manage_pipe(char **cmd, char **env);
 void	ft_child(char **cmd, char **env);
 int		ft_exec_cmd(char **cmd, t_env *infos);
 char	*value_env(char *name, t_env *infos);
-void	ft_exec_echo(char **cmd, t_env *infos);
 void	ft_var_env(char *str, t_env *infos);
 
 
