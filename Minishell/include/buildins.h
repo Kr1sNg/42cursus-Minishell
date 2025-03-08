@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/06 11:13:00 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:37:29 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct s_args
 
 void	cmd_create_env(t_env *infos, char **env);
 void	cmd_create_export(t_env *infos);
-void	ft_exec_export(char **cmd, t_env *infos);
-void	ft_exec_env(char **env);
-void	ft_exec_pwd(void);
-void	ft_exec_cd(char **cmd, t_env *infos);
-void	ft_exec_unset(char **cmd, t_env *infos);
+int		ft_exec_export(char **cmd, t_env *infos);
+int		ft_exec_env(char **cmd, char **env);
+int		ft_exec_pwd(void);
+int		ft_exec_cd(char **cmd, t_env *infos);
+int		ft_exec_unset(char **cmd, t_env *infos);
 void	ft_display_export(char **env);
 int		ft_strlen_name_env(char *str);
 int		check_egal(char *cmd);

@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/05 11:04:44 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:25 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,19 @@ void	ft_var_env(char *str, t_env *infos)
 		printf("%s", value);
 	}
 	free(name);
+}
+
+int	ft_exec_env(char **cmd, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (cmd[1])
+		return (127);
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	return (0);
 }

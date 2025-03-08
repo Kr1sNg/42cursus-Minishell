@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:09:17 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 21:10:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:07:45 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,17 @@ void	cmd_unset(t_env *infos, char *cmd)
 	infos->export = export_cpy;
 }
 
-void	ft_exec_unset(char **cmd, t_env *infos)
+int	ft_exec_unset(char **cmd, t_env *infos)
 {
 	int	i;
 	
 	i = 1;
 	if (!cmd[1])
-		return ;
+		return (0);
 	while(cmd[i])
 	{
 		cmd_unset(infos, cmd[i]);
 		i++;
 	}
+	return(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/06 11:09:11 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:46:10 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 {
 	int	status;
 	pid_t	pid;
-	
+	status = 1;
 	pid = fork();
 	// printf("\t\t 3-option A: (SUBSHELL)\n");
 	if (ast->logical)

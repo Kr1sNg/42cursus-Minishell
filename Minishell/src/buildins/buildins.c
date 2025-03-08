@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:02:29 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/02 11:20:46 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:12 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ int	ft_strlen_name_env(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (i);
-}
-
-void	ft_exec_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
 }
 
 void	ft_display_export(char **env)

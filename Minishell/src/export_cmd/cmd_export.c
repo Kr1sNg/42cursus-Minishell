@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 21:09:29 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:42:59 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/buildins.h"
+
+int	ft_check_valid_export(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(cmd[0]))
+		return(1);
+	while (cmd[i] && cmd[i] != '=')
+	{
+		if (!ft_isalnum(cmd[i]))
+			return(1);
+		i++;
+	}
+	return (0);
+}
 
 char	**cmd_add_export(char **env, char *cmd)
 {
@@ -156,7 +172,7 @@ void	cmd_create_export(t_env *infos)
 	infos->export = ft_print_sort_env(infos->env);
 }
 
-void	ft_exec_export(char **cmd, t_env *infos)
+int	ft_exec_export(char **cmd, t_env *infos)
 {
 	int	i;
 	
@@ -165,7 +181,15 @@ void	ft_exec_export(char **cmd, t_env *infos)
 		cmd_export(infos, NULL);
 	while(cmd[i])
 	{
+		if (ft_check_valid_export(cmd[i]))
+		{
+			write(2, "bash: export: `", 15);
+			ft_putstr_fd(cmd[i], 2);
+			write(2, "\': not a valid identifier\n", 26);
+			return(1);
+		}
 		cmd_export(infos, cmd[i]);
 		i++;
 	}
+	return (0);
 }
