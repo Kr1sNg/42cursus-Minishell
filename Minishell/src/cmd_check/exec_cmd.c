@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:48:51 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 21:18:05 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,15 @@ int	ft_exec_buildins(char **cmd, t_env *infos)
 
 int	ft_exec_cmd(char **cmd, t_env *infos)
 {
-	int	type_cmd;
+	int		type_cmd;
 	// int	status;
 
 	type_cmd = ft_check_valide_cmd(cmd[0], *infos);
 	if (type_cmd == 0)
+	{
+		printf("%s: command not found\n", cmd[0]);
 		return (127);
+	}
 	if (type_cmd == 1)
 		return(ft_exec_buildins(cmd, infos));
 	if (type_cmd == 2)
