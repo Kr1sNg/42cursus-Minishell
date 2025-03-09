@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:50:07 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 17:07:50 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_child(char **cmd, char **env);
 int		ft_exec_cmd(char **cmd, t_env *infos);
 char	*value_env(char *name, t_env *infos);
 void	ft_var_env(char *str, t_env *infos);
-
+int	check_list_var(char *cmd, t_env *infos, int free_old);
 
 // int		ft_true_false(char *t);
 

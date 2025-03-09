@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 18:01:02 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 13:00:54 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 	char	*acces;
 	int		error;
 
-	if (cmd[2])
-	{
-		return(ft_error_tm_args());
-	}
 	if (!cmd[1])
 	{
 		acces = ft_strjoin("/home/", value_env("USER", infos));
@@ -51,7 +47,11 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 		free(acces);
 	}
 	else
+	{
+		if (cmd[2])
+			return(ft_error_tm_args());
 		error = chdir(cmd[1]);
+	}
 	if (error == -1)
 	{
 		acces = ft_strjoin("bash: cd: ", cmd[1]);

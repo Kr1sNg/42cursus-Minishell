@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:42:59 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 17:39:57 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_check_valid_export(char *cmd)
 		return(1);
 	while (cmd[i] && cmd[i] != '=')
 	{
-		if (!ft_isalnum(cmd[i]))
+		if (!ft_isalnum(cmd[i]) && cmd[i] != '_')
 			return(1);
 		i++;
 	}
@@ -87,82 +87,100 @@ char	**cmd_add_env(char **env, char *cmd)
 	env_cpy[i + 1] = NULL;
 	return (env_cpy);
 }
-
-int	check_env_var(char *cmd, t_env *infos, int free_old)
+int	check_env_var(char *cmd, t_env *infos)
 {
 	int		i;
 	char	*line;
-	char	*oldline;
 	int		check;
 
-	i = 0;
 	check = 0;
+	i = 0;
 	while (infos->env[i])
 	{
-		if (ft_strncmp(cmd, infos->env[i], ft_strlen_egal(cmd)) == 0)
+		if (infos->env[i] && ft_strncmp(cmd, infos->env[i], ft_strlen_egal(cmd)) == 0)
 		{
 			line = infos->env[i];
 			infos->env[i] = ft_strdup(cmd);
 			if (ft_strncmp(cmd, "PWD", ft_strlen_egal("PWD")) == 0)
-			{
-				oldline = ft_strjoin("OLD", line);
-				check_env_var(oldline, infos, 1);
-			}
-			free(line);
-			check = 1;
-		}
-		if (ft_strncmp(cmd, &infos->export[i][11], ft_strlen_egal(cmd)) == 0)
-		{
-			line = infos->export[i];
-			infos->export[i] = ft_strjoin("declare -x ", cmd);
-			if (ft_strncmp(cmd, "PWD", ft_strlen_egal("PWD")) == 0)
-			{
-				oldline = ft_strjoin("OLD", line);
-				check_env_var(oldline, infos, 1);
-			}
+				check_list_var(ft_strjoin("OLD", line), infos, 1);
 			free(line);
 			check = 1;
 		}
 		i++;
 	}
+	return (check);
+}
+
+int	check_export_var(char *cmd, t_env *infos)
+{
+	int		i;
+	char	*line;
+	int		check;
+
+	i = 0;
+	check = 0;
+	while (infos->export[i])
+	{
+		if (ft_strncmp(cmd, &infos->export[i][11], ft_strlen_egal(cmd)) == 0)
+		{
+			if (!check_egal(cmd))
+			{
+				line = infos->export[i];
+				infos->export[i] = convert_line_export(cmd);
+				if (ft_strncmp(cmd, "PWD", ft_strlen_egal("PWD")) == 0)
+					check_list_var(ft_strjoin("OLD", line), infos, 1);
+				free(line);
+			}
+			check = 1;
+		}
+		i++;
+	}
+	return(check);
+}
+
+int	check_list_var(char *cmd, t_env *infos, int free_old)
+{
+	int		check;
+
+	check = 0;
+	check += check_env_var(cmd, infos);
+	check += check_export_var(cmd, infos);
 	if (free_old == 1)
 		free(cmd);
 	return (check);
+}
+
+void	cmd_export_no_args(t_env *infos)
+{
+	ft_sort_a(infos->export);
+	ft_display_export(infos->export);
 }
 
 void	cmd_export(t_env *infos, char *cmd)
 {
 	char	**env_cpy;
 	char	*cpy_cmd;
+	int		check;
 
 	env_cpy = NULL;
 	if (!cmd)
-	{
-		ft_sort_a(infos->export);
-		ft_display_export(infos->export);
-	}
-	// else if (ft_valide_export_cmd(cmd) == 1)
-	// 	return ;
+		cmd_export_no_args(infos);
 	else
 	{
-		// printf("%s", infos->list_export);
-		// cpy_cmd = check_list_export(cmd, infos->list_export);
-		// printf("DEBUG");
 		cpy_cmd = ft_strdup(cmd);
-		if (check_env_var(cpy_cmd, infos, 0) == 1)
-		{
-			free(cpy_cmd);
-			return ;
-		}
-		if (check_egal(cpy_cmd) == 0)
+		check = check_list_var(cpy_cmd, infos, 0);
+		if (check_egal(cpy_cmd) == 0 && check != 2)
 		{
 			env_cpy = cmd_add_env(infos->env, cpy_cmd);
 			free_tab(infos->env);
 			infos->env = env_cpy;
 		}
-		env_cpy = cmd_add_export(infos->export, cpy_cmd);
-		free_tab(infos->export);
-		infos->export = env_cpy;
+		if (check == 0)
+		{
+			env_cpy = cmd_add_export(infos->export, cpy_cmd);
+			free_tab(infos->export);
+			infos->export = env_cpy;
+		}
 		free(cpy_cmd);
 	}
 }
