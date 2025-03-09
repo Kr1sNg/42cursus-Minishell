@@ -17,8 +17,8 @@
 int	ft_execute(t_ast *ast, t_env *env)
 {
 	int	status;
-	// int	*fd_in;
-	// int *fd_out;
+	int	fd_in = STDIN_FILENO;
+	int fd_out = STDOUT_FILENO;
 	
 	if (!ast)
 		return (EXIT_FAILURE);
@@ -37,7 +37,7 @@ int	ft_execute(t_ast *ast, t_env *env)
 	else if (ast->type == AST_WORDS)
 		status = ft_exe_words(ast->cmd_words, env);
 	else if (ast->type == AST_REDIRECT)
-		status = ft_exe_redirect(ast);//, *fd_in, *fd_out);
+		status = ft_exe_redirect(ast, &fd_in, &fd_out);
 	else
 	{
 		status = EXIT_FAILURE;
@@ -170,23 +170,53 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 int ft_exe_command(t_ast_command *ast, t_env *env)
 {
 	int 	status;
-	// pid_t	pid;
-	// int		fd_in;
-	// int		fd_out;
-	// t_ast_redirect	*redir;
+	pid_t	pid;
+	int		fd_in;
+	int		fd_out;
+	t_ast	*redir;
 
-	// fd_in = STDIN_FILENO;
-	// fd_out = STDOUT_FILENO;
+	fd_in = STDIN_FILENO;
+	fd_out = STDOUT_FILENO;
 	if (ast->redirect_list)
 	{
-		status = ft_execute(ast->redirect_list, env);
-		// redir = ast->redirect_list;
-		// while (redir)
-		// {
-		// 	if (ft_exe_redirect)
-		// }
+		redir = ast->redirect_list; // head of redirect_list
+		while (redir)
+		{
+			if (ft_exe_redirect(redir, &fd_in, &fd_out) == EXIT_FAILURE)
+			{
+				if (fd_in != STDIN_FILENO)
+					close(fd_in);
+				if (fd_out != STDOUT_FILENO)
+					close(fd_out);
+				return (EXIT_FAILURE);
+			}
+			redir = redir->redirect->next; //continue following the redirect list
+		}
+		pid = fork();
+		if (pid == -1)
+			return (perror("fork"), 1);
+		if (pid == 0)
+		{
+			if (fd_in != STDIN_FILENO)
+			{
+				dup2(fd_in, STDIN_FILENO);
+				close(fd_in);
+			}
+			if (fd_out != STDOUT_FILENO)
+			{
+				dup2(fd_out, STDOUT_FILENO);
+				close(fd_out);
+			}
+			status = ft_execute(ast->cmd_words, env);
+			exit(status);
+		}
+		if (fd_in != STDIN_FILENO)
+			close(fd_in);
+		if (fd_out != STDOUT_FILENO)
+			close(fd_out);
+		wait(NULL);
+		// return (status);
 	}
-
 	else
 	{
 		if (ast->cmd_words)
@@ -214,23 +244,27 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 	return (status);
 }
 
-int	ft_exe_redirect(t_ast *ast)//, int *fd_in, int *fd_out)
+int	ft_exe_redirect(t_ast *ast, int *fd_in, int *fd_out)
 {
-	// int	status;
-	// int	fd;
+	int	fd;
 
 	// status = 1;
 	// printf("\t\t\t\t5 - REDIRECT LEVEL\n");
-	if (ast)
+	if (!ast || ast->type != AST_REDIRECT)
+		return (1);
+	if (ast->redirect->direction == TK_REDIR_IN)
 	{
-		// status = 0;
-		while (ast) // && status == 0)
-		{
-			printf("\t\t\t\t 5-direction: {%i}\n", ast->redirect->direction);
-			printf("\t\t\t\t 5-target_file: {%s}\n", ast->redirect->target);
-			// status = ft_exec_redir(ast->redirect);
-			ast = ast->redirect->next;
-		}
+		fd = open(ast->redirect->target, O_RDONLY, 0777);
+		if (fd == -1)
+			return (perror("open input redirection"), 1);
+		*fd_in = fd;
+	}
+	else if (ast->redirect->direction == TK_REDIR_OUT)
+	{
+		fd = open(ast->redirect->target, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if (fd == -1)
+			return (perror("open output redirection"), 1);
+		*fd_out = fd;
 	}
 	return (0);
 }
