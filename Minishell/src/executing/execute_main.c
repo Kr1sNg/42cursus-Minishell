@@ -17,6 +17,8 @@
 int	ft_execute(t_ast *ast, t_env *env)
 {
 	int	status;
+	// int	*fd_in;
+	// int *fd_out;
 	
 	if (!ast)
 		return (EXIT_FAILURE);
@@ -35,7 +37,7 @@ int	ft_execute(t_ast *ast, t_env *env)
 	else if (ast->type == AST_WORDS)
 		status = ft_exe_words(ast->cmd_words, env);
 	else if (ast->type == AST_REDIRECT)
-		status = ft_exe_redirect(ast);
+		status = ft_exe_redirect(ast);//, *fd_in, *fd_out);
 	else
 	{
 		status = EXIT_FAILURE;
@@ -87,11 +89,11 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 
 	status = 1;
 	if (pipe(fd) == -1)
-		return (-42);
+		return (1);
 	// printf("\t2 - PIPEEXPR level\n");
 	pid_left = fork();
 	if (pid_left == -1)
-		return (-42);
+		return (1);
 	if (pid_left == 0)
 	{
 		if (ast->left)
@@ -106,7 +108,7 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 	}
 	pid_right = fork();
 	if (pid_right == -1)
-		return (-42);
+		return (1);
 	if (pid_right == 0)
 	{
 		if (ast->right)
@@ -141,20 +143,21 @@ int ft_exe_expression(t_ast_expression *ast, t_env *env)
 int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 {
 	int	status;
-	pid_t	pid;
+	//pid_t	pid;
 	status = 1;
-	pid = fork();
+	// pid = fork();
 	// printf("\t\t 3-option A: (SUBSHELL)\n");
 	if (ast->logical)
 	{
 		// printf("\t\t 3a subshell - logical\n");
-		pid = fork();
-		if (pid == 0)
-		{
+		// pid = fork();
+		// if (pid == 0)
+		// {
 			status = ft_execute(ast->logical, env);
-			exit(status);
-		}
-		wait(NULL);
+			// exit(status);
+		// }
+		// else
+		// 	waitpid(pid, NULL, 0);
 	}	
 	if (ast->redirect_list)
 	{
@@ -166,18 +169,32 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 
 int ft_exe_command(t_ast_command *ast, t_env *env)
 {
-	int status;
+	int 	status;
+	// pid_t	pid;
+	// int		fd_in;
+	// int		fd_out;
+	// t_ast_redirect	*redir;
 
+	// fd_in = STDIN_FILENO;
+	// fd_out = STDOUT_FILENO;
+	if (ast->redirect_list)
+	{
+		status = ft_execute(ast->redirect_list, env);
+		// redir = ast->redirect_list;
+		// while (redir)
+		// {
+		// 	if (ft_exe_redirect)
+		// }
+	}
+
+	else
+	{
 		if (ast->cmd_words)
 		{
 			// printf("\t\t 3b-cmd_words\n");
 			status = ft_execute(ast->cmd_words, env);
 		}
-		if (ast->redirect_list)
-		{
-			// printf("\t\t 3b-redirect list\n");
-			status = ft_execute(ast->redirect_list, env);
-		}
+	}
 	return (status);
 }
 
@@ -193,21 +210,28 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 		status = ft_exec_cmd(ast->args, env);
 	}
 	else
-		status = false;
+		status = 1;
 	return (status);
 }
 
-int	ft_exe_redirect(t_ast *ast)
+int	ft_exe_redirect(t_ast *ast)//, int *fd_in, int *fd_out)
 {
+	// int	status;
+	// int	fd;
+
+	// status = 1;
 	// printf("\t\t\t\t5 - REDIRECT LEVEL\n");
 	if (ast)
 	{
-		while (ast)
+		// status = 0;
+		while (ast) // && status == 0)
 		{
-			// printf("\t\t\t\t 5-target_file: {%s}\n", ast->u_ast_data.redirect.target);
+			printf("\t\t\t\t 5-direction: {%i}\n", ast->redirect->direction);
+			printf("\t\t\t\t 5-target_file: {%s}\n", ast->redirect->target);
+			// status = ft_exec_redir(ast->redirect);
 			ast = ast->redirect->next;
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
