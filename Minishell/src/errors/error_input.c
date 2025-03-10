@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 15:57:15 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:21:15 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,18 @@ void	ft_error_syntax(char *s)
 
 void	ft_error_input(int er)
 {
-	if (er == -42)
-		printf("syntax error\n");
+	(void)er;
+	return ;
+	// if (er == -42)
+		// printf("syntax error\n");
 	//exit(EXIT_FAILURE);
+}
+
+void	ft_error_target(char *s)
+{
+	char	*access;
+	
+	access = ft_strjoin("bash: ", s);
+	perror(access);
+	free(access);
 }

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 22:14:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:21:35 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ void	ft_handler(int sig);
 /* error */
 void	ft_error_input(int er);
 void	ft_error_syntax(char *s);
+void	ft_error_target(char *s);
 
 /* execute follow the tree */
 int	ft_execute(t_ast *ast, t_env *env);
@@ -237,6 +238,6 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env);
 int ft_exe_subshell(t_ast_subshell *ast, t_env *env);
 int ft_exe_command(t_ast_command *ast, t_env *env);
 int	ft_exe_words(t_ast_words *ast, t_env *env);
-int	ft_exe_redirect(t_ast *ast, int *fd_in, int *fd_out);
+int	ft_exe_redirect(t_ast *ast, t_env *env);
 
 #endif

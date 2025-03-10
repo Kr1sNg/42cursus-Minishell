@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/09 21:06:52 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 20:45:56 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ t_env	ft_initialization(int argc, char **argv, char **env)
 	
 	(void)argc;
 	(void)argv;
+	infos.status = 0;
+	infos.fd_in = STDIN_FILENO;
+	infos.fd_out = STDOUT_FILENO;
 	cmd_create_env(&infos, env);
 	cmd_create_export(&infos);
 	return (infos);
@@ -79,11 +82,11 @@ int	main(int argc, char *argv[], char *env[])
 	signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
 	input = (char *)NULL;
 	infos = ft_initialization(argc, argv, env);
-	infos.status = 0;
+	// infos.status = 0;
 	while (1)
 	{
 		input = readline("minishell:~ $ ");
-		if (!input)
+		if (!input || !ft_strcmp(input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
 			break ;
 		add_history(input); // to save history and move up - down cmd
 		tokens = ft_tokenize(input);
