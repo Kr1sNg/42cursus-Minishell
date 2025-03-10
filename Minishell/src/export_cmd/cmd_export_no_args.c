@@ -3,45 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_no_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/09 13:33:17 by theo             ###   ########.fr       */
+/*   Updated: 2025/03/10 09:29:35 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/buildins.h"
 
-char	*var_export_only(char *line)
-{
-	char	*dest;
-	int		i;
-	int		check;
 
-	i = 0;
-	check = 0;
-	dest = malloc((ft_strlen(line) + 3) * sizeof(char));
-	while (line[i - check])
-	{
-		if (check == 0 && i > 0 && line[i - 1] == '=')
-		{
-			dest[i] = '\"';
-			check = 1;
-		}
-		else
-			dest[i] = line[i - check];
-		i++;
-	}
-	if (check == 0 && line[i - 1] == '=')
-	{
-		dest[i++] = '\"';
-		check++;
-	}
-	if (check == 1)
-		dest[i] = '\"';
-	dest[i + check] = '\0';
-	return (dest);
-}
 
 void	ft_swap(char **str, char **str2)
 {

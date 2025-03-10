@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/09 21:12:51 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 08:34:03 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,20 @@ int	ft_exec_pwd(void)
 	return (1);
 }
 
-int	ft_exec_cd(char **cmd, t_env *infos)
+void	ft_exec_cd_export(t_env *infos)
 {
 	char	*line;
 	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	line = ft_strjoin("PWD=",pwd );
+	cmd_export(infos, line);
+	free(pwd);
+	free(line);
+}
+
+int	ft_exec_cd(char **cmd, t_env *infos)
+{
 	char	*acces;
 	int		error;
 
@@ -59,10 +69,5 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 		free(acces);
 		return (1);
 	}
-	pwd = getcwd(NULL, 0);
-	line = ft_strjoin("PWD=",pwd );
-	cmd_export(infos, line);
-	free(pwd);
-	free(line);
 	return (0);
 }

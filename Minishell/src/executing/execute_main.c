@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/09 22:14:39 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 22:33:02 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	ft_execute(t_ast *ast, t_env *env)
 	else if (ast->type == AST_REDIRECT)
 		status = ft_exe_redirect(ast);//, *fd_in, *fd_out);
 	else
-	{
 		status = EXIT_FAILURE;
-	}
 	return (status);
 }
 
