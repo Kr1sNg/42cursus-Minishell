@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 20:45:56 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:58:14 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char *argv[], char *env[])
 	while (1)
 	{
 		input = readline("minishell:~ $ ");
-		if (!input || !ft_strcmp(input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
+		if (!input) // || !ft_strcmp(input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
 			break ;
 		add_history(input); // to save history and move up - down cmd
 		tokens = ft_tokenize(input);
