@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 19:36:44 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:57:15 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error_syntax(char *s)
 {
-	printf("Minishell: syntax error near unexpected token `%s'\n", s);
+	printf("minishell: syntax error near unexpected token `%s'\n", s);
 	//exit(EXIT_FAILURE);
 }
 
