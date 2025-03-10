@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 16:39:23 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 17:09:50 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,16 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 	char	*acces;
 	int		error;
 
+	error = 0;
 	if (!cmd[1])
 	{
-		acces = ft_strjoin("/home/", value_env("USER", infos));
-		if (!acces)
-			perror("");
-		error = chdir(acces);
-		free(acces);
+		if (!value_env("HOME", infos))
+		{
+			write(2, "bash: cd: HOME not set\n", 23);
+			return (1);
+		}
+		else
+			error = chdir(value_env("HOME", infos));
 	}
 	else
 	{
