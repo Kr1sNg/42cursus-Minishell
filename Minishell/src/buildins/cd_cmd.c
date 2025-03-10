@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 08:34:03 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:35:39 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 	if (!cmd[1])
 	{
 		acces = ft_strjoin("/home/", value_env("USER", infos));
+		if (!acces)
+			perror("");
 		error = chdir(acces);
 		free(acces);
 	}
