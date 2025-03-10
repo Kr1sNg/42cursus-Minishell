@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/08 16:46:10 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:02:09 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,18 +230,18 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 			{
 				if (fd_in != STDIN_FILENO)
 				{
-					printf("1a list close fd_in: %i\n", fd_in);
+					// printf("1a list close fd_in: %i\n", fd_in);
 					close(fd_in);
 				}
 				if (fd_out != STDOUT_FILENO)
 				{
-					printf("1a list close fd_out: %i\n", fd_out);
+					// printf("1a list close fd_out: %i\n", fd_out);
 					close(fd_out);
 				}
 				return (EXIT_FAILURE);
 			}
-			printf("1 list open fd_in: %i\n", fd_in);
-			printf("1 list open fd_out: %i\n", fd_out);
+			// printf("1 list open fd_in: %i\n", fd_in);
+			// printf("1 list open fd_out: %i\n", fd_out);
 			redir = redir->redirect->next; //continue following the redirect list
 		}
 		pid = fork();
@@ -249,8 +249,8 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 			return (perror("fork"), 1);
 		if (pid == 0)
 		{
-			printf("2 child fd_in: %i\n", fd_in);
-			printf("2 child fd_out: %i\n", fd_out);
+			// printf("2 child fd_in: %i\n", fd_in);
+			// printf("2 child fd_out: %i\n", fd_out);
 			if (fd_in != STDIN_FILENO)
 			{
 				dup2(fd_in, STDIN_FILENO);
@@ -264,8 +264,8 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 			status = ft_execute(ast->cmd_words, env);
 			exit(status);
 		}
-		printf("3 parent fd_in: %i\n", fd_in);
-		printf("3 parent fd_out: %i\n", fd_out);
+		// printf("3 parent fd_in: %i\n", fd_in);
+		// printf("3 parent fd_out: %i\n", fd_out);
 		if (fd_in != STDIN_FILENO)
 			close(fd_in);
 		if (fd_out != STDOUT_FILENO)
