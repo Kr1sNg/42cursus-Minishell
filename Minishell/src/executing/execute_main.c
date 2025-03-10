@@ -213,7 +213,7 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 
 int ft_exe_command(t_ast_command *ast, t_env *env)
 {
-	int 	status;
+	int 	status = 1;
 	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
