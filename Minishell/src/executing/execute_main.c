@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/08 16:46:10 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:08:11 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 	pid_t	pid_left;
 	pid_t	pid_right;
 
-	status = 1;
+	status = 0;
 	if (pipe(fd) == -1)
 		return (1);
 	// printf("\t2 - PIPEEXPR level\n");
@@ -122,16 +122,16 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid_left, NULL, 0);
-	waitpid(pid_right, NULL, 0);
-
-	return (status);
+	waitpid(pid_left, &status, 0);
+	waitpid(pid_right, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 int ft_exe_expression(t_ast_expression *ast, t_env *env)
 {
 	int	status;
 
+	status = 127;
 	// printf("\t\t3- EXPRESSION LEVEL\n");
 	if (ast->parenthesis)
 		status = ft_execute(ast->cmd_or_sub, env);
@@ -144,7 +144,7 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 {
 	int	status;
 	//pid_t	pid;
-	status = 1;
+	status = 127;
 	// pid = fork();
 	// printf("\t\t 3-option A: (SUBSHELL)\n");
 	if (ast->logical)
@@ -231,6 +231,8 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 int	ft_exe_words(t_ast_words *ast, t_env *env)
 {
 	int status;
+
+	status = 127;
 	// printf("\t\t\t4 - WORDS LEVEL\n");
 	if (ast->args)
 	{
@@ -240,7 +242,7 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 		status = ft_exec_cmd(ast->args, env);
 	}
 	else
-		status = 1;
+		status = 127;
 	return (status);
 }
 
