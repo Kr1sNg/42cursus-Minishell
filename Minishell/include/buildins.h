@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/09 21:01:19 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:39:03 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ char	*check_list_export(char *cmd, char **list);
 int		ft_valide_export_cmd(char *cmd);
 int		check_egal(char *cmd);
 void	ft_swap(char **str, char **str2);
+char	*var_export_only(char *line);
 
 int		ft_check_valide_cmd(char *cmd, t_env infos);
 void	ft_child(char **cmd, char **env);
 
+int		check_env_var(char *cmd, t_env *infos);
 char	*ft_getenv(char *name, char **env);
 char	*ft_getpath(char *name, char **path);
 char	*ft_strjoin_pipex(char const *s1, char const *s2, char *sep);
@@ -82,7 +84,8 @@ void	ft_child(char **cmd, char **env);
 int		ft_exec_cmd(char **cmd, t_env *infos);
 char	*value_env(char *name, t_env *infos);
 void	ft_var_env(char *str, t_env *infos);
-int	check_list_var(char *cmd, t_env *infos, int free_old);
+int		check_list_var(char *cmd, t_env *infos, int free_old);
+int		ft_check_valid_export(char *cmd);
 
 // int		ft_true_false(char *t);
 

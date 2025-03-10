@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/09 21:12:41 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:39:35 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int	ft_exec_echo(char **cmd, t_env *infos)
 	int	i;
 
 	i = 1;
+	if (!cmd[1])
+	{	
+		printf("\n");
+		return(0);
+	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen("-n0")) == 0)
 		i++;
 	while(cmd[i])

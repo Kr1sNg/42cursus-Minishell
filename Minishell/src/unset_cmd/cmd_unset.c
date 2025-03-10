@@ -6,11 +6,25 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:09:17 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 18:07:45 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/10 09:53:01 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/buildins.h"
+
+void	cmd_env_unset_line(t_init *index, char **env, char **env_cpy)
+{
+		env_cpy[index->j] = (char *)malloc((ft_strlen(env[index->j
+						+ index->l]) + 1) * sizeof(char));
+		index->k = 0;
+		while (env[index->j + index->l][index->k])
+		{
+			env_cpy[index->j][index->k] = env[index->j + index->l][index->k];
+			(index->k)++;
+		}
+		env_cpy[index->j][index->k] = '\0';
+		(index->j)++;
+}
 
 char	**cmd_env_unset(char **env, char *cmd)
 {
@@ -31,16 +45,7 @@ char	**cmd_env_unset(char **env, char *cmd)
 			(index.l) = 1;
 		if (index.j + index.l == index.i)
 			break ;
-		env_cpy[index.j] = (char *)malloc((ft_strlen(env[index.j
-						+ index.l]) + 1) * sizeof(char));
-		index.k = 0;
-		while (env[index.j + index.l][index.k])
-		{
-			env_cpy[index.j][index.k] = env[index.j + index.l][index.k];
-			(index.k)++;
-		}
-		env_cpy[index.j][index.k] = '\0';
-		(index.j)++;
+		cmd_env_unset_line(&index, env, env_cpy);
 	}
 	if (index.j + index.l < index.i)
 		env_cpy[index.j] = NULL;

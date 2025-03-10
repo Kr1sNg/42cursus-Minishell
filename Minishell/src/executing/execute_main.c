@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 16:02:09 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:40:24 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	ft_execute(t_ast *ast, t_env *env)
 		printf("do we reach here\n");
 	}
 	else
-	{
 		status = EXIT_FAILURE;
-	}
 	return (status);
 }
 
