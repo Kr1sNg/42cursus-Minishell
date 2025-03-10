@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/05 20:32:51 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:06:52 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,18 @@ int	main(int argc, char *argv[], char *env[])
 	char	*input;
 	t_token	*tokens;
 	t_ast	*ast;
-	int		status;
 	t_env	infos;
 	// pid_t	pid;
 	//ft_copy_env
 	// (void)argc; // we don't really need it rightnow
 	// (void)argv; // we don't really need it rightnow
+
 	signal(SIGINT, ft_handler);
 	signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal - ctr-backflash
 	signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
 	input = (char *)NULL;
 	infos = ft_initialization(argc, argv, env);
+	infos.status = 0;
 	while (1)
 	{
 		input = readline("minishell:~ $ ");
@@ -88,12 +89,12 @@ int	main(int argc, char *argv[], char *env[])
 		tokens = ft_tokenize(input);
 		// ft_print_token(tokens);
 		ast = ft_parse(tokens);
-		status = ft_execute(ast, &infos);
+		infos.status = ft_execute(ast, &infos);
 		ft_free_ast(ast);
 		ft_free_token(tokens);
 		free(input);
 	}
 	free_tab(infos.env);
 	free_tab(infos.export);
-	return (status);
+	return (infos.status);
 }

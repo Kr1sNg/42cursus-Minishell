@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/08 21:49:48 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/09 21:12:41 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	ft_echodouble(char *str, t_env *infos)
 			ft_var_env(&str[i], infos);
 			while (isalpha(str[i]))
 				i++;
+		}
+		else if (str[i] == '$' && str[i + 1] == '?')
+		{
+			printf("%d", infos->status);
+			i += 2;
 		}
 		else if (str[i] != '\"')
 		{
