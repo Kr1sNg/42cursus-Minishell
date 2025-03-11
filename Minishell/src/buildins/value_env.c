@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   value_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/09 13:04:49 by theo             ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/buildins.h"
+#include "../../include/libraries.h"
 
 char	*value_env(char *name, t_env *infos)
 {

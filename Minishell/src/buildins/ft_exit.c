@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_input.c                                      :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 14:38:24 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:51:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
-void	ft_error_syntax(char *s)
+int ft_exit(t_env *infos)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", s);
-}
-
-void	ft_error_input(int er)
-{
-	(void)er;
-	return ;
-	// if (er == -42)
-		// printf("syntax error\n");
-	//exit(EXIT_FAILURE);
-}
-
-void	ft_error_target(char *s)
-{
-	char	*access;
-	
-	access = ft_strjoin("bash: ", s);
-	perror(access);
-	free(access);
+	ft_free_cmd(infos);
+	printf("exit\n");
+	free_tab(infos->env);
+	free_tab(infos->export);
+	exit(infos->status);
+	return (infos->status);
 }

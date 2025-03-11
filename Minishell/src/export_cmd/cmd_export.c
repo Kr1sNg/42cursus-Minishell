@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 09:37:56 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/buildins.h"
+#include "../../include/libraries.h"
 
 void	cmd_export_no_args(t_env *infos)
 {

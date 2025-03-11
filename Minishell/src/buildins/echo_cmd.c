@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 16:39:35 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/libraries.h"
 
 void	ft_echodouble(char *str, t_env *infos)
 {

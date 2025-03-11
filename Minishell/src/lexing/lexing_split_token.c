@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:29:23 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/03 19:26:13 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/libraries.h"
 
 /* these functions are to split command line into tokens */
 

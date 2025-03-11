@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/05 13:06:56 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/libraries.h"
 
 /* create new node */
 void	ft_new_ast_node(t_ast **node, t_ast_type type)

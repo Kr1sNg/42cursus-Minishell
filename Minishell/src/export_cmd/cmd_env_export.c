@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:32:39 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 09:41:59 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/buildins.h"
+#include "../../include/libraries.h"
 
 char	**cmd_add_env(char **env, char *cmd)
 {

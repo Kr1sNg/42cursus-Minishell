@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 22:45:45 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 14:23:46 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/buildins.h"
+#include "../../include/libraries.h"
 
 int	ft_exec_execve(char **cmd, char **env)
 {
@@ -32,10 +32,7 @@ int	ft_exec_buildins(char **cmd, t_env *infos)
 	if (ft_strncmp(ft_convert_cmd(cmd)[0], "pwd", ft_strlen("pwd0")) == 0)
 		return(ft_exec_pwd());
 	if (ft_strncmp(ft_convert_cmd(cmd)[0], "exit", ft_strlen("exit0")) == 0)
-	{
-		exit(0);
-		return(1);
-	}
+		return(ft_exit(infos));
 		// return(ft_exit(0));
 	// if (ft_strncmp(cmd[0], "true", ft_strlen("true0")) == 0)
 	// 	return(ft_true_false("true"));

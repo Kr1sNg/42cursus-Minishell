@@ -6,11 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:29:34 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 21:09:23 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/buildins.h"
+#include "../../include/libraries.h"
 
 int	check_egal(char *cmd)
 {
