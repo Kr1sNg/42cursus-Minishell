@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 19:27:12 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:57:30 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,20 +192,23 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 		waitpid(pid, &status, 0);
 	}
 	else
-	{
-		if (ast->logical)
+	{		
+		// pid = fork();
+		if (/*pid == 0 && */ast->logical)
 		{
 		// printf("\t\t 3a subshell - logical\n");
 		// pid = fork();
 		// if (pid == 0)
 		// {
 			status = ft_execute(ast->logical, env);
+			// kill(-1, 0);
 			return (status);
 			// exit(status);
 		// }
 		// else
 		// 	waitpid(pid, NULL, 0);
-		}	
+		}
+		// waitpid(pid, &status, 0);	
 	}
 	return (WEXITSTATUS(status));
 }

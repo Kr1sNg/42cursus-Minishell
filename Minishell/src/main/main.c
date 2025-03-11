@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 20:58:14 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:45:59 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	main(int argc, char *argv[], char *env[])
 		ft_free_token(tokens);
 		free(input);
 	}
+	printf("exit\n");
 	free_tab(infos.env);
 	free_tab(infos.export);
 	return (infos.status);
