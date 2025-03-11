@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 22:20:03 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:51:49 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_var_env(char *str, t_env *infos);
 int		check_list_var(char *cmd, t_env *infos, int free_old);
 int		ft_check_valid_export(char *cmd);
 char	**ft_convert_cmd(char **str);
-
+void	ft_check_wildcards(char **cmd, t_env *env);
 // int		ft_true_false(char *t);
 
 #endif

@@ -6,112 +6,134 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 00:13:59 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:06:09 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../include/buildins.h"
+#include "../../include/buildins.h"
 
-// int	ft_strlen_wildcards(char *str)
-// {
-// 	int	i;
-// 	int	len;
+int	ft_strlen_wildcards(char *str)
+{
+	int	i;
+	int	len;
 
-// 	i = 0;
-// 	len = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] != '*')
-// 			len++;
-// 		i++;
-// 	}
-// 	return(len);
-// }
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] != '*')
+			len++;
+		i++;
+	}
+	return(len);
+}
 
-// int	ft_check_star(char * str)
-// {
-// 	int	i;
+int	ft_check_star(char * str)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '*')
-// 			return(1);
-// 		i++;
-// 	}
-// 	return(0);
-// }
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*')
+			return(1);
+		i++;
+	}
+	return(0);
+}
 
-// char	*ft_replace_cmd_only(char *cmd)
-// {
-// 	int		len;
-// 	char	*dest;
-// 	int		i;
-// 	int		j;
+char	*ft_replace_cmd_only(char *cmd)
+{
+	int		len;
+	char	*dest;
+	int		i;
+	int		j;
 
-// 	i = 0;
-// 	j = 0;
-// 	len = ft_strlen_wildcards(cmd);
-// 	dest = (char *)malloc((len + 1) * sizeof(char));
-// 	while (i < len)
-// 	{
-// 		if (cmd[i] == '*')
-// 			i++;
-// 		else
-// 		{
-// 			dest[j] = cmd[i]; 
-// 			i++;
-// 			j++;
-// 		}
-// 	}
-// 	dest[j] = '\0';
-// 	return(dest);
-// }
+	i = 0;
+	j = 0;
+	len = ft_strlen_wildcards(cmd);
+	dest = (char *)malloc((len + 1) * sizeof(char));
+	while (i < len)
+	{
+		if (cmd[i] == '*')
+			i++;
+		else
+		{
+			dest[j] = cmd[i]; 
+			i++;
+			j++;
+		}
+	}
+	dest[j] = '\0';
+	return(dest);
+}
 
-// char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
-// {
-// 	pid_t	pid;
-// 	int		fd[2];
-// 	char	**ls;
-// 	char	**new_cmd;
+char	**ft_new_tab(int fd, char **cmd, t_env *env, int j)
+{
+	char	**new_cmd;
+	char	**wildcards_add;
+	char	*buffer;
+	(void)j;
+	(void)env;
+	(void)cmd;
+	(void)new_cmd;
+	buffer = get_next_line(fd);
+	printf("%s", buffer);
+	exit(0);
+	wildcards_add = ft_split(buffer, ' ');
+	int	i = 0;
+	while(wildcards_add[i])
+	{
+		printf("%s", wildcards_add[i]);
+		i++;
+	}
+	return(wildcards_add);
+}
 
-// 	pipe(fd);
-// 	dup2(fd[1], 1);
-// 	dup2(fd[0], 0);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		close(fd[1]);
-// 		ls = malloc(sizeof(char *) * 2);
-// 		ls[0] = ft_strdup("ls");
-// 		ls[1] = NULL;
-// 		ft_child(ls, env);
-// 		close(fd[0]);
-// 	}
-// 	wait(NULL);
-// 	close(fd[0]);
-// 	new_cmd = ft_();
-// 	close(fd[1]);
-// 	return (new_cmd);
-// }
+char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
+{
+	pid_t	pid;
+	int		fd[2];
+	char	**ls;
+	char	**new_cmd;
 
-// void	ft_check_wildcards(char **cmd, t_env *env)
-// {
-// 	int	i;
+	pipe(fd);
+	dup2(fd[0], 0);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		ls = malloc(sizeof(char *) * 2);
+		ls[0] = ft_strdup("ls");
+		ls[1] = NULL;
+		ft_child(ls, env->env);
+		close(fd[1]);
+	}
+	wait(NULL);
+	close(fd[1]);
+		dup2(fd[1], 1);
+	new_cmd = ft_new_tab(fd[0], cmd, env, i);
+	close(fd[0]);
+	return (new_cmd);
+}
 
-// 	i = 0;
-// 	while (cmd[i])
-// 	{
-// 		if (ft_check_star(cmd[i]))
-// 		{
-// 			if (cmd[i][0] == '*' && !cmd[i][1])
-// 			{
-// 				cmd = ft_replace_cmd_wilds(cmd, i, env);
-// 				i = 0;
-// 			}
-// 			else
-// 				cmd[i] = ft_replace_cmd_only(cmd[i]);
-// 		}
-// 		i++;
-// 	}
-// }
+void	ft_check_wildcards(char **cmd, t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (ft_check_star(cmd[i]))
+		{
+			if (cmd[i][0] == '*' && !cmd[i][1])
+			{
+				/*cmd = */ft_replace_cmd_wilds(cmd, i, env);
+				i = 0;
+			}
+			else
+				cmd[i] = ft_replace_cmd_only(cmd[i]);
+		}
+		i++;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 22:45:45 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:51:29 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_exec_cmd(char **cmd, t_env *infos)
 {
 	int		type_cmd;
 	// int	status;
-
+	ft_check_wildcards(cmd, infos);
 	type_cmd = ft_check_valide_cmd(ft_convert_cmd(cmd)[0], *infos);
 	if (type_cmd == 0)
 	{
