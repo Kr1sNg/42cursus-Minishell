@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/10 17:32:05 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:20:03 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*value_env(char *name, t_env *infos);
 void	ft_var_env(char *str, t_env *infos);
 int		check_list_var(char *cmd, t_env *infos, int free_old);
 int		ft_check_valid_export(char *cmd);
+char	**ft_convert_cmd(char **str);
 
 // int		ft_true_false(char *t);
 

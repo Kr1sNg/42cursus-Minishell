@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
+#    By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:04:41 by tbahin            #+#    #+#              #
-#    Updated: 2025/03/03 21:53:59 by tat-nguy         ###   ########.fr        #
+#    Updated: 2025/03/10 21:36:58 by tbahin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 
 # Source Files
 DIR_SRCS	= src
-SUBDIRS		= main buildins cmd_check errors executing export_cmd lexing \
+SUBDIRS		= main buildins cmd_exec errors executing export_cmd lexing pipe \
 				parsing redirect signal unset_cmd 
 SRCS_DIRS	= $(foreach dir, $(SUBDIRS), $(addprefix $(DIR_SRCS)/, $(dir)))
 SRCS		= $(foreach dir, $(SRCS_DIRS), $(wildcard $(dir)/*.c))

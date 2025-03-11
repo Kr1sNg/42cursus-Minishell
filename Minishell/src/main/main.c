@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 12:21:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:04:00 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	main(int argc, char *argv[], char *env[])
 		// free(input);
 		ft_free_cmd(input, ast, tokens, &infos);
 	}
+	printf("exit\n");
 	free_tab(infos.env);
 	free_tab(infos.export);
 	return (infos.status);
