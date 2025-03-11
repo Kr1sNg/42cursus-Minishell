@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:29:23 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:07:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_operator(char *s)
 		else if (s[1] && (ft_isalnum(s[1]) || ft_isspace(s[1])))
 			return (1);
 		else
-			return (ft_error_input(-42), -42);
+			return (-42);
 	}
 	else if (s[0] == '(' || s[0] == ')')
 		return (1);
@@ -32,7 +32,7 @@ static int	is_operator(char *s)
 		if (s[1] == s[0])
 			return (22);
 		else
-			return (ft_error_input(-42), -42);
+			return (-42);
 	}
 	return (0);
 }
@@ -65,7 +65,7 @@ static int	count_words(char *str)
 			while (str[i] != '\0' && str[i] != c)
 				i++;
 			if (str[i] != c)
-				return (ft_error_input(-42), -42);
+				return (-42);
 			i++;
 		}
 		else if ((str[i] != '\0') && is_operator(&str[i]))

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:36:36 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:22:10 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int	ft_check_buildins(char *cmd)
 		return (1);
 	if (ft_strncmp(cmd, "exit", ft_strlen("exit0")) == 0)
 		return (1);
-	// if (ft_strncmp(cmd, "true", ft_strlen("true0")) == 0)
-	// 	return (1);
-	// if (ft_strncmp(cmd, "false", ft_strlen("false0")) == 0)
-	// 	return (1);
 	return (0);
 }
 

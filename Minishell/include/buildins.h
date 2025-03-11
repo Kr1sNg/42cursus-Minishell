@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 16:16:40 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:06:26 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define BUILDINS_H
 
 /*
-** :::::::::::::::::::::::::::::::::* HEADERS *:::::::::::::::::::::::::::::: **
+** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
 */
 
 
@@ -65,9 +65,7 @@ int		check_list_var(char *cmd, t_env *infos, int free_old);
 int		ft_check_valid_export(char *cmd);
 char	**ft_convert_cmd(char **str);
 
-/*
-** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
-*/
+
 
 // int	main(int argc, char *argv[], char *env[]);
 
@@ -131,7 +129,6 @@ void	ft_handler(int sig);
 
 
 /* error */
-void	ft_error_input(int er);
 void	ft_error_syntax(char *s);
 void	ft_error_target(char *s);
 
@@ -154,5 +151,7 @@ int ft_exit(t_env *infos);
 
 void	ft_check_wildcards(char **cmd, t_env *env);
 // int		ft_true_false(char *t);
+
+int	ft_here_doc(char *eof);
 
 #endif

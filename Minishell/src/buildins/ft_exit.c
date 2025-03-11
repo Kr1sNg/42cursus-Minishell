@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 14:51:39 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:00:27 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int ft_exit(t_env *infos)
 {
-	ft_free_cmd(infos);
-	printf("exit\n");
+	ft_close_io(infos);
+	ft_free_cmd(infos);	
 	free_tab(infos->env);
 	free_tab(infos->export);
+	printf("exit\n");
 	exit(infos->status);
 	return (infos->status);
 }

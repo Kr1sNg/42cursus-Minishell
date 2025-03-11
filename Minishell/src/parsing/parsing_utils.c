@@ -1,50 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_parsing.c                                     :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:05:13 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
-// void	test_parsing(char *input)
-// {
-// 	t_token	*token;
-// 	t_ast	*command_tree;
+/* to add new rediction into redirection_list */
 
-// 	token = NULL;
-// 	command_tree = NULL;
-// 	token = ft_tokenize(input);
-// 	if (!token)
-// 		return (printf("no token!\n"));
-// 	command_tree = ft_parse(&token);
-// 	if (!command_tree)
-// 		return (printf("no tree!\n"));
-// 	print_logical_expr(command_tree);
-// 	ft_free_token(token);
+void	ft_redir_list_add(t_ast **head, t_ast *new)
+{
+	t_ast	*tmp;
 
-
-// }
-
-// void print_indent(int level)
-// {
-//     for (int i = 0; i < level; i++)
-// 		printf("  ");
-// }
-
-// void print_tree(t_ast *words, int level)
-// {
-// 	printf("TREE:\n");
-	
-// }
-
-
-
-
-
-
+	if (!new)
+		return ;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		tmp = *head;
+		while (tmp->redirect->next)
+			tmp = tmp->redirect->next;
+		tmp->redirect->next = new;
+	}
+}

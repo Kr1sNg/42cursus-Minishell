@@ -6,14 +6,12 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 15:11:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:03:08 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
 
 /*
 ** :::::::::::::::::::::::::::* STRUCT DECLARATION *::::::::::::::::::::::::: **
@@ -41,7 +39,6 @@ typedef struct s_args
 	char	**cmd;
 	char	**env;
 }	t_args;
-
 
 
 /* tokenizer */
