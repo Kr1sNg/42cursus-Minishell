@@ -19,6 +19,13 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+typedef	enum s_file
+{
+	READ,
+	WRITE,
+	APPEND,
+} 	t_file;
+
 typedef struct s_init
 {
 	int	i;

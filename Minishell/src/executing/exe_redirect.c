@@ -13,30 +13,22 @@
 #include "../../include/minishell.h"
 #include "../../include/buildins.h"
 
-// int	ft_exec_redir(t_ast_redirect *ast)
-// {
-// 	int	status;
+int	ft_exe_redirect(t_ast *ast, t_env *env)
+{
+	if (!ast || ast->type != AST_REDIRECT)
+		return (1);
+	if (ast->redirect->direction == TK_REDIR_IN)
+		env->fd_in = ft_open(ast->redirect->target, READ);
+	else if (ast->redirect->direction == TK_REDIR_OUT)
+		env->fd_out = ft_open(ast->redirect->target, WRITE);
+	else if (ast->redirect->direction == TK_APPEND_OUT)
+		env->fd_out = ft_open(ast->redirect->target, APPEND);
+	// else if (ast->redirect->direction == TK_HEREDOC)
+	// {
 
-// 	status = 1;
-// 	if (!ast)
-// 		return (1);
-// 	if (ast->direction == TK_REDIR_IN || ast->direction == TK_HEREDOC)
-// 		status = ft_redir_input(ast);
-// 	else if (ast->direction == TK_REDIR_OUT)
-// 		status = ft_redir_output(ast);
-// 	else if (ast->direction == TK_APPEND_OUT)
-// 		status = ft_append_output(ast);
-// 	return (status);
-// }
+	// }
+	if (env->fd_in == -1 || env->fd_out == -1)
+		return (ft_error_target(ast->redirect->target), 1);
+	return (0);
+}
 
-// int	ft_redir_input(t_ast_redirect *ast)
-// {
-// 	int	input_fd;
-// 	int	original_stdin;
-// 	int	status;
-
-// 	input_fd = open(ast->target, O_RDONLY);
-// 	if (input_fd == -1)
-// 		return (perror(ast->target), EXIT_FAILURE);
-// 	original_stdin = dup()
-// }

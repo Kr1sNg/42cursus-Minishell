@@ -93,6 +93,8 @@ int	main(int argc, char *argv[], char *env[])
 		// ft_print_token(tokens);
 		ast = ft_parse(tokens);
 		infos.status = ft_execute(ast, &infos);
+		infos.fd_in = STDIN_FILENO;
+		infos.fd_out = STDOUT_FILENO;
 		ft_free_ast(ast);
 		ft_free_token(tokens);
 		free(input);
