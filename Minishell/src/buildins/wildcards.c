@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 16:23:20 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:31:16 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 		line = ft_strjoin(line, buffer);
 	}
 	wildcards = ft_split(line, '\n');
+	free(line);
 	new_cmd = (char **)malloc(sizeof(char *) * (ft_double_tab_len(cmd) - 1
 			+ ft_double_tab_len(wildcards) + 1));
 	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
 	free(wildcards);
-	free(line);
 	return(new_cmd);
 }
 
