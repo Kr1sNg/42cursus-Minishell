@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/10 19:27:12 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:57:26 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,9 @@ int ft_exe_subshell(t_ast_subshell *ast, t_env *env)
 	{
 		if (ft_exe_redirect(redir, env) == EXIT_FAILURE)
 		{
-			if (env->fd_in != STDIN_FILENO)
+			if (env->fd_in != STDIN_FILENO && env->fd_in > -1)
 				close(env->fd_in);
-			if (env->fd_out != STDOUT_FILENO)
+			if (env->fd_out != STDOUT_FILENO && env->fd_in > -1)
 				close(env->fd_out);
 			return (status);
 		}
@@ -167,25 +167,21 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 {
 	int 	status = 1;
 	pid_t	pid;
-	// int		fd_in;
-	// int		fd_out;
 	t_ast	*redir;
 
-	// fd_in = STDIN_FILENO;
-	// fd_out = STDOUT_FILENO;
 	if (ast->redirect_list)
 	{
-		redir = ast->redirect_list; // head of redirect_list
+		redir = ast->redirect_list;
 		while (redir)
 		{
 			if (ft_exe_redirect(redir, env) == EXIT_FAILURE)
 			{
-				if (env->fd_in != STDIN_FILENO)
+				if (env->fd_in != STDIN_FILENO && env->fd_in > -1)
 				{
 					// printf("1a list close fd_in: %i\n", fd_in);
 					close(env->fd_in);
 				}
-				if (env->fd_out != STDOUT_FILENO)
+				if (env->fd_out != STDOUT_FILENO && env->fd_in > -1)
 				{
 					// printf("1a list close fd_out: %i\n", fd_out);
 					close(env->fd_out);
@@ -232,7 +228,7 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		if (ast->cmd_words)
 		{
 			// printf("\t\t 3b-cmd_words\n");
-			status = ft_execute(ast->cmd_words, env);
+			status = ft_execute(ast->cmd_words, env); // have to keep this for exit!
 			return (status);
 		}
 	}

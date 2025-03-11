@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_redirect.c                                 :+:      :+:    :+:   */
+/*   exe_redirect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 09:30:38 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/09 09:30:41 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:34:44 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ft_exe_redirect(t_ast *ast, t_env *env)
 {
 	if (!ast || ast->type != AST_REDIRECT)
-		return (1);
+		return (EXIT_FAILURE);
 	if (ast->redirect->direction == TK_REDIR_IN)
 		env->fd_in = ft_open(ast->redirect->target, READ);
 	else if (ast->redirect->direction == TK_REDIR_OUT)
@@ -28,7 +28,7 @@ int	ft_exe_redirect(t_ast *ast, t_env *env)
 
 	// }
 	if (env->fd_in == -1 || env->fd_out == -1)
-		return (ft_error_target(ast->redirect->target), 1);
-	return (0);
+		return (ft_error_target(ast->redirect->target), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
