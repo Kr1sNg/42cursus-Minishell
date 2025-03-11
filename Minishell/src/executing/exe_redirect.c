@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 09:30:38 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 15:59:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:29:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,4 @@ void	ft_close_io(t_env *env)
 	if (env->fd_out != STDOUT_FILENO && env->fd_in > -1)
 		close(env->fd_out);
 }
+
