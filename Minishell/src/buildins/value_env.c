@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   value_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/09 13:04:49 by theo             ###   ########.fr       */
+/*   Updated: 2025/03/11 16:11:05 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 char	*value_env(char *name, t_env *infos)
 {
 	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
+	j = 0;
 	while (infos->env[i])
 	{
 		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name)) == 0)
 		{
-			line = strdup(infos->env[i]);
-			while(*line != '=')
-				line++;
-			line++;
+			
+			while(infos->env[i][j] != '=')
+				j++;
+			j++;
+			line = strdup(&infos->env[i][j]);
 			return (line);
 		}
 		i++;

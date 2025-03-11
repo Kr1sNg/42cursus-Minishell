@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:06:09 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/11 15:34:27 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ int	ft_strlen_wildcards(char *str)
 		i++;
 	}
 	return(len);
+}
+
+int	ft_double_tab_len(char **str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return(i);
 }
 
 int	ft_check_star(char * str)
@@ -68,26 +78,56 @@ char	*ft_replace_cmd_only(char *cmd)
 	return(dest);
 }
 
-char	**ft_new_tab(int fd, char **cmd, t_env *env, int j)
+void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	k = 0;
+	while(cmd[k])
+	{
+		if (k != j)
+		{
+			new_cmd[i] = cmd[k];
+			i++;
+		}
+		k++;
+	}
+	k = 0;
+	while(wildcards[k])
+	{
+		new_cmd[i] = wildcards[k];
+		i++;
+		k++;
+	}
+	new_cmd[i] = NULL;
+}
+
+char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 {
 	char	**new_cmd;
-	char	**wildcards_add;
+	char	**wildcards;
 	char	*buffer;
-	(void)j;
-	(void)env;
-	(void)cmd;
-	(void)new_cmd;
-	buffer = get_next_line(fd);
-	printf("%s", buffer);
-	exit(0);
-	wildcards_add = ft_split(buffer, ' ');
-	int	i = 0;
-	while(wildcards_add[i])
+	char	*line;
+	int		i;
+
+	i = 0;
+	buffer = NULL;
+	line = get_next_line(fd);
+	while(buffer || i++ == 0)
 	{
-		printf("%s", wildcards_add[i]);
-		i++;
+		if (buffer)
+			free(buffer);
+		buffer = get_next_line(fd);
+		line = ft_strjoin(line, buffer);
 	}
-	return(wildcards_add);
+	wildcards = ft_split(line, '\n');
+	new_cmd = (char **)malloc(sizeof(char *) * (ft_double_tab_len(cmd) - 1
+			+ ft_double_tab_len(wildcards) + 1));
+	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
+	free(wildcards);
+	return(new_cmd);
 }
 
 char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
@@ -98,11 +138,11 @@ char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
 	char	**new_cmd;
 
 	pipe(fd);
-	dup2(fd[0], 0);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(fd[0]);
+		dup2(fd[1], 1);
 		ls = malloc(sizeof(char *) * 2);
 		ls[0] = ft_strdup("ls");
 		ls[1] = NULL;
@@ -111,8 +151,8 @@ char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
 	}
 	wait(NULL);
 	close(fd[1]);
-		dup2(fd[1], 1);
-	new_cmd = ft_new_tab(fd[0], cmd, env, i);
+	dup2(fd[0], 0);
+	new_cmd = ft_malloc_new_tab(fd[0], cmd, i);
 	close(fd[0]);
 	return (new_cmd);
 }
@@ -128,7 +168,7 @@ void	ft_check_wildcards(char **cmd, t_env *env)
 		{
 			if (cmd[i][0] == '*' && !cmd[i][1])
 			{
-				/*cmd = */ft_replace_cmd_wilds(cmd, i, env);
+				cmd = ft_replace_cmd_wilds(cmd, i, env);
 				i = 0;
 			}
 			else
