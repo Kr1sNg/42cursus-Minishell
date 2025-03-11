@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:17:19 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 char	*value_env(char *name, t_env *infos)
 {
 	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
+	j = 0;
 	while (infos->env[i])
 	{
 		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name)) == 0)
 		{
-			line = strdup(infos->env[i]);
-			while(*line != '=')
-				line++;
-			line++;
+			
+			while(infos->env[i][j] != '=')
+				j++;
+			j++;
+			line = strdup(&infos->env[i][j]);
 			return (line);
 		}
 		i++;

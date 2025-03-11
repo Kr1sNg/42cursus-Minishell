@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 14:23:46 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:18:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_exec_cmd(char **cmd, t_env *infos)
 {
 	int		type_cmd;
 	// int	status;
-
+	ft_check_wildcards(cmd, infos);
 	type_cmd = ft_check_valide_cmd(ft_convert_cmd(cmd)[0], *infos);
 	if (type_cmd == 0)
 	{

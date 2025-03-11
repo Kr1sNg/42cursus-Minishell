@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 16:00:42 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:16:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ void	ft_close_io(t_env *env);
 int ft_exit(t_env *infos);
 
 
+void	ft_check_wildcards(char **cmd, t_env *env);
+// int		ft_true_false(char *t);
 
 #endif
