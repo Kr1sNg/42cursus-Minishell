@@ -167,6 +167,8 @@ typedef struct s_ast
 
 // int	main(int argc, char *argv[], char *env[]);
 
+void ft_free_cmd(char* input, t_ast *ast, t_token *tokens, t_env *infos);
+
 /* split */
 
 char	**ft_split_tokens(char *str);

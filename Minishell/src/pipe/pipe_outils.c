@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:31:54 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/03 21:09:11 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:28:35 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	ft_open(char *name, int read_write)
 {
 	int	fd;
 
-	fd = 0;
-	if (read_write == 0)
+	fd = -1;
+	if (read_write == READ)
 		fd = open(name, O_RDONLY, 0777);
-	if (read_write == 1)
-		fd = open(name, O_WRONLY | O_CREAT, 0777);
-	if (read_write == 2)
+	else if (read_write == WRITE)
+		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC , 0777);
+	else if (read_write == APPEND)
 		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	return (fd);
 }
