@@ -93,13 +93,24 @@ int	main(int argc, char *argv[], char *env[])
 		// ft_print_token(tokens);
 		ast = ft_parse(tokens);
 		infos.status = ft_execute(ast, &infos);
-		infos.fd_in = STDIN_FILENO;
-		infos.fd_out = STDOUT_FILENO;
-		ft_free_ast(ast);
-		ft_free_token(tokens);
-		free(input);
+		// infos.fd_in = STDIN_FILENO;
+		// infos.fd_out = STDOUT_FILENO;
+		// ft_free_ast(ast);
+		// ft_free_token(tokens);
+		// free(input);
+		ft_free_cmd(input, ast, tokens, &infos);
 	}
 	free_tab(infos.env);
 	free_tab(infos.export);
 	return (infos.status);
+}
+
+/* free ast, tokens, input after each command line */
+void ft_free_cmd(char* input, t_ast *ast, t_token *tokens, t_env *infos)
+{
+	infos->fd_in = STDIN_FILENO;
+	infos->fd_out = STDOUT_FILENO;
+	ft_free_ast(ast);
+	ft_free_token(tokens);
+	free(input);
 }
