@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 16:18:02 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:23:20 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 			+ ft_double_tab_len(wildcards) + 1));
 	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
 	free(wildcards);
+	free(line);
 	return(new_cmd);
 }
 
