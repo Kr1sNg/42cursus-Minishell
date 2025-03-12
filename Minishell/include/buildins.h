@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/11 20:06:26 by tat-nguy         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/12 21:03:06 by tbahin           ###   ########.fr       */
+>>>>>>> 4401b75 (theo mar12 21:05)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +68,8 @@ void	ft_var_env(char *str, t_env *infos);
 int		check_list_var(char *cmd, t_env *infos, int free_old);
 int		ft_check_valid_export(char *cmd);
 char	**ft_convert_cmd(char **str);
+char	*ft_convert_cmd_only(char *str);
+int		ft_check_buildins_out_echo(char *cmd);
 
 
 
@@ -133,9 +139,9 @@ void	ft_error_syntax(char *s);
 void	ft_error_target(char *s);
 
 /* execute follow the tree */
-int	ft_execute(t_ast *ast, t_env *env);
-int	ft_exe_logical(t_ast_logical *ast, t_env *env);
-int ft_exe_expression(t_ast_expression *ast, t_env *env);
+int		ft_execute(t_ast *ast, t_env *env);
+int		ft_exe_logical(t_ast_logical *ast, t_env *env);
+int 	ft_exe_expression(t_ast_expression *ast, t_env *env);
 
 // --just for testing ast rightnow--
 int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env);
@@ -148,8 +154,9 @@ void	ft_close_io(t_env *env);
 
 int ft_exit(char **cmd, t_env *infos);
 
-
-void	ft_check_wildcards(char **cmd, t_env *env);
+int		ft_check_star(char * str);
+char	*ft_replace_cmd_only(char *cmd);
+char	**ft_check_wildcards(char **cmd, t_env *env);
 // int		ft_true_false(char *t);
 
 int	ft_here_doc(char *eof);

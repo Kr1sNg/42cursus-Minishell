@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 16:31:16 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/12 20:51:18 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*ft_replace_cmd_only(char *cmd)
 	j = 0;
 	len = ft_strlen_wildcards(cmd);
 	dest = (char *)malloc((len + 1) * sizeof(char));
-	while (i < len)
+	while (j < len)
 	{
 		if (cmd[i] == '*')
 			i++;
@@ -89,7 +89,7 @@ void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
 	{
 		if (k != j)
 		{
-			new_cmd[i] = cmd[k];
+			new_cmd[i] = ft_strdup(cmd[k]);
 			i++;
 		}
 		k++;
@@ -97,7 +97,7 @@ void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
 	k = 0;
 	while(wildcards[k])
 	{
-		new_cmd[i] = wildcards[k];
+		new_cmd[i] = ft_strdup(wildcards[k]);
 		i++;
 		k++;
 	}
@@ -127,7 +127,7 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 	new_cmd = (char **)malloc(sizeof(char *) * (ft_double_tab_len(cmd) - 1
 			+ ft_double_tab_len(wildcards) + 1));
 	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
-	free(wildcards);
+	free_tab(wildcards);
 	return(new_cmd);
 }
 
@@ -147,34 +147,42 @@ char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
 		ls = malloc(sizeof(char *) * 2);
 		ls[0] = ft_strdup("ls");
 		ls[1] = NULL;
-		ft_child(ls, env->env);
 		close(fd[1]);
+		ft_child(ls, env->env);
+		exit(0);
 	}
-	wait(NULL);
+	waitpid(0, NULL, 0);
 	close(fd[1]);
 	dup2(fd[0], 0);
 	new_cmd = ft_malloc_new_tab(fd[0], cmd, i);
 	close(fd[0]);
+	// free(cmd);
 	return (new_cmd);
 }
 
-void	ft_check_wildcards(char **cmd, t_env *env)
+char	**ft_check_wildcards(char **cmd, t_env *env)
 {
-	int	i;
+	int		i;
+	char	**ptr;
 
 	i = 0;
-	while (cmd[i])
+	ptr = cmd;
+	while (ptr[i])
 	{
-		if (ft_check_star(cmd[i]))
+		if (ft_check_star(ptr[i]))
 		{
-			if (cmd[i][0] == '*' && !cmd[i][1])
+			// Check if we have only wildcards
+			// We need to check exter_str for complete any names from wildcards
+			// Function for convert a raw of wildcards on one wildcard
+			if (ptr[i][0] == '*' && !ptr[i][1])
 			{
-				cmd = ft_replace_cmd_wilds(cmd, i, env);
+				ptr = ft_replace_cmd_wilds(ptr, i, env);
+				dup2(0, 0);
+				dup2(1, 1);
 				i = 0;
 			}
-			else
-				cmd[i] = ft_replace_cmd_only(cmd[i]);
 		}
 		i++;
 	}
+	return(ptr);
 }
