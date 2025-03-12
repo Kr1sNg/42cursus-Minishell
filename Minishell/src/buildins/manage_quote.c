@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:39:22 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:37:00 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ char	*ft_quote_clear(char *str)
 	return(dest);
 }
 
+char	*ft_convert_cmd_only(char *str)
+{
+	 if (!(str[0] == '\"') || !(str[0] == '\''))
+		str = ft_replace_cmd_only(str);
+	if (str[0] == '\"' || str[0] == '\'')
+		str = ft_quote_clear(str);
+	return (str);
+}
+
 char	**ft_convert_cmd(char **str)
 {
 	int	i;
@@ -41,6 +50,8 @@ char	**ft_convert_cmd(char **str)
 	i = 0;
 	while(str[i])
 	{
+		if (!(str[i][0] == '\"') || !(str[i][0] == '\''))
+			str[i] = ft_replace_cmd_only(str[i]);
 		if (str[i][0] == '\"' || str[i][0] == '\'')
 			str[i] = ft_quote_clear(str[i]);
 		i++;

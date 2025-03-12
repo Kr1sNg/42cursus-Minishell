@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 18:22:24 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:12:57 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_exec_execve(char **cmd, char **env)
 
 int	ft_exec_buildins(char **cmd, t_env *infos)
 {
-	if (ft_strncmp(cmd[0], "echo", ft_strlen("echo0")) == 0)
+	if (ft_strncmp(ft_convert_cmd(cmd)[0], "echo", ft_strlen("echo0")) == 0)
 		return(ft_exec_echo(cmd, infos));
 	if (ft_strncmp(ft_convert_cmd(cmd)[0], "export", ft_strlen("export0")) == 0)
 		return(ft_exec_export(cmd, infos));
@@ -40,8 +40,8 @@ int	ft_exec_cmd(char **cmd, t_env *infos)
 {
 	int		type_cmd;
 
-	ft_check_wildcards(cmd, infos);
-	type_cmd = ft_check_valide_cmd(ft_convert_cmd(cmd)[0], *infos);
+	cmd = ft_check_wildcards(cmd, infos);
+	type_cmd = ft_check_valide_cmd(ft_convert_cmd_only(cmd[0]), *infos);
 	if (type_cmd == 0)
 	{
 		printf("%s: command not found\n", cmd[0]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:23:56 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	ft_exec_echo(char **cmd, t_env *infos)
 			ft_echodouble(cmd[i], infos);
 		else
 			ft_echodouble(cmd[i], infos);
-		printf(" ");
 		i++;
+		if (cmd[i])
+			printf(" ");
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen("-n0")) != 0)
 		printf("\n");
