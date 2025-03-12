@@ -12,19 +12,15 @@
 
 #include "../../include/libraries.h"
 
-int ft_exit(char **cmd, t_env *infos)
+int	ft_exit(char **cmd, t_env *infos)
 {
-	long i;
+	long	i;
 
 	i = EXIT_FAILURE;
 	printf("exit\n");
-	if (cmd[2])
-	{
-		printf("cmd2: %s\n\n", cmd[2]);
-		printf("minishell: exit: too many arguments\n");
-		return (i);
-	}
-	else if (cmd[1] && !cmd[2])
+	if (cmd && cmd[0] && cmd[1] && cmd[2])
+		return (printf("minishell: exit: too many arguments\n"), i);
+	else if (cmd && cmd[0] && cmd[1] && !cmd[2])
 	{
 		if (!ft_isdigit_s(cmd[1]))
 		{
@@ -38,11 +34,7 @@ int ft_exit(char **cmd, t_env *infos)
 		i = infos->status;
 	ft_close_io(infos);
 	ft_free_cmd(infos);
-	if (infos->env)
-		free_tab(infos->env);
-	if (infos->export)
-		free_tab(infos->export);
+	free_tab(infos->env);
+	free_tab(infos->export);
 	exit(i);
-	return (infos->status);
 }
-
