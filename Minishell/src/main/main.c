@@ -12,10 +12,6 @@
 
 #include "../../include/libraries.h"
 
-
-
-/* env[] is needed for ENV, EXPORT, UNSET */
-
 t_env	ft_initialization(int argc, char **argv, char **env)
 {
 	t_env infos;
@@ -63,7 +59,10 @@ void ft_free_cmd(t_env *infos)
 {
 	infos->fd_in = STDIN_FILENO;
 	infos->fd_out = STDOUT_FILENO;
-	ft_free_ast(infos->ast);
-	ft_free_token(infos->tokens);
-	free(infos->input);
+	if (infos->ast)
+		ft_free_ast(infos->ast);
+	if (infos->tokens)
+		ft_free_token(infos->tokens);
+	if (infos->input)
+		free(infos->input);
 }

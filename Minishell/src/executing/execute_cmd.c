@@ -41,7 +41,7 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		redir = redir->redirect->next;
 	}
 	if (!ft_strcmp(ast->cmd_words->cmd_words->args[0], "exit"))
-		return(ft_exit(env));
+		return(ft_exit(ast->cmd_words->cmd_words->args, env));
 	pid = fork();
 	if (pid == -1)
 		return (status);

@@ -146,7 +146,7 @@ int	ft_exe_redirect(t_ast *ast, t_env *env);
 
 void	ft_close_io(t_env *env);
 
-int ft_exit(t_env *infos);
+int ft_exit(char **cmd, t_env *infos);
 
 
 void	ft_check_wildcards(char **cmd, t_env *env);

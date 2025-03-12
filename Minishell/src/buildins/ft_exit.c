@@ -12,13 +12,37 @@
 
 #include "../../include/libraries.h"
 
-int ft_exit(t_env *infos)
+int ft_exit(char **cmd, t_env *infos)
 {
-	ft_close_io(infos);
-	ft_free_cmd(infos);	
-	free_tab(infos->env);
-	free_tab(infos->export);
+	long i;
+
+	i = EXIT_FAILURE;
 	printf("exit\n");
-	exit(infos->status);
+	if (cmd[2])
+	{
+		printf("cmd2: %s\n\n", cmd[2]);
+		printf("minishell: exit: too many arguments\n");
+		return (i);
+	}
+	else if (cmd[1] && !cmd[2])
+	{
+		if (!ft_isdigit_s(cmd[1]))
+		{
+			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			i = 255;
+		}
+		else
+			i = ft_atol(cmd[1]);
+	}
+	else
+		i = infos->status;
+	ft_close_io(infos);
+	ft_free_cmd(infos);
+	if (infos->env)
+		free_tab(infos->env);
+	if (infos->export)
+		free_tab(infos->export);
+	exit(i);
 	return (infos->status);
 }
+

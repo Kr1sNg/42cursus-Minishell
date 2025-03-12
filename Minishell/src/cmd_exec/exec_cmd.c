@@ -32,7 +32,7 @@ int	ft_exec_buildins(char **cmd, t_env *infos)
 	if (ft_strncmp(ft_convert_cmd(cmd)[0], "pwd", ft_strlen("pwd0")) == 0)
 		return(ft_exec_pwd());
 	if (ft_strncmp(ft_convert_cmd(cmd)[0], "exit", ft_strlen("exit0")) == 0)
-		return(ft_exit(infos));
+		return(ft_exit(cmd, infos));
 	return(127);
 }
 

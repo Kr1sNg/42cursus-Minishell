@@ -28,6 +28,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <limits.h>
 # include "minishell.h"
 # include "buildins.h"
 
