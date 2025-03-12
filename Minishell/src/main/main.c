@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 18:48:06 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:18:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_env	infos;
 
-	signal(SIGINT, ft_handler);
-	signal(SIGQUIT, SIG_IGN); //SIG_IGN: ignore signal - ctr-backflash
-	signal(SIGTSTP, SIG_IGN); // SIGTSTP: keyboard stop = EOF
+	g_signal_value = 0;
+	if (argc > 1)
+		return (ft_error_target(argv[1]), exit(127), 0);
+	// ft_signal_main();
+	ft_signal_input();
+	// signal(SIGINT, ft_sigint_handler); // ctr-c
+	// signal(SIGQUIT, ft_sigquit_handler); //SIG_IGN: ignore signal - ctr-backflash
 	infos = ft_initialization(argc, argv, env);
 	while (1)
 	{
@@ -51,6 +55,8 @@ int	main(int argc, char *argv[], char *env[])
 	printf("exit\n");
 	free_tab(infos.env);
 	free_tab(infos.export);
+	if (g_signal_value == SIGINT)
+		infos.status = 130;
 	return (infos.status);
 }
 

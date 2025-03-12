@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 18:00:27 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:17:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@ int	ft_exit(char **cmd, t_env *infos)
 
 	i = EXIT_FAILURE;
 	printf("exit\n");
-	if (cmd && cmd[0] && cmd[1] && cmd[2])
-		return (printf("minishell: exit: too many arguments\n"), i);
-	else if (cmd && cmd[0] && cmd[1] && !cmd[2])
+	if (cmd && cmd[0] && cmd[1])
 	{
 		if (!ft_isdigit_s(cmd[1]))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-			i = 255;
+			i = 2;
 		}
 		else
+		{
+			if (cmd[2])
+				return (printf("minishell: exit: too many arguments\n"), i);
 			i = ft_atol(cmd[1]);
+		}
 	}
 	else
 		i = infos->status;

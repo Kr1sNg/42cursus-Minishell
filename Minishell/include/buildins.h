@@ -6,12 +6,14 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 20:06:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:19:09 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILDINS_H
 # define BUILDINS_H
+
+extern sig_atomic_t	g_signal_value;
 
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
@@ -125,7 +127,11 @@ void	ft_redir_list_add(t_ast **head, t_ast *new);
 
 
 /* signal */
-void	ft_handler(int sig);
+void	ft_signal(int signum, void (*handler)(int));
+void	ft_signal_main(void);
+void	ft_signal_child(void);
+void	sigint_prompt(int signum);
+void	ft_signal_input(void);
 
 
 /* error */

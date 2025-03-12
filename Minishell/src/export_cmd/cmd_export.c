@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 19:37:46 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:35:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_exec_export(char **cmd, t_env *infos)
 	{
 		if (ft_check_valid_export(cmd[i]))
 		{
-			write(2, "minishell: export: `", 15);
+			write(2, "minishell: export: `", 20);
 			ft_putstr_fd(cmd[i], 2);
 			write(2, "\': not a valid identifier\n", 26);
 			return(1);

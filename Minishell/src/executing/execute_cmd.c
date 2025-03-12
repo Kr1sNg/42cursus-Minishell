@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 18:46:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:43:28 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 
 	status = EXIT_FAILURE;
 	redir = NULL;
-	if (!ast->redirect_list)
-		return (ft_execute(ast->cmd_words, env)); // have to keep this for cd!
+	// if (!ast->redirect_list)
+	// 	return (ft_execute(ast->cmd_words, env)); // have to keep this for cd!
 	if (ast->redirect_list)
 		redir = ast->redirect_list;
 	while (redir)
@@ -47,6 +47,7 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		return (status);
 	if (pid == 0)
 	{
+		ft_signal_child();
 		if (env->fd_in != STDIN_FILENO)
 		{
 			dup2(env->fd_in, STDIN_FILENO);
@@ -60,8 +61,11 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		status = ft_execute(ast->cmd_words, env);
 		exit(status);
 	}
-	ft_close_io(env);
-	waitpid(pid, &status, 0);
+	else
+	{
+		ft_close_io(env);
+		waitpid(pid, &status, 0);
+	}
 	return (WEXITSTATUS(status));
 }
 
