@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 21:22:28 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:12:55 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int argc, char *argv[], char *env[])
 	g_signal_value = 0;
 	if (argc > 1)
 		return (ft_error_target(argv[1]), exit(127), 0);
-	// ft_signal_main();
 	ft_signal_input();
+	// ft_signal_input();
 	// signal(SIGINT, ft_sigint_handler); // ctr-c
 	// signal(SIGQUIT, ft_sigquit_handler); //SIG_IGN: ignore signal - ctr-backflash
 	infos = ft_initialization(argc, argv, env);
@@ -51,6 +51,7 @@ int	main(int argc, char *argv[], char *env[])
 		infos.ast = ft_parse(infos.tokens);
 		infos.status = ft_execute(infos.ast, &infos);
 		ft_free_cmd(&infos);
+		// g_signal_value = 0;
 	}
 	printf("exit\n");
 	free_tab(infos.env);

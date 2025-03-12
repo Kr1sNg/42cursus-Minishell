@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 19:43:28 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:35:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 			return (ft_close_io(env), status);
 		redir = redir->redirect->next;
 	}
-	if (!ft_strcmp(ast->cmd_words->cmd_words->args[0], "exit"))
-		return(ft_exit(ast->cmd_words->cmd_words->args, env));
+	if (ft_check_buildins_out_echo(ast->cmd_words->cmd_words->args[0]))
+		return(ft_exec_cmd(ast->cmd_words->cmd_words->args, env));
 	pid = fork();
 	if (pid == -1)
 		return (status);

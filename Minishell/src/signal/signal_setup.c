@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:59:37 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 20:03:48 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:08:28 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	ft_signal_main(void)
 
 void	ft_signal_child(void)
 {
-	ft_signal(SIGINT, SIG_DFL);
-	ft_signal(SIGQUIT, SIG_DFL);
+	ft_signal(SIGINT, sigint_quit);
+	ft_signal(SIGQUIT, sigquit_handler);
 }
 
 void	ft_signal_input(void)

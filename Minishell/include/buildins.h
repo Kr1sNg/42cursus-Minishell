@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 21:24:25 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/12 22:10:32 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	ft_signal_main(void);
 void	ft_signal_child(void);
 void	sigint_prompt(int signum);
 void	ft_signal_input(void);
+void	sigquit_handler(int signum);
+void	sigint_quit(int signum);
 
 
 /* error */
