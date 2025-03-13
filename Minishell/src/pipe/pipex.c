@@ -6,30 +6,58 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:52:51 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 14:28:28 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:53:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
+static void	input_heredoc(char *eof, int fd)
+{
+	char *line;
+	
+	while (1)
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			break;
+		if (!ft_strncmp(line, eof, ft_strlen(eof)) && line[ft_strlen(eof)] == '\n')
+		{
+			free(line);
+			break;
+		}
+		ft_putstr_fd(line, fd);
+		free(line);
+	}
+}
+
 int	ft_here_doc(char *eof)
 {
-	int		here_doc;
-	char	*line;
+	pid_t	pid;
+	int		fd[2];
 
-	here_doc = ft_open("here_doc", APPEND);
-	line = get_next_line(STDIN_FILENO);
-	while (!(ft_strcmp(line, eof) == 10 && (ft_strlen(line) - 1 == ft_strlen(eof))))
+	if (pipe(fd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
 	{
-		ft_putstr_fd(line, here_doc);
-		free(line);
-		line = get_next_line(STDIN_FILENO);
+		disable_echoctl();
+		heredoc_signals();
+		close(fd[0]);
+		input_heredoc(eof, fd[1]);
+		close(fd[1]);
+		enable_echoctl();
+		exit(0);
 	}
-	free(line);
-	close(here_doc);
-	here_doc = ft_open("here_doc", READ);
-	return (here_doc);
+	ignore_signals();
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	return (fd[0]);
 }
+
+
 
 // void	ft_no_here_doc(int ac, t_env en, int *file_out, int *file_in)
 // {

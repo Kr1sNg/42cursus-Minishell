@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 14:20:37 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:57:17 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
-		if (!infos.input) // || !ft_strcmp(input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
+		if ((!infos.input) || !ft_strcmp(infos.input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
+		{
+			if (infos.input && !ft_strcmp(infos.input, "exit"))
+				infos.status = 0;
 			break ;
+		}
 		add_history(infos.input); // to save history and move up - down cmd
 		infos.tokens = ft_tokenize(infos.input);
 		infos.ast = ft_parse(infos.tokens);
-		infos.status = ft_execute(infos.ast, &infos);
+		infos.status = ft_status_value(&infos);
+		// infos.status = ft_execute(infos.ast, &infos);
 		ft_free_cmd(&infos);
 	}
-	printf("exit\n");
-	free_tab(infos.env);
-	free_tab(infos.export);
+	ft_finish(&infos);
 	return (infos.status);
 }
 
@@ -65,4 +68,23 @@ void ft_free_cmd(t_env *infos)
 		ft_free_token(infos->tokens);
 	if (infos->input)
 		free(infos->input);
+}
+
+void	ft_finish(t_env *infos)
+{
+	printf("exit\n");
+	free_tab(infos->env);
+	free_tab(infos->export);
+}
+
+int	ft_status_value(t_env *infos)
+{
+	if (g_signal == 130 || g_signal == 131)
+	{
+		infos->status = g_signal;
+		g_signal = 0;
+	}
+	else
+		infos->status = ft_execute(infos->ast, infos);
+	return (infos->status);
 }

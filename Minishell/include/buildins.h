@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 14:32:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:53:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int		ft_check_buildins_out_echo(char *cmd);
 
 // int	main(int argc, char *argv[], char *env[]);
 
+void	ft_finish(t_env *infos);
+int	ft_status_value(t_env *infos);
 void ft_free_cmd(t_env *infos);
 
 
@@ -129,20 +131,20 @@ void	ft_redir_list_add(t_ast **head, t_ast *new);
 
 
 /* signal */
-// void	ft_signal(int signum, void (*handler)(int));
-// void	ft_signal_main(void);
-// void	ft_signal_child(void);
-// void	sigint_prompt(int signum);
-// void	ft_signal_input(void);
-// void	sigquit_handler(int signum);
-// void	sigint_quit(int signum);
+void	ft_signal(int signum, void (*handler)(int));
 
 void	setup_signal_handlers(void);
-void	restore_default_signals(void);
+void	child_signals(void);
 void	ignore_signals(void);
-void	sigint_handler(int signum);
-void	sigquit_handler(int signum);
 void	heredoc_signals(void);
+
+void	sigint_handler_main(int signum);
+void	sigquit_handler_child(int signum);
+void	sigint_handler_child(int signum);
+void	sigint_handler_heredoc(int signum);
+
+void	disable_echoctl(void);
+void	enable_echoctl(void);
 
 /* error */
 void	ft_error_syntax(char *s);

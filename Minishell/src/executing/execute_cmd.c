@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 14:22:22 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:55:41 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_exe_words(t_ast_words *ast, t_env *env)
 		status = ft_exec_cmd(ast->args, env);
 	return (status);
 }
+
 
 int ft_exe_command(t_ast_command *ast, t_env *env)
 {
@@ -45,7 +46,7 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		return (status);
 	if (pid == 0)
 	{
-		restore_default_signals();
+		child_signals();
 		if (env->fd_in != STDIN_FILENO)
 		{
 			dup2(env->fd_in, STDIN_FILENO);
@@ -59,13 +60,9 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		status = ft_execute(ast->cmd_words, env);
 		exit(status);
 	}
-	else
-	{
-		ignore_signals();
-		ft_close_io(env);
-		waitpid(pid, &status, 0);
-		setup_signal_handlers();
-	}
+	ignore_signals();
+	ft_close_io(env);
+	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 13:17:53 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:44:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_exit(char **cmd, t_env *infos)
 	long	i;
 
 	i = EXIT_FAILURE;
-	printf("exit\n");
 	if (cmd && cmd[0] && cmd[1])
 	{
 		if (!ft_isdigit_s(cmd[1]))
