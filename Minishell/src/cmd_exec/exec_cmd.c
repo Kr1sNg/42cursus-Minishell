@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 21:12:57 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:47:54 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,21 @@ int	ft_exec_buildins(char **cmd, t_env *infos)
 int	ft_exec_cmd(char **cmd, t_env *infos)
 {
 	int		type_cmd;
+	char	**cmd_dup;
+	int		status;
 
-	cmd = ft_check_wildcards(cmd, infos);
-	type_cmd = ft_check_valide_cmd(ft_convert_cmd_only(cmd[0]), *infos);
+	cmd_dup = ft_check_wildcards(cmd, infos);
+	type_cmd = ft_check_valide_cmd(ft_convert_cmd_only(cmd_dup[0]), *infos);
 	if (type_cmd == 0)
 	{
-		printf("%s: command not found\n", cmd[0]);
+		printf("%s: command not found\n", cmd_dup[0]);
+		free_tab(cmd_dup);
 		return (127);
 	}
 	if (type_cmd == 1)
-		return(ft_exec_buildins(cmd, infos));
+		status = ft_exec_buildins(cmd_dup, infos);
 	if (type_cmd == 2)
-		return(ft_exec_execve(ft_convert_cmd(cmd), infos->env));
-	return(127);
+		status = ft_exec_execve(ft_convert_cmd(cmd_dup), infos->env);
+	free_tab(cmd_dup);
+	return(status);
 }

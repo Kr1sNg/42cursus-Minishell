@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 20:51:18 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:38:02 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,6 @@ int	ft_strlen_wildcards(char *str)
 		i++;
 	}
 	return(len);
-}
-
-int	ft_double_tab_len(char **str)
-{
-	int	i;
-
-	i = 0;
-	while(str[i])
-		i++;
-	return(i);
 }
 
 int	ft_check_star(char * str)
@@ -101,7 +91,34 @@ void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
 		i++;
 		k++;
 	}
+	free_tab(wildcards);
+	free_tab(cmd);
 	new_cmd[i] = NULL;
+}
+
+char	*ft_strjoin_replace(char *s1, char *s2)
+{
+	size_t	lens1;
+	size_t	lens2;
+	char	*new;
+
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return ((char *)(s2));
+	else if (!s2)
+		return ((char *)(s1));
+	lens1 = ft_strlen(s1);
+	lens2 = ft_strlen(s2);
+	new = malloc(sizeof(char) * (lens1 + lens2 + 1));
+	if (!new)
+		return (NULL);
+	new[0] = '\0';
+	ft_strcat(new, s1);
+	ft_strcat(new, s2);
+	free(s1);
+	free(s2);
+	return (new);
 }
 
 char	**ft_malloc_new_tab(int fd, char **cmd, int j)
@@ -117,17 +134,14 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 	line = get_next_line(fd);
 	while(buffer || i++ == 0)
 	{
-		if (buffer)
-			free(buffer);
 		buffer = get_next_line(fd);
-		line = ft_strjoin(line, buffer);
+		line = ft_strjoin_replace(line, buffer);
 	}
 	wildcards = ft_split(line, '\n');
 	free(line);
-	new_cmd = (char **)malloc(sizeof(char *) * (ft_double_tab_len(cmd) - 1
-			+ ft_double_tab_len(wildcards) + 1));
+	new_cmd = (char **)malloc(sizeof(char *) * (ft_tablen(cmd) - 1
+			+ ft_tablen(wildcards) + 1));
 	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
-	free_tab(wildcards);
 	return(new_cmd);
 }
 
@@ -156,7 +170,6 @@ char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
 	dup2(fd[0], 0);
 	new_cmd = ft_malloc_new_tab(fd[0], cmd, i);
 	close(fd[0]);
-	// free(cmd);
 	return (new_cmd);
 }
 
@@ -166,7 +179,7 @@ char	**ft_check_wildcards(char **cmd, t_env *env)
 	char	**ptr;
 
 	i = 0;
-	ptr = cmd;
+	ptr = ft_tabdup(cmd);
 	while (ptr[i])
 	{
 		if (ft_check_star(ptr[i]))
