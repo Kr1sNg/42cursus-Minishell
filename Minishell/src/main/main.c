@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 22:12:55 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:20:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,12 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_env	infos;
 
-	g_signal_value = 0;
 	if (argc > 1)
 		return (ft_error_target(argv[1]), exit(127), 0);
-	ft_signal_input();
-	// ft_signal_input();
-	// signal(SIGINT, ft_sigint_handler); // ctr-c
-	// signal(SIGQUIT, ft_sigquit_handler); //SIG_IGN: ignore signal - ctr-backflash
 	infos = ft_initialization(argc, argv, env);
 	while (1)
 	{
+		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
 		if (!infos.input) // || !ft_strcmp(input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
 			break ;
@@ -51,13 +47,10 @@ int	main(int argc, char *argv[], char *env[])
 		infos.ast = ft_parse(infos.tokens);
 		infos.status = ft_execute(infos.ast, &infos);
 		ft_free_cmd(&infos);
-		// g_signal_value = 0;
 	}
 	printf("exit\n");
 	free_tab(infos.env);
 	free_tab(infos.export);
-	if (g_signal_value == SIGINT)
-		infos.status = 130;
 	return (infos.status);
 }
 

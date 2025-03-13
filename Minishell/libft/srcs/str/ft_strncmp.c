@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:30:21 by tat-nguy          #+#    #+#             */
-/*   Updated: 2024/12/02 19:32:17 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:45:22 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 #include <string.h>
 int	main(void)
 {
-	char *s1 = "This is 23";
- 	char *s2 = "This is 24";	
+	char *s1 = "<ba";
+ 	char *s2 = "<a";	
 
-	printf("strncmp: %i\n", strncmp(s1, s2, 10));
-	printf("ft_strncmp: %i\n", ft_strncmp(s1, s2, 10));
+	// printf("strncmp: %i\n", strncmp(s1, s2, -1));
+	printf("ft_strncmp: %i\n", ft_strncmp(s1, s2, -1));
 }
 */

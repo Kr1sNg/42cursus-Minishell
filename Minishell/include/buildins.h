@@ -6,14 +6,14 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 22:10:32 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:32:18 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILDINS_H
 # define BUILDINS_H
 
-extern sig_atomic_t	g_signal_value;
+extern volatile sig_atomic_t	g_signal;
 
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
@@ -129,14 +129,20 @@ void	ft_redir_list_add(t_ast **head, t_ast *new);
 
 
 /* signal */
-void	ft_signal(int signum, void (*handler)(int));
-void	ft_signal_main(void);
-void	ft_signal_child(void);
-void	sigint_prompt(int signum);
-void	ft_signal_input(void);
-void	sigquit_handler(int signum);
-void	sigint_quit(int signum);
+// void	ft_signal(int signum, void (*handler)(int));
+// void	ft_signal_main(void);
+// void	ft_signal_child(void);
+// void	sigint_prompt(int signum);
+// void	ft_signal_input(void);
+// void	sigquit_handler(int signum);
+// void	sigint_quit(int signum);
 
+void	setup_signal_handlers(void);
+void	restore_default_signals(void);
+void	ignore_signals(void);
+void	sigint_handler(int signum);
+void	sigquit_handler(int signum);
+void	heredoc_signals(void);
 
 /* error */
 void	ft_error_syntax(char *s);

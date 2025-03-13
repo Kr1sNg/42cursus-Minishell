@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 21:35:42 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:22:22 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 
 	status = EXIT_FAILURE;
 	redir = NULL;
-	// if (!ast->redirect_list)
-	// 	return (ft_execute(ast->cmd_words, env)); // have to keep this for cd!
 	if (ast->redirect_list)
 		redir = ast->redirect_list;
 	while (redir)
@@ -47,7 +45,7 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 		return (status);
 	if (pid == 0)
 	{
-		ft_signal_child();
+		restore_default_signals();
 		if (env->fd_in != STDIN_FILENO)
 		{
 			dup2(env->fd_in, STDIN_FILENO);
@@ -63,8 +61,10 @@ int ft_exe_command(t_ast_command *ast, t_env *env)
 	}
 	else
 	{
+		ignore_signals();
 		ft_close_io(env);
 		waitpid(pid, &status, 0);
+		setup_signal_handlers();
 	}
 	return (WEXITSTATUS(status));
 }
