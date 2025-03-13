@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 20:03:17 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:33:00 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,17 @@
 
 // builtin: echo, cd, pwd, export, unset, env, exit
 // quote: " ", ' '
-// open: $
 // operation: |, ||, &&
 // redirect: >, <, >>, <<
 // option: -n
 
-
-// echo "    hello   "
-
-
 /* split cmd, word, operations */
-
 
 /* after spliting words, create nodes for each tokens and add its type */
 t_token	*ft_create_token(char *word)
 {
 	t_token	*new;
-	
+
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
@@ -38,6 +32,7 @@ t_token	*ft_create_token(char *word)
 	new->type = ft_token_type(word);
 	return (new);
 }
+
 /* add cmd/argument to the list */
 void	ft_token_add_back(t_token **head, char *word)
 {
@@ -62,6 +57,7 @@ void	ft_token_add_back(t_token **head, char *word)
 void	ft_free_token(t_token *head)
 {
 	t_token	*tmp;
+
 	while (head)
 	{
 		tmp = head;
@@ -87,7 +83,7 @@ void	ft_print_token(t_token *head)
 t_token	*ft_tokenize(char *input)
 {
 	t_token	*tokens;
-	char 	**words;
+	char	**words;
 	int		i;
 
 	tokens = NULL;
@@ -100,4 +96,3 @@ t_token	*ft_tokenize(char *input)
 	ft_split_free(words);
 	return (tokens);
 }
-

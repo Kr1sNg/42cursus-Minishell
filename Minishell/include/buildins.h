@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 20:53:53 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:23:10 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,15 @@ int	ft_status_value(t_env *infos);
 void ft_free_cmd(t_env *infos);
 
 
-/* split */
+/* split - lexing */
+int		is_operator(char *s);
+int		is_quote(char c);
 
+int		count_words(char *str);
+char	*ft_strdup_s(char *src);
 char	**ft_split_tokens(char *str);
+
+t_token_type	ft_token_type(char *word);
 
 /* tokenize */
 
@@ -90,9 +96,6 @@ void	ft_token_add_back(t_token **head, char *input);
 void	ft_free_token(t_token *head);
 
 void	ft_print_token(t_token *head);
-
-/* lexing */
-t_token_type	ft_token_type(char *word);
 
 /* parsing */
 // create ast node

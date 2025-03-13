@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:59:37 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 20:52:02 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:13:25 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ volatile sig_atomic_t	g_signal;
 void	ft_signal(int signum, void (*handler)(int))
 {
 	struct sigaction	sa;
-	
+
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
