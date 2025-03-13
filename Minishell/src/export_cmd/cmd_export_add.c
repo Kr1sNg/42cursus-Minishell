@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_add.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:34:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:41:23 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_check_valid_export(char *cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd || cmd[0] == '\0')
+		return(1);
 	if (ft_isdigit(cmd[0]))
 		return(1);
 	while (cmd[i] && cmd[i] != '=')
