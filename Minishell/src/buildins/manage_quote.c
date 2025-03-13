@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:39:22 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 15:37:00 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:35:49 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ char	*ft_quote_clear(char *str)
 
 char	*ft_convert_cmd_only(char *str)
 {
-	 if (!(str[0] == '\"') || !(str[0] == '\''))
-		str = ft_replace_cmd_only(str);
 	if (str[0] == '\"' || str[0] == '\'')
 		str = ft_quote_clear(str);
 	return (str);
@@ -50,7 +48,7 @@ char	**ft_convert_cmd(char **str)
 	i = 0;
 	while(str[i])
 	{
-		if (!(str[i][0] == '\"') || !(str[i][0] == '\''))
+		if ((!(str[i][0] == '\"') || !(str[i][0] == '\'')) && ft_check_star(str[i]))
 			str[i] = ft_replace_cmd_only(str[i]);
 		if (str[i][0] == '\"' || str[i][0] == '\'')
 			str[i] = ft_quote_clear(str[i]);
