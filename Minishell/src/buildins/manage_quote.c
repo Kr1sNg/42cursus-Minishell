@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:39:22 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 15:33:05 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:47:41 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ char	**ft_convert_cmd(char **str, t_env *infos)
 	i = 0;
 	while(str[i])
 	{
-		if ((!(str[i][0] == '\"') || !(str[i][0] == '\'')) && ft_check_star(str[i]))
-			str[i] = ft_replace_cmd_only(str[i]);
+		// if ((!(str[i][0] == '\"') && !(str[i][0] == '\'')) && ft_check_star(str[i]))
+		// 	str[i] = ft_replace_cmd_only(str[i]);
+		if (!(str[i][0] == '\''))
+			str[i] = ft_cvt_var_env(str[i], infos);
 		if (str[i][0] == '\"' || str[i][0] == '\'')
 			str[i] = ft_quote_clear(str[i]);
-		str[i] = ft_cvt_var_env(str[i], infos);
 		if (!str[i + 1] && !str[i][0])
 			str[i] = NULL;	
 		i++;

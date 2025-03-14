@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/14 14:47:11 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:50:35 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,15 @@
 // 	if (!s)
 // 		return (NULL);
 // 	if (only_stars(s) > 0)
+// 	{
+// 		free(s);
 // 		return (ft_strdup("*"));
+// 	}
 // 	else
-// 		return (ft_stars_str(s));
+// 	{
+// 		free(s);
+// 		return (ft_stars_str(s));	
+// 	}
 // }
 
 // #include <stdio.h>
