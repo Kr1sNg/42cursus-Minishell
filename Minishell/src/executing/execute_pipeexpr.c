@@ -22,6 +22,7 @@ static void	exec_left_child(t_ast_pipeexpr *ast, t_env *env,
 {
 	if (ast->left)
 	{
+		child_signals();
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		*status = ft_execute(ast->left, env);
@@ -35,6 +36,7 @@ static void	exec_right_child(t_ast_pipeexpr *ast, t_env *env,
 {
 	if (ast->right)
 	{
+		child_signals();
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		*status = ft_execute(ast->right, env);
@@ -63,6 +65,7 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 		return (status);
 	if (pid_right == 0)
 		exec_right_child(ast, env, fd, &status);
+	ignore_signals();
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid_left, &status, 0);

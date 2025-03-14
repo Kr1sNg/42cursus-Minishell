@@ -26,7 +26,7 @@ t_ast	*ft_create_ast_redirect(t_token_type direction, char *target)
 	t_ast	*node;
 
 	if (!target)
-		return (ft_error_syntax("newline", NULL), NULL);
+		return (ft_error_syntax("newlinetarget", NULL), NULL);
 	ft_new_ast_node(&node, AST_REDIRECT);
 	if (node)
 	{

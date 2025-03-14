@@ -50,7 +50,7 @@ t_ast	*ft_parse(t_token *token)
 	{
 		if (token->type == TK_REDIR_IN || token->type == TK_REDIR_OUT
 			|| token->type == TK_APPEND_OUT || token->type == TK_HEREDOC)
-			ft_error_syntax("newline", token);
+			ft_error_syntax("newlineparse", token);
 		else
 			ft_error_syntax(token->word, token);
 		return (ft_free_ast(ast), NULL);

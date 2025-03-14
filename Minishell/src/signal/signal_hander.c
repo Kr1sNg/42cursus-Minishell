@@ -28,7 +28,9 @@ void	sigquit_handler_child(int signum)
 {
 	(void)signum;
 	g_signal = 131;
-	write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	rl_replace_line("", 0);
+	rl_on_new_line();
 }
 
 void	sigint_handler_child(int signum)

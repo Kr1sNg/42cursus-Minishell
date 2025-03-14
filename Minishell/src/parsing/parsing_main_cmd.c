@@ -23,7 +23,7 @@ t_ast	*ft_parse_command(t_token **token)
 	ahead = ft_parse_redirect(token);
 	cmd_words = ft_parse_words(token);
 	if (!cmd_words)
-		return (ft_free_ast(ahead), ft_error_syntax("newline", *token), NULL);
+		return (ft_free_ast(ahead), NULL);
 	behind = ft_parse_redirect(token);
 	return (ft_create_ast_command(ahead, cmd_words, behind));
 }
