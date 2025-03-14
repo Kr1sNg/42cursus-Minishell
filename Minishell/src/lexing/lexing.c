@@ -19,7 +19,7 @@
 	TEXT, BUILTIN, OPTION // -n, text, echo, cd, pwd, export, unset, env, exit 0
 */
 
-t_token_type	ft_token_type(char *word)
+t_ktype	ft_token_type(char *word)
 {
 	if (*word == '(')
 		return (TK_SUBSHELL_OPEN);

@@ -62,10 +62,10 @@ t_ast	*ft_parse(t_token *token)
 
 t_ast	*ft_parse_logical(t_token **token)
 {
-	t_token_type	operator;
-	t_ast			*left;
-	t_ast			*right;
-	char			c;
+	t_ktype	operator;
+	t_ast	*left;
+	t_ast	*right;
+	char	c;
 
 	left = ft_parse_pipeexpr(token);
 	while ((*token) && ((*token)->type == TK_AND || (*token)->type == TK_OR))

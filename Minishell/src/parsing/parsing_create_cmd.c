@@ -96,7 +96,7 @@ t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right)
 	return (node);
 }
 
-t_ast	*ft_create_ast_logical(t_token_type operator, t_ast *left, t_ast *right)
+t_ast	*ft_create_ast_logical(t_ktype operator, t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 

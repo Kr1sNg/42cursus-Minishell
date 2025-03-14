@@ -14,8 +14,8 @@
 
 t_env	ft_initialization(int argc, char **argv, char **env)
 {
-	t_env infos;
-	
+	t_env	infos;
+
 	(void)argc;
 	(void)argv;
 	infos.status = 0;
@@ -40,17 +40,16 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
-		if ((!infos.input) || !ft_strcmp_exit(infos.input)) // quand on faire "exit" on dois nettoyer tout avant!
+		if ((!infos.input) || !ft_strcmp_exit(infos.input))
 		{
 			if (infos.input && !ft_strcmp_exit(infos.input))
 				infos.status = 0;
 			break ;
 		}
-		add_history(infos.input); // to save history and move up - down cmd
+		add_history(infos.input);
 		infos.tokens = ft_tokenize(infos.input);
 		infos.ast = ft_parse(infos.tokens);
 		infos.status = ft_status_value(&infos);
-		// infos.status = ft_execute(infos.ast, &infos);
 		ft_free_cmd(&infos);
 	}
 	ft_finish(&infos);
@@ -58,7 +57,7 @@ int	main(int argc, char *argv[], char *env[])
 }
 
 /* free ast, tokens, input after each command line */
-void ft_free_cmd(t_env *infos)
+void	ft_free_cmd(t_env *infos)
 {
 	infos->fd_in = STDIN_FILENO;
 	infos->fd_out = STDOUT_FILENO;
@@ -88,4 +87,3 @@ int	ft_status_value(t_env *infos)
 		infos->status = ft_execute(infos->ast, infos);
 	return (infos->status);
 }
-

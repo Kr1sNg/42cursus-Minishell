@@ -49,5 +49,5 @@ int	ft_strcmp_exit(char *s)
 	else if (!ft_strncmp(s, "exit", -1))
 		return (0);
 	else
-		return (1);		
+		return (1);
 }

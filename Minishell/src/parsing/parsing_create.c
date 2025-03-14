@@ -21,7 +21,7 @@ void	ft_new_ast_node(t_ast **node, t_ast_type type)
 	(*node)->type = type;
 }
 
-t_ast	*ft_create_ast_redirect(t_token_type direction, char *target)
+t_ast	*ft_create_ast_redirect(t_ktype direction, char *target)
 {
 	t_ast	*node;
 

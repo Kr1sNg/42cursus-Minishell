@@ -75,11 +75,10 @@ char	*ft_cvt_var_env(char *str, t_env *infos);
 int		ft_limite(char str);
 char	*ft_stars(char *s);
 
-
 /* support function */
 void	ft_finish(t_env *infos);
 int		ft_status_value(t_env *infos);
-void 	ft_free_cmd(t_env *infos);
+void	ft_free_cmd(t_env *infos);
 void	ft_close_io(t_env *env);
 
 /* split - lexing */
@@ -88,7 +87,7 @@ int		is_quote(char c);
 int		count_words(char *str);
 char	*ft_strdup_s(char *src);
 char	**ft_split_tokens(char *str);
-t_token_type	ft_token_type(char *word);
+t_ktype	ft_token_type(char *word);
 
 /* tokenize */
 t_token	*ft_tokenize(char *input);
@@ -98,39 +97,39 @@ void	ft_free_token(t_token *head);
 
 /* parsing - create node */
 void	ft_new_ast_node(t_ast **node, t_ast_type type);
-t_ast	*ft_create_ast_redirect(t_token_type direction, char *target);
+t_ast	*ft_create_ast_redirect(t_ktype direction, char *target);
 t_ast	*ft_create_ast_words(char **args);
 t_ast	*ft_create_ast_command(t_ast *ahead, t_ast *cmd_words, t_ast *behind);
 t_ast	*ft_create_ast_subshell(t_ast *logical, t_ast *redir_list);
 t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis);
-t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right) ;
-t_ast	*ft_create_ast_logical(t_token_type operator, t_ast *left, t_ast *right);
+t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right);
+t_ast	*ft_create_ast_logical(t_ktype operator, t_ast *left, t_ast *right);
 void	ft_redir_list_add(t_ast **head, t_ast *new);
 
 /* parsing - descend the tree */
 t_ast	*ft_parse(t_token *token);
-t_ast   *ft_parse_logical(t_token **token);
-t_ast   *ft_parse_pipeexpr(t_token **token);
-t_ast   *ft_parse_expression(t_token **token);
-t_ast   *ft_parse_command(t_token **token);
-t_ast   *ft_parse_subshell(t_token **token);
-t_ast   *ft_parse_words(t_token **token);
-t_ast   *ft_parse_redirect(t_token **token);
+t_ast	*ft_parse_logical(t_token **token);
+t_ast	*ft_parse_pipeexpr(t_token **token);
+t_ast	*ft_parse_expression(t_token **token);
+t_ast	*ft_parse_command(t_token **token);
+t_ast	*ft_parse_subshell(t_token **token);
+t_ast	*ft_parse_words(t_token **token);
+t_ast	*ft_parse_redirect(t_token **token);
 
 /* parsing - free node */
-void    ft_free_ast(t_ast *ast);
-void    ft_free_logical(t_ast *ast);
-void    ft_free_pipeexpr(t_ast *ast);
-void    ft_free_expression(t_ast *ast);
-void    ft_free_subshell(t_ast *ast);
-void    ft_free_command(t_ast *ast);
-void    ft_free_words(t_ast *words);
+void	ft_free_ast(t_ast *ast);
+void	ft_free_logical(t_ast *ast);
+void	ft_free_pipeexpr(t_ast *ast);
+void	ft_free_expression(t_ast *ast);
+void	ft_free_subshell(t_ast *ast);
+void	ft_free_command(t_ast *ast);
+void	ft_free_words(t_ast *words);
 void	ft_free_redir_list(t_ast *redir_list);
 
 /* execute follow the tree */
 int		ft_execute(t_ast *ast, t_env *env);
 int		ft_exe_logical(t_ast_logical *ast, t_env *env);
-int 	ft_exe_expression(t_ast_expression *ast, t_env *env);
+int		ft_exe_expression(t_ast_expression *ast, t_env *env);
 int		ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env);
 int		ft_exe_subshell(t_ast_subshell *ast, t_env *env);
 int		ft_exe_command(t_ast_command *ast, t_env *env);
@@ -159,7 +158,7 @@ void	ft_error_target(char *s);
 int		ft_exit(char **cmd, t_env *infos);
 int		ft_strcmp_exit(char *s);
 
-int		ft_check_star(char * str);
+int		ft_check_star(char *str);
 char	*ft_replace_cmd_only(char *cmd);
 char	**ft_check_wildcards(char **cmd, t_env *env);
 

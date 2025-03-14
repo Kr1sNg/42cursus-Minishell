@@ -17,12 +17,12 @@
 ** :::::::::::::::::::::::::::* STRUCT DECLARATION *::::::::::::::::::::::::: **
 */
 
-typedef	enum s_file
+typedef enum s_file
 {
 	READ,
 	WRITE,
 	APPEND,
-} 	t_file;
+}	t_file;
 
 typedef struct s_init
 {
@@ -32,7 +32,6 @@ typedef struct s_init
 	int	l;
 }	t_init;
 
-
 typedef struct s_args
 {
 	char	*path;
@@ -40,12 +39,10 @@ typedef struct s_args
 	char	**env;
 }	t_args;
 
-
 /* tokenizer */
-
 typedef enum e_token_type
 {
-	TK_WORD, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, pwd, export, unset, env, exit
+	TK_WORD, // BUILTIN, OPTION, EXTEND, // -n, $, text, echo, cd, export...
 	TK_SUBSHELL_OPEN, // (
 	TK_SUBSHELL_CLOSE, // )
 	TK_AND, // &&
@@ -58,28 +55,17 @@ typedef enum e_token_type
 	TK_DQUOTE, // "all the words in double quote"
 	TK_SQUOTE, // 'all the words in single quote'
 	// TK_EOF,  // avoid error for next_token and peek_token
-}	t_token_type;
+}	t_ktype;
 
 typedef struct s_token
 {
-	t_token_type	type;
+	t_ktype			type;
 	char			*word;
 	struct s_token	*next;
 	int				print_error_syntax;
 }	t_token;
 
-
-// /* parsing support */
-// typedef struct s_parser
-// {
-// 	t_token	*tokens;
-// 	int		index;
-// 	int		token_count;
-// }	t_parser;
-
-
 /* command trees */
-
 typedef enum e_ast_type
 {
 	AST_REDIRECT, // > < >> <<
@@ -98,7 +84,7 @@ typedef enum e_ast_type
 //<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
 typedef struct s_ast_redirect //node of redirect_list
 {
-	t_token_type	direction; // TK_REDIR_IN, TK_REDIR_OUT, TK_APPEND_OUT, or TK_HEREDOC
+	t_ktype			direction; // TK_REDR_IN,TK_REDR_OUT,TK_APND_OUT,TK_HDOC
 	char			*target; // filename or hereend
 	struct s_ast	*next; // redirect_list
 }	t_ast_redirect;
@@ -123,13 +109,12 @@ typedef struct s_ast_subshell
 	struct s_ast	*redirect_list;
 }	t_ast_subshell;
 
-///<EXPRESSION>     	::= <COMMAND>  -> type NO_PARENTHESE
-//						| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
+///<EXPRESSION> ::= <COMMAND>  -> type NO_PARENTHESE
+//		| <SUBSHELL -> type PARENTHESE => "(" <LOGICAL> ")" [ <REDIR_LIST> ]
 typedef struct s_ast_expression
 {
-	bool				parenthesis; // false - COMMAND or true - SUBSHELL
-	struct s_ast		*cmd_or_sub;
-	
+	bool			parenthesis; // false - COMMAND or true - SUBSHELL
+	struct s_ast	*cmd_or_sub;
 }	t_ast_expression;
 
 //<PIPELINE>       	::= <EXPRESSION> { "|" <EXPRESSION> }
@@ -142,7 +127,7 @@ typedef struct s_ast_pipeexpr
 //<LOGICAL>       	::= <PIPELINE> { ("&&" | "||") <PIPELINE> } 
 typedef struct s_ast_logical
 {
-	t_token_type	operator; // && or ||
+	t_ktype			operator; // && or ||
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast_logical;
@@ -165,9 +150,9 @@ typedef struct s_ast
 
 typedef struct s_env
 {
-	char **env;
-	char **export;
-	char **list_export;
+	char	**env;
+	char	**export;
+	char	**list_export;
 	int		status;
 	int		fd_in;
 	int		fd_out;
@@ -175,6 +160,5 @@ typedef struct s_env
 	t_token	*tokens;
 	t_ast	*ast;
 }	t_env;
-
 
 #endif

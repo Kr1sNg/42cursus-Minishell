@@ -90,10 +90,10 @@ t_ast	*ft_parse_words(t_token **token)
 
 t_ast	*ft_parse_redirect(t_token **token)
 {
-	t_ast			*head;
-	t_ast			*curr;
-	t_token_type	direction;
-	char			*target;
+	t_ast	*head;
+	t_ast	*curr;
+	t_ktype	direction;
+	char	*target;
 
 	head = NULL;
 	while (*token && (*token)->next && ((*token)->type == TK_REDIR_IN

@@ -15,7 +15,7 @@
 void	ft_error_syntax(char *s, t_token *token)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!token)
 		i = 0;
