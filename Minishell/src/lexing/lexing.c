@@ -48,7 +48,7 @@ t_token_type	ft_token_type(char *word)
 }
 
 int	is_operator(char *s)
-{	
+{
 	if ((s[0] == '|' || s[0] == '>' || s[0] == '<') && s[1])
 	{
 		if (s[1] == s[0])
@@ -70,7 +70,7 @@ int	is_operator(char *s)
 	return (0);
 }
 
-int is_quote(char c)
+int	is_quote(char c)
 {
 	if (c == '\"')
 		return (34);
@@ -78,4 +78,4 @@ int is_quote(char c)
 		return (39);
 	else
 		return (0);
-}	
+}

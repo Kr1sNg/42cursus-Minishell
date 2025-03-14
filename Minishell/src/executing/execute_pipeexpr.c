@@ -62,5 +62,3 @@ int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env)
 	return (WEXITSTATUS(status));
 }
 
-
-
