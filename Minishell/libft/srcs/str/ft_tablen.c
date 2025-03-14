@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 13:21:44 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 15:01:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:55:29 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_tablen(char **tab)
 {
 	int	i;
 
+	if (!tab)
+		return (0);
 	i = 0;
 	while (tab[i])
 		i++;

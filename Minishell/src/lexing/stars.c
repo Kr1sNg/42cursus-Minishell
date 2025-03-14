@@ -1,79 +1,88 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   stars.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 22:19:10 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:35:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
 /*	
+	📛 need to free() after using
+	
 	transfer **this********is*****star**
-	become *this*is*star*
+	=> become *this*is*star*
+	transfer **************
+	=> become *
 */
 
-int	ft_lenstrs(int size, char **strs, char *sep)
+static char	*ft_stars_str(char *s)
+{
+	char	**split;
+	char	*new;
+	char	*temp;
+
+	if (!s || !s[0])
+		return (NULL);
+	split = ft_split_charset(s, "*");
+	if (!split)
+		return (NULL);
+	new = ft_strjoin_sep(split, "*");
+	if (!new)
+		return (NULL);
+	if (s[0] && s[0] == '*')
+	{
+		temp = new;
+		new = ft_strjoin("*", temp);
+		free(temp);
+	}
+	if (s[ft_strlen(s) - 1] && s[ft_strlen(s) - 1] == '*')
+	{
+		temp = new;
+		new = ft_strjoin("*", temp);
+		free(temp);
+	}
+	return (ft_split_free(split), new);
+}
+
+static int	only_stars(char *s)
 {
 	int	i;
-	int	length;
+	int	len;
 
+	if (!s || !s[0])
+		return (0);
 	i = 0;
-	length = 0;
-	while (i < size)
+	while (s[i])
 	{
-		length = length + ft_strlen(strs[i]);
+		if (s[i] != '*')
+			return (0);
 		i++;
 	}
-	length = length + ft_strlen(sep) * (size - 1);
-	return (length);
+	return (1);
 }
 
-char	*ft_strjoin_s(int size, char **strs, char *sep)
+char	*ft_stars(char *s)
 {
-	char	*strfinal;
-	int		n;
-
-	if (size == 0)
-	{
-		strfinal = malloc(1);
-		strfinal[0] = '\0';
-		return (strfinal);
-	}
-	strfinal = malloc(ft_lenstrs(size, strs, sep) + 1);
-	if (strfinal == NULL)
-		return (0);
-	strfinal[0] = '\0';
-	n = 0;
-	while (n < size)
-	{
-		ft_strcat(strfinal, strs[n]);
-		if (n < size - 1)
-			ft_strcat(strfinal, sep);
-		n++;
-	}
-	return (strfinal);
+	if (!s)
+		return (NULL);
+	if (only_stars(s) > 0)
+		return (ft_strdup("*"));
+	else
+		return (ft_stars_str(s));
 }
 
-int	main(void)
-{
-	char *s = "**this********is*****star**";
-
-	int s_len = ft_strlen(s);
-	int count_word = 3;
-	char **split = ft_split_charset(s, "*");
-	
-	char *new = ft_strjoin_s(count_word, split, "*");
-
-	if (s != NULL && s[0] && s[0] == '*')
-		new = ft_strjoin("*", new);
-	if (s != NULL && s[s_len - 1] && s[s_len - 1] == '*')
-		new = ft_strjoin(new, "*");
-	printf("new: %s\n", new);
-	free(new);
-	ft_split_free(split);
-}
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	char *s = "";
+// 	char *new = ft_stars(s);
+// 	printf("new: %s\n", new);
+// 	free(new);
+// 	return (0);
+// }

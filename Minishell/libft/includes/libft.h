@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:09:12 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 13:44:38 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 13:40:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	ft_putstr(char *s);
 **	str
 */
 
+size_t	ft_countwords(const char *str, char *charset);
 void	ft_split_free(char **arrs);
 char	**ft_split(char const *s, char c);
 char	**ft_split_charset(char const *s, char *charset);
@@ -126,6 +127,7 @@ char	*ft_strdup(const char *s);
 char	**ft_tabdup(char **tab);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_sep(char **strs, char *sep);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
