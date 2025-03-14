@@ -31,6 +31,7 @@ void	sigquit_handler_child(int signum)
 	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 	rl_replace_line("", 0);
 	rl_on_new_line();
+	exit(131);
 }
 
 void	sigint_handler_child(int signum)
@@ -40,6 +41,7 @@ void	sigint_handler_child(int signum)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
+	exit(130);
 }
 
 /* handler in heredoc */
