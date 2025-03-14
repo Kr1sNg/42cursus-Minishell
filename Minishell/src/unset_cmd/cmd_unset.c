@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:09:17 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:41:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	cmd_env_unset_line(t_init *index, char **env, char **env_cpy)
 {
-		env_cpy[index->j] = (char *)malloc((ft_strlen(env[index->j
-						+ index->l]) + 1) * sizeof(char));
-		index->k = 0;
-		while (env[index->j + index->l][index->k])
-		{
-			env_cpy[index->j][index->k] = env[index->j + index->l][index->k];
-			(index->k)++;
-		}
-		env_cpy[index->j][index->k] = '\0';
-		(index->j)++;
+	env_cpy[index->j] = (char *)malloc((ft_strlen(env[index->j
+					+ index->l]) + 1) * sizeof(char));
+	index->k = 0;
+	while (env[index->j + index->l][index->k])
+	{
+		env_cpy[index->j][index->k] = env[index->j + index->l][index->k];
+		(index->k)++;
+	}
+	env_cpy[index->j][index->k] = '\0';
+	(index->j)++;
 }
 
 char	**cmd_env_unset(char **env, char *cmd)
@@ -74,14 +74,14 @@ void	cmd_unset(t_env *infos, char *cmd)
 int	ft_exec_unset(char **cmd, t_env *infos)
 {
 	int	i;
-	
+
 	i = 1;
 	if (!cmd[1])
 		return (0);
-	while(cmd[i])
+	while (cmd[i])
 	{
 		cmd_unset(infos, cmd[i]);
 		i++;
 	}
-	return(0);
+	return (0);
 }

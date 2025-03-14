@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 14:15:03 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 16:40:14 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILDINS_H
 # define BUILDINS_H
+
+/*
+** ::::::::::::::::::::::::::::* GLOBAL VARIABLE *::::::::::::::::::::::::::: **
+*/
 
 extern volatile sig_atomic_t	g_signal;
 
@@ -19,8 +23,7 @@ extern volatile sig_atomic_t	g_signal;
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
 */
 
-
-
+/* build-in */
 void	cmd_create_env(t_env *infos, char **env);
 void	cmd_create_export(t_env *infos);
 int		ft_exec_export(char **cmd, t_env *infos);
@@ -71,34 +74,28 @@ int		ft_check_buildins_out_echo(char *cmd);
 char	*ft_cvt_var_env(char *str, t_env *infos);
 int		ft_limite(char str);
 
-// int	main(int argc, char *argv[], char *env[]);
 
+/* support function */
 void	ft_finish(t_env *infos);
-int	ft_status_value(t_env *infos);
-void ft_free_cmd(t_env *infos);
-
+int		ft_status_value(t_env *infos);
+void 	ft_free_cmd(t_env *infos);
+void	ft_close_io(t_env *env);
 
 /* split - lexing */
 int		is_operator(char *s);
 int		is_quote(char c);
-
 int		count_words(char *str);
 char	*ft_strdup_s(char *src);
 char	**ft_split_tokens(char *str);
-
 t_token_type	ft_token_type(char *word);
 
 /* tokenize */
-
 t_token	*ft_tokenize(char *input);
 t_token	*ft_create_token(char *input);
 void	ft_token_add_back(t_token **head, char *input);
 void	ft_free_token(t_token *head);
 
-void	ft_print_token(t_token *head);
-
-/* parsing */
-// create ast node
+/* parsing - create node */
 void	ft_new_ast_node(t_ast **node, t_ast_type type);
 t_ast	*ft_create_ast_redirect(t_token_type direction, char *target);
 t_ast	*ft_create_ast_words(char **args);
@@ -106,9 +103,10 @@ t_ast	*ft_create_ast_command(t_ast *ahead, t_ast *cmd_words, t_ast *behind);
 t_ast	*ft_create_ast_subshell(t_ast *logical, t_ast *redir_list);
 t_ast	*ft_create_ast_expression(t_ast *expression, bool parenthesis);
 t_ast	*ft_create_ast_pipeexpr(t_ast *left, t_ast *right) ;
-t_ast	*ft_create_ast_logical(t_token_type logical, t_ast *left, t_ast *right);
+t_ast	*ft_create_ast_logical(t_token_type operator, t_ast *left, t_ast *right);
+void	ft_redir_list_add(t_ast **head, t_ast *new);
 
-// parsing through level of node
+/* parsing - descend the tree */
 t_ast	*ft_parse(t_token *token);
 t_ast   *ft_parse_logical(t_token **token);
 t_ast   *ft_parse_pipeexpr(t_token **token);
@@ -118,7 +116,7 @@ t_ast   *ft_parse_subshell(t_token **token);
 t_ast   *ft_parse_words(t_token **token);
 t_ast   *ft_parse_redirect(t_token **token);
 
-// free ast node
+/* parsing - free node */
 void    ft_free_ast(t_ast *ast);
 void    ft_free_logical(t_ast *ast);
 void    ft_free_pipeexpr(t_ast *ast);
@@ -128,52 +126,40 @@ void    ft_free_command(t_ast *ast);
 void    ft_free_words(t_ast *words);
 void	ft_free_redir_list(t_ast *redir_list);
 
-
-// utils support
-void	ft_redir_list_add(t_ast **head, t_ast *new);
-
-
-/* signal */
-void	ft_signal(int signum, void (*handler)(int));
-
-void	setup_signal_handlers(void);
-void	child_signals(void);
-void	ignore_signals(void);
-void	heredoc_signals(void);
-
-void	sigint_handler_main(int signum);
-void	sigquit_handler_child(int signum);
-void	sigint_handler_child(int signum);
-void	sigint_handler_heredoc(int signum);
-
-void	disable_echoctl(void);
-void	enable_echoctl(void);
-
-/* error */
-void	ft_error_syntax(char *s);
-void	ft_error_target(char *s);
-
 /* execute follow the tree */
 int		ft_execute(t_ast *ast, t_env *env);
 int		ft_exe_logical(t_ast_logical *ast, t_env *env);
 int 	ft_exe_expression(t_ast_expression *ast, t_env *env);
+int		ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env);
+int		ft_exe_subshell(t_ast_subshell *ast, t_env *env);
+int		ft_exe_command(t_ast_command *ast, t_env *env);
+int		ft_exe_words(t_ast_words *ast, t_env *env);
+int		ft_exe_redirect(t_ast *ast, t_env *env);
+int		ft_here_doc(char *eof);
 
-// --just for testing ast rightnow--
-int	ft_exe_pipeexpr(t_ast_pipeexpr *ast, t_env *env);
-int ft_exe_subshell(t_ast_subshell *ast, t_env *env);
-int ft_exe_command(t_ast_command *ast, t_env *env);
-int	ft_exe_words(t_ast_words *ast, t_env *env);
-int	ft_exe_redirect(t_ast *ast, t_env *env);
+/* signal */
+void	ft_signal(int signum, void (*handler)(int));
+void	setup_signal_handlers(void);
+void	child_signals(void);
+void	ignore_signals(void);
+void	heredoc_signals(void);
+void	sigint_handler_main(int signum);
+void	sigquit_handler_child(int signum);
+void	sigint_handler_child(int signum);
+void	sigint_handler_heredoc(int signum);
+void	disable_echoctl(void);
+void	enable_echoctl(void);
 
-void	ft_close_io(t_env *env);
+/* error */
+void	ft_error_syntax(char *s, t_token *token);
+void	ft_error_target(char *s);
 
-int ft_exit(char **cmd, t_env *infos);
+/* exit */
+int		ft_exit(char **cmd, t_env *infos);
+int		ft_strcmp_exit(char *s);
 
 int		ft_check_star(char * str);
 char	*ft_replace_cmd_only(char *cmd);
 char	**ft_check_wildcards(char **cmd, t_env *env);
-// int		ft_true_false(char *t);
-
-int	ft_here_doc(char *eof);
 
 #endif

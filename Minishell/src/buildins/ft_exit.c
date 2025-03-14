@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 15:44:42 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:40:52 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,16 @@ int	ft_exit(char **cmd, t_env *infos)
 	free_tab(infos->env);
 	free_tab(infos->export);
 	exit(i);
+}
+
+int	ft_strcmp_exit(char *s)
+{
+	if (!ft_strncmp(s, "\'exit\'", -1))
+		return (0);
+	else if (!ft_strncmp(s, "\"exit\"", -1))
+		return (0);
+	else if (!ft_strncmp(s, "exit", -1))
+		return (0);
+	else
+		return (1);		
 }

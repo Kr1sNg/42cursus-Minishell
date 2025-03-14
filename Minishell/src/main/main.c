@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/14 14:15:15 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 16:12:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
-		if ((!infos.input) || !ft_strcmp(ft_cvt_cmd_on(infos.input), "exit")) // quand on faire "exit" on dois nettoyer tout avant!
+		if ((!infos.input) || !ft_strcmp_exit(infos.input)) // quand on faire "exit" on dois nettoyer tout avant!
 		{
-			if (infos.input && !ft_strcmp(ft_cvt_cmd_on(infos.input), "exit"))
+			if (infos.input && !ft_strcmp_exit(infos.input))
 				infos.status = 0;
 			break ;
 		}
@@ -88,3 +88,4 @@ int	ft_status_value(t_env *infos)
 		infos->status = ft_execute(infos->ast, infos);
 	return (infos->status);
 }
+

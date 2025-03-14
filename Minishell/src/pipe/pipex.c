@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:52:51 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 21:11:17 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:44:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 static void	input_heredoc(char *eof, int fd)
 {
-	char *line;
-	
+	char	*line;
+
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break;
-		if (!ft_strncmp(line, eof, ft_strlen(eof)) && line[ft_strlen(eof)] == '\n')
+			break ;
+		if (!ft_strncmp(line, eof, ft_strlen(eof))
+			&& line[ft_strlen(eof)] == '\n')
 		{
 			free(line);
-			break;
+			break ;
 		}
 		ft_putstr_fd(line, fd);
 		free(line);

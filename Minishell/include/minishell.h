@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:56:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/12 19:40:01 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:21:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_token
 	t_token_type	type;
 	char			*word;
 	struct s_token	*next;
+	int				print_error_syntax;
 }	t_token;
 
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 20:01:48 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:16:41 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*ft_create_ast_redirect(t_token_type direction, char *target)
 	t_ast	*node;
 
 	if (!target)
-		return (ft_error_syntax("newline"), NULL);
+		return (ft_error_syntax("newline", NULL), NULL);
 	ft_new_ast_node(&node, AST_REDIRECT);
 	if (node)
 	{

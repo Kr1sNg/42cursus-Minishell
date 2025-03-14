@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 20:02:49 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:23:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ t_ast	*ft_parse(t_token *token)
 
 	if (token && (token->type == TK_AND || token->type == TK_OR
 			|| token->type == TK_PIPE))
-		return (ft_error_syntax(token->word), NULL);
+		return (ft_error_syntax(token->word, token), NULL);
 	ast = ft_parse_logical(&token);
 	if (token)
 	{
 		if (token->type == TK_REDIR_IN || token->type == TK_REDIR_OUT
 			|| token->type == TK_APPEND_OUT || token->type == TK_HEREDOC)
-			ft_error_syntax("newline");
+			ft_error_syntax("newline", token);
 		else
-			ft_error_syntax(token->word);
+			ft_error_syntax(token->word, token);
 		return (ft_free_ast(ast), NULL);
 	}
 	return (ast);
@@ -78,9 +78,9 @@ t_ast	*ft_parse_logical(t_token **token)
 		{
 			ft_free_ast(left);
 			if (c == '|')
-				return (ft_error_syntax("||"), NULL);
+				return (ft_error_syntax("||", *token), NULL);
 			else
-				return (ft_error_syntax("&&"), NULL);
+				return (ft_error_syntax("&&", *token), NULL);
 		}
 		left = ft_create_ast_logical(operator, left, right);
 	}
@@ -102,7 +102,7 @@ t_ast	*ft_parse_pipeexpr(t_token **token)
 		if (!(*token))
 		{
 			ft_free_ast(left);
-			return (ft_error_syntax("|"), NULL);
+			return (ft_error_syntax("|", *token), NULL);
 		}
 		right = ft_parse_expression(token);
 		left = ft_create_ast_pipeexpr(left, right);
@@ -127,5 +127,5 @@ t_ast	*ft_parse_expression(t_token **token)
 		expression = ft_parse_command(token);
 		return (ft_create_ast_expression(expression, false));
 	}
-	return (ft_error_syntax("("), NULL);
+	return (ft_error_syntax("(", *token), NULL);
 }

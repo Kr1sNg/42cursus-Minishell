@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/11 20:02:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:22:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ast	*ft_parse_command(t_token **token)
 	ahead = ft_parse_redirect(token);
 	cmd_words = ft_parse_words(token);
 	if (!cmd_words)
-		return (ft_free_ast(ahead), NULL);
+		return (ft_free_ast(ahead), ft_error_syntax("newline", *token), NULL);
 	behind = ft_parse_redirect(token);
 	return (ft_create_ast_command(ahead, cmd_words, behind));
 }
@@ -43,14 +43,14 @@ t_ast	*ft_parse_subshell(t_token **token)
 		if (!logical || !*token || (*token)->type != TK_SUBSHELL_CLOSE)
 		{
 			ft_free_ast(logical);
-			return (ft_error_syntax("("), NULL);
+			return (ft_error_syntax("(", *token), NULL);
 		}
 		*token = (*token)->next;
 		if (*token)
 			redir_list = ft_parse_redirect(token);
 		return (ft_create_ast_subshell(logical, redir_list));
 	}
-	return (ft_error_syntax("("), NULL);
+	return (ft_error_syntax("(", *token), NULL);
 }
 
 /*<CMD_WORDS>       	::= <WORD> { <WORD> }*/
