@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   value_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/12 13:41:08 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 01:10:28 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ char	*value_env(char *name, t_env *infos)
 	j = 0;
 	while (infos->env[i])
 	{
-		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name)) == 0)
+		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name) + 1) == '=')
 		{
-			
 			while(infos->env[i][j] != '=')
 				j++;
 			j++;
@@ -41,6 +40,8 @@ int	ft_limite(char str)
 	if (str == 32 || (str >= 9 && str <= 13) || str == '\'' || str == '\"')
 		return (1);
 	else if (!str)
+		return (1);
+	else if (str != '_' && !ft_isalnum(str))
 		return (1);
 	return (0);
 }

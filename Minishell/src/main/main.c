@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 21:10:08 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:15:15 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
-		if ((!infos.input) || !ft_strcmp(infos.input, "exit")) // quand on faire "exit" on dois nettoyer tout avant!
+		if ((!infos.input) || !ft_strcmp(ft_cvt_cmd_on(infos.input), "exit")) // quand on faire "exit" on dois nettoyer tout avant!
 		{
-			if (infos.input && !ft_strcmp(infos.input, "exit"))
+			if (infos.input && !ft_strcmp(ft_cvt_cmd_on(infos.input), "exit"))
 				infos.status = 0;
 			break ;
 		}
