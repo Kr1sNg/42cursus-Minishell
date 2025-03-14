@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/14 14:37:40 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:41:30 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static char	*ft_stars_str(char *s)
 static int	only_stars(char *s)
 {
 	int	i;
-	int	len;
 
 	if (!s || !s[0])
 		return (0);
@@ -72,9 +71,15 @@ char	*ft_stars(char *s)
 	if (!s)
 		return (NULL);
 	if (only_stars(s) > 0)
+	{
+		free(s);
 		return (ft_strdup("*"));
+	}
 	else
-		return (ft_stars_str(s));
+	{
+		free(s);
+		return (ft_stars_str(s));	
+	}
 }
 
 // #include <stdio.h>

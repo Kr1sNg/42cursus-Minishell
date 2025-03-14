@@ -6,29 +6,99 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 14:38:02 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 17:48:26 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
-int	ft_strlen_wildcards(char *str)
+// int	ft_strlen_wildcards(char *str)
+// {
+// 	int	i;
+// 	int	len;
+
+// 	i = 0;
+// 	len = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] != '*')
+// 			len++;
+// 		i++;
+// 	}
+// 	return(len);
+// }
+
+int	ft_check_valid_wc(char *base, char *in)
 {
 	int	i;
-	int	len;
+	int	j;
+	int	check;
 
 	i = 0;
-	len = 0;
-	while (str[i])
+	j = 0;
+	check = 0;
+	while (base[i] && in[j] && base[i] - in[j] != 0)
 	{
-		if (str[i] != '*')
-			len++;
-		i++;
+		while(base[i] && in[j] && base[i] == '*')
+		{
+			i++;
+			check = 1;
+		}
+		if(check == 1)
+		{
+			if (!base[i])
+				break;
+			while (base[i] && base[i + 1] && in[j] && base[i] != in[j])
+				j++;
+			check = 0;
+		}
+		else if ((!base[i] || !in[j]) || base[i] != in[j])
+			return (0);
+		else if (!base[i] && !in[j])
+			break;
+		while (base[i] && in[j] && base[i] == in[j])
+		{
+			i++;
+			j++;
+		}
+		if ((!base[i] || !in[j]) && (base[i] || in[j]))
+			return (0);
+		// if (((!base[i] || !in[j]) && (base[i] || in[j])) || (base[i] != in[j] && base[i] == '*'))
+		// 	return (0);
+		// while(base[i] && in[j] && base[i] == '*')
+		// 	i++;
+		// while(base[i] && in[j] && base[i] != in[j])
+		// 	j++;
+		// if ((!base[i] || !in[j]) && (base[i] || in[j]))
+		// 	return (0);
+		// while (base[i] && in[j] && base[i] == in[j])
+		// {
+		// 	i++;
+		// 	j++;
+		// }
+		// if ((!base[i] || !in[j]) && (base[i] || in[j]))
+		// 	return (0);
 	}
-	return(len);
+	return (1);
 }
 
-int	ft_check_star(char * str)
+int	ft_tablen_wc(char *cmd, char **wildcards)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while(wildcards[i])
+	{
+		if (ft_check_valid_wc(cmd, wildcards[i]))
+			j++;
+		i++;
+	}
+	return (j);
+}
+
+int	ft_check_star(char *str)
 {
 	int	i;
 
@@ -42,31 +112,31 @@ int	ft_check_star(char * str)
 	return(0);
 }
 
-char	*ft_replace_cmd_only(char *cmd)
-{
-	int		len;
-	char	*dest;
-	int		i;
-	int		j;
+// char	*ft_replace_cmd_only(char *cmd)
+// {
+// 	int		len;
+// 	char	*dest;
+// 	int		i;
+// 	int		j;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen_wildcards(cmd);
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	while (j < len)
-	{
-		if (cmd[i] == '*')
-			i++;
-		else
-		{
-			dest[j] = cmd[i]; 
-			i++;
-			j++;
-		}
-	}
-	dest[j] = '\0';
-	return(dest);
-}
+// 	i = 0;
+// 	j = 0;
+// 	len = ft_strlen_wildcards(cmd);
+// 	dest = (char *)malloc((len + 1) * sizeof(char));
+// 	while (j < len)
+// 	{
+// 		if (cmd[i] == '*')
+// 			i++;
+// 		else
+// 		{
+// 			dest[j] = cmd[i]; 
+// 			i++;
+// 			j++;
+// 		}
+// 	}
+// 	dest[j] = '\0';
+// 	return(dest);
+// }
 
 void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
 {
@@ -87,8 +157,8 @@ void	ft_fill_new_tab(char **new_cmd, char **cmd, char **wildcards, int j)
 	k = 0;
 	while(wildcards[k])
 	{
-		new_cmd[i] = ft_strdup(wildcards[k]);
-		i++;
+		if (ft_check_valid_wc(cmd[j], wildcards[k]))
+			new_cmd[i++] = ft_strdup(wildcards[k]);
 		k++;
 	}
 	free_tab(wildcards);
@@ -139,8 +209,14 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 	}
 	wildcards = ft_split(line, '\n');
 	free(line);
+	if (ft_tablen_wc(cmd[j], wildcards) == 0)
+	{
+		printf("test");
+		free_tab(wildcards);
+		return (cmd);
+	}
 	new_cmd = (char **)malloc(sizeof(char *) * (ft_tablen(cmd) - 1
-			+ ft_tablen(wildcards) + 1));
+			+ ft_tablen_wc(cmd[j], wildcards) + 1));
 	ft_fill_new_tab(new_cmd, cmd, wildcards, j);
 	return(new_cmd);
 }
@@ -187,12 +263,15 @@ char	**ft_check_wildcards(char **cmd, t_env *env)
 			// Check if we have only wildcards
 			// We need to check exter_str for complete any names from wildcards
 			// Function for convert a raw of wildcards on one wildcard
-			if (ptr[i][0] == '*' && !ptr[i][1])
+			while (ptr[i] && (ptr[i][0] == '\'' || ptr[i][0] == '\"'))
+				i++;
+			if (ft_check_star(ptr[i]))
 			{
 				ptr = ft_replace_cmd_wilds(ptr, i, env);
 				dup2(0, 0);
 				dup2(1, 1);
-				i = 0;
+				if (!ft_check_star(ptr[i]))
+					i = 0;
 			}
 		}
 		i++;

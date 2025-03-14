@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 23:59:01 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 17:57:35 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,31 @@
 
 void	ft_echodouble(char *str, t_env *infos)
 {
-	char	*dest;
-	// int	i;
+	int	i;
 
-	// i = 0;
-	// while(str[i])
-	// {
-	// 	if (str[i] == '$' && isalpha(str[i + 1]))
-	// 	{
-	// 		i++;
-	// 		ft_var_env(&str[i], infos);
-	// 		while (isalpha(str[i]))
-	// 			i++;
-	// 	}
-	// 	else if (str[i] == '$' && str[i + 1] == '?')
-	// 	{
-	// 		printf("%d", infos->status);
-	// 		i += 2;
-	// 	}
-	// 	else if (str[i] != '\"')
-	// 	{
-	// 		printf("%c", str[i]);
-	// 		i++;
-	// 	}
-	// 	else
-	// 		i++;
-	// }
-	dest = ft_cvt_var_env(str, infos);
-	printf("%s", dest);
-	free(dest);
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '$' && isalpha(str[i + 1]))
+		{
+			i++;
+			ft_var_env(&str[i], infos);
+			while (isalpha(str[i]))
+				i++;
+		}
+		else if (str[i] == '$' && str[i + 1] == '?')
+		{
+			printf("%d", infos->status);
+			i += 2;
+		}
+		else if (str[i] != '\"')
+		{
+			printf("%c", str[i]);
+			i++;
+		}
+		else
+			i++;
+	}
 }
 
 void	ft_echosimple(char *str)

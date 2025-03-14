@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 14:15:03 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:39:37 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*ft_cvt_cmd_on(char *str);
 int		ft_check_buildins_out_echo(char *cmd);
 char	*ft_cvt_var_env(char *str, t_env *infos);
 int		ft_limite(char str);
+char	*ft_stars(char *s);
 
 // int	main(int argc, char *argv[], char *env[]);
 
