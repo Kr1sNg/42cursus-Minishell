@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 18:46:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:18:55 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int		ft_exe_redirect(t_ast *ast, t_env *env);
 int		ft_here_doc(char *eof);
 
 /* signal */
+void	ft_sigint_main(t_env *infos);
 void	ft_signal(int signum, void (*handler)(int));
 void	setup_signal_handlers(void);
 void	child_signals(void);

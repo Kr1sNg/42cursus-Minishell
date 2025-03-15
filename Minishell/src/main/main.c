@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/14 16:12:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:15:30 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		setup_signal_handlers();
 		infos.input = readline("minishell:~ $ ");
+		if (g_signal == SIGINT)
+			ft_sigint_main(&infos);
 		if ((!infos.input) || !ft_strcmp_exit(infos.input))
 		{
 			if (infos.input && !ft_strcmp_exit(infos.input))
@@ -49,7 +51,7 @@ int	main(int argc, char *argv[], char *env[])
 		add_history(infos.input);
 		infos.tokens = ft_tokenize(infos.input);
 		infos.ast = ft_parse(infos.tokens);
-		infos.status = ft_status_value(&infos);
+		infos.status = ft_execute(infos.ast, &infos);
 		ft_free_cmd(&infos);
 	}
 	ft_finish(&infos);
@@ -76,14 +78,4 @@ void	ft_finish(t_env *infos)
 	free_tab(infos->export);
 }
 
-int	ft_status_value(t_env *infos)
-{
-	if (g_signal == 130 || g_signal == 131)
-	{
-		infos->status = g_signal;
-		g_signal = 0;
-	}
-	else
-		infos->status = ft_execute(infos->ast, infos);
-	return (infos->status);
-}
+

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/13 20:36:41 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:18:25 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_execute(t_ast *ast, t_env *env)
 
 	status = EXIT_FAILURE;
 	if (!ast)
-		return (status);
-	if (ast->type == AST_LOGICAL)
+		return (EXIT_SUCCESS);
+	else if (ast->type == AST_LOGICAL)
 		status = ft_exe_logical(ast->logical, env);
 	else if (ast->type == AST_PIPEEXPR)
 		status = ft_exe_pipeexpr(ast->pipeexpr, env);
