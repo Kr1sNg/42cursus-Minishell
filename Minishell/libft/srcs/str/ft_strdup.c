@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:39:27 by tat-nguy          #+#    #+#             */
-/*   Updated: 2024/12/02 19:18:30 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:32:00 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*ft_strdup(const char *s)
 	size_t	len;
 	char	*dup;
 
+	if (!s || !s[0])
+		return (NULL);
 	i = 0;
 	len = ft_strlen(s);
 	dup = malloc(sizeof(char) * (len + 1));

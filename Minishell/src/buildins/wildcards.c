@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 17:48:26 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/15 12:26:29 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,8 @@ char	**ft_check_wildcards(char **cmd, t_env *env)
 	char	**ptr;
 
 	i = 0;
+	if (!(*cmd) || !cmd)
+		return (NULL);
 	ptr = ft_tabdup(cmd);
 	while (ptr[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:39:22 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 18:47:41 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:33:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_cvt_cmd_on(char *str)
 {
 	char	*ptr;
 
-	ptr = strdup(str);
+	ptr = ft_strdup(str);
 	if (str[0] == '\"' || str[0] == '\'')
 		ptr = ft_quote_clear(ptr);
 	return (ptr);
