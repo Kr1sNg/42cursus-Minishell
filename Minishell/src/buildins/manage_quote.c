@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:39:22 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/15 12:33:39 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:49:14 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ char	**ft_convert_cmd(char **str, t_env *infos)
 			str[i] = ft_cvt_var_env(str[i], infos);
 		if (str[i][0] == '\"' || str[i][0] == '\'')
 			str[i] = ft_quote_clear(str[i]);
-		if (!str[i + 1] && !str[i][0])
-			str[i] = NULL;	
 		i++;
 	}
 	return (str);

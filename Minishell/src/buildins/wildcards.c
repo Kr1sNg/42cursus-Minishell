@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:12:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/15 12:26:29 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:48:52 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_check_valid_wc(char *base, char *in)
 	i = 0;
 	j = 0;
 	check = 0;
+	// printf("base = |%s : %s|\n", &base[i], &in[j]);
 	while (base[i] && in[j] && base[i] - in[j] != 0)
 	{
 		while(base[i] && in[j] && base[i] == '*')
@@ -48,9 +49,8 @@ int	ft_check_valid_wc(char *base, char *in)
 		{
 			if (!base[i])
 				break;
-			while (base[i] && base[i + 1] && in[j] && base[i] != in[j])
+			while (base[i] && in[j] && base[i] != in[j])
 				j++;
-			check = 0;
 		}
 		else if ((!base[i] || !in[j]) || base[i] != in[j])
 			return (0);
@@ -61,6 +61,7 @@ int	ft_check_valid_wc(char *base, char *in)
 			i++;
 			j++;
 		}
+		// printf("|%s : %s : check %d|\n", &base[i], &in[j], check);
 		if ((!base[i] || !in[j]) && (base[i] || in[j]))
 			return (0);
 		// if (((!base[i] || !in[j]) && (base[i] || in[j])) || (base[i] != in[j] && base[i] == '*'))
@@ -211,7 +212,6 @@ char	**ft_malloc_new_tab(int fd, char **cmd, int j)
 	free(line);
 	if (ft_tablen_wc(cmd[j], wildcards) == 0)
 	{
-		printf("test");
 		free_tab(wildcards);
 		return (cmd);
 	}
@@ -239,9 +239,8 @@ char	**ft_replace_cmd_wilds(char **cmd, int i, t_env *env)
 		ls[1] = NULL;
 		close(fd[1]);
 		ft_child(ls, env->env);
-		exit(0);
 	}
-	waitpid(0, NULL, 0);
+	waitpid(pid, NULL, 0);
 	close(fd[1]);
 	dup2(fd[0], 0);
 	new_cmd = ft_malloc_new_tab(fd[0], cmd, i);
@@ -258,25 +257,19 @@ char	**ft_check_wildcards(char **cmd, t_env *env)
 	if (!(*cmd) || !cmd)
 		return (NULL);
 	ptr = ft_tabdup(cmd);
+	if (ft_check_buildins_out_echo(ft_strdup(cmd[0])))
+		return (ptr);
 	while (ptr[i])
 	{
-		if (ft_check_star(ptr[i]))
+		if (ft_check_star(ptr[i]) && (ptr[i][0] != '\'' && ptr[i][0] != '\"'))
 		{
-			// Check if we have only wildcards
-			// We need to check exter_str for complete any names from wildcards
-			// Function for convert a raw of wildcards on one wildcard
-			while (ptr[i] && (ptr[i][0] == '\'' || ptr[i][0] == '\"'))
-				i++;
-			if (ft_check_star(ptr[i]))
-			{
-				ptr = ft_replace_cmd_wilds(ptr, i, env);
-				dup2(0, 0);
-				dup2(1, 1);
-				if (!ft_check_star(ptr[i]))
-					i = 0;
-			}
+			ptr = ft_replace_cmd_wilds(ptr, i, env);
+			dup2(0, 0);
+			dup2(1, 1);
+			if (!ft_check_star(ptr[i]))
+				i = 0;
 		}
 		i++;
 	}
-	return(ptr);
+	return (ptr);
 }

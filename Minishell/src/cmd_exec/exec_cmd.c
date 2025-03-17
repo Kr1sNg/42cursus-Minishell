@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:56:55 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 14:52:34 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:14:17 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	ft_exec_execve(char **cmd, char **env)
 {
-	return(ft_manage_pipe(cmd, env));
+	if (access(cmd[0], F_OK | X_OK) == 0)
+		return(ft_manage_pipe_withpath(cmd, env));
+	else
+		return(ft_manage_pipe(cmd, env));
 }
 
 int	ft_exec_buildins(char **cmd, t_env *infos)

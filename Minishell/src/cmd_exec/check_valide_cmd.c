@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:36:36 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 00:33:30 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/16 16:34:57 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,34 @@ int	ft_check_buildins(char *cmd)
 		return (1);
 	return (0);
 }
+int	ft_check_alpha(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if(!ft_isalpha(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_check_execve(char *cmd, char **env)
 {
 	char	*path;
 
+	if (!cmd[0] || !ft_check_alpha(cmd))
+		return(0);
 	path = ft_getenv(cmd, env);
 	if (!path)
-		return (0);
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (2);
+		else
+			return (0);
+	}
 	free(path);
 	return (2);
 }
