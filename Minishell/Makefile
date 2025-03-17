@@ -6,7 +6,7 @@
 #    By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:04:41 by tbahin            #+#    #+#              #
-#    Updated: 2025/03/16 15:17:40 by tbahin           ###   ########.fr        #
+#    Updated: 2025/03/17 22:10:25 by tbahin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS		= $(SRCS:.c=.o)
 # Include and Flags
 INCLUDE		= -Iinclude
 LDFLAGS     = -L/opt/homebrew/opt/readline/lib -lreadline
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 CC			= cc -I/opt/homebrew/opt/readline/include
 RM			= rm -rf
 

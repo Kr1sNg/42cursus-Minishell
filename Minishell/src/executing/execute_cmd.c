@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:58:06 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/14 17:37:36 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:30:27 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ static void	exec_child_command(t_ast_command *ast, t_env *env, int *status)
 		close(env->fd_out);
 	}
 	*status = ft_execute(ast->cmd_words, env);
+	free_tab(env->env);
+	free_tab(env->export);
+	ft_free_token(env->tokens);
+	ft_free_ast(env->ast);
 	exit(*status);
 }
 

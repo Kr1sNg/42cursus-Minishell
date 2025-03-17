@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/17 17:23:15 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 22:12:35 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_var_env(char *str, t_env *infos)
 	if (value)
 	{
 		printf("%s", value);
+		free(value);
 	}
 	free(name);
 }

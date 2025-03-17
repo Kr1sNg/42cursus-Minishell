@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 21:33:23 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/17 17:49:26 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 22:08:49 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,14 @@ char	*ft_return_var_env(char *str, t_env *infos)
 char	*ft_replace_option(char *dest, int *i, char *str)
 {
 	char	*tmp;
+	int		len;
 
+	len = ft_strlen(str);
 	tmp = ft_replace(dest, *i, *i + 1, str);
-	*i += 2;
+	if (str)
+		*i += len;
+	else
+		*i += 2;
 	return (tmp);
 }
 
