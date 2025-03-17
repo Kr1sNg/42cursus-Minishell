@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 21:33:23 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 01:10:55 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:49:26 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strlen_valid(char *str)
 	i = 0;
 	while (isalpha(str[i]))
 		i++;
-	return(i);
+	return (i);
 }
 
 char	*ft_replace(char *base, int start, int end, char *in)
@@ -64,7 +64,7 @@ char	*ft_return_var_env(char *str, t_env *infos)
 	name = (char *)malloc((len + 1) * sizeof(char));
 	name[len] = '\0';
 	len--;
-	while(len >= 0)
+	while (len >= 0)
 	{
 		name[len] = str[len];
 		len--;
@@ -74,6 +74,15 @@ char	*ft_return_var_env(char *str, t_env *infos)
 	return (value);
 }
 
+char	*ft_replace_option(char *dest, int *i, char *str)
+{
+	char	*tmp;
+
+	tmp = ft_replace(dest, *i, *i + 1, str);
+	*i += 2;
+	return (tmp);
+}
+
 char	*ft_cvt_var_env(char *str, t_env *infos)
 {
 	int		i;
@@ -81,28 +90,23 @@ char	*ft_cvt_var_env(char *str, t_env *infos)
 	char	*dest;
 
 	i = 0;
-	dest = ft_strdup(str);
-	while(dest[i])
+	dest = str;
+	while (dest[i])
 	{
 		if (dest[i] == '$' && ft_isdigit(dest[i + 1]))
-		{
-			dest = ft_replace(dest, i, i + 1, NULL);
-			i += 2;
-		}
+			dest = ft_replace_option(dest, &i, NULL);
 		else if (dest[i] == '$' && ft_isalnum(dest[i + 1]))
 		{
 			i++;
 			var = ft_return_var_env(&dest[i], infos);
-			dest = ft_replace(dest, i - 1, i - 1 + ft_strlen_valid(&dest[i]), var);
+			dest = ft_replace(dest, i - 1, i - 1
+					+ ft_strlen_valid(&dest[i]), var);
 			i += ft_strlen_valid(&dest[i + 1]);
 		}
 		else if (dest[i] == '$' && dest[i + 1] == '?')
-		{
-			dest = ft_replace(dest, i, i + 1, ft_itoa(infos->status));
-			i += 2;
-		}
+			dest = ft_replace_option(dest, &i, ft_itoa(infos->status));
 		else
 			i++;
 	}
-	return(dest);
+	return (dest);
 }

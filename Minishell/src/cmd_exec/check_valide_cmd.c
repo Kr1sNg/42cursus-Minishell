@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:36:36 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/16 16:34:57 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 18:16:01 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	ft_check_buildins_out_echo(char *cmd)
 		res = 1;
 	else if (ft_strncmp(cmd, "exit", ft_strlen("exit0")) == 0)
 		res = 1;
-	// if (ft_strncmp(cmd, "true", ft_strlen("true0")) == 0)
-	// 	return (1);
-	// if (ft_strncmp(cmd, "false", ft_strlen("false0")) == 0)
-	// 	return (1);
 	free(cmd);
 	return (res);
 }
@@ -55,14 +51,15 @@ int	ft_check_buildins(char *cmd)
 		return (1);
 	return (0);
 }
+
 int	ft_check_alpha(char *str)
 {
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(!ft_isalpha(str[i]))
+		if (!ft_isalpha(str[i]))
 			return (0);
 		i++;
 	}
@@ -74,7 +71,7 @@ int	ft_check_execve(char *cmd, char **env)
 	char	*path;
 
 	if (!cmd[0] || !ft_check_alpha(cmd))
-		return(0);
+		return (0);
 	path = ft_getenv(cmd, env);
 	if (!path)
 	{

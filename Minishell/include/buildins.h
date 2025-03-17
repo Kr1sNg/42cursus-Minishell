@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/15 12:18:55 by tat-nguy         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/16 14:57:09 by tbahin           ###   ########.fr       */
->>>>>>> 10f5046 (errors manage)
+/*   Updated: 2025/03/17 17:58:59 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +73,9 @@ char	*ft_cvt_cmd_on(char *str);
 int		ft_check_buildins_out_echo(char *cmd);
 char	*ft_cvt_var_env(char *str, t_env *infos);
 int		ft_limite(char str);
-char	*ft_stars(char *s);
 int		ft_manage_pipe_withpath(char **cmd, char **env);
+int		ft_check_valid_wc(char *base, char *in);
+int		ft_tablen_wc(char *cmd, char **wildcards);
 
 /* support function */
 void	ft_finish(t_env *infos);

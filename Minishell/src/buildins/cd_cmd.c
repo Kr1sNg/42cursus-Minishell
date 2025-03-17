@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/12 13:33:30 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:13:53 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,46 @@ void	ft_exec_cd_export(t_env *infos)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	line = ft_strjoin("PWD=",pwd );
+	line = ft_strjoin("PWD=", pwd);
 	cmd_export(infos, line);
 	free(pwd);
 	free(line);
+}
+
+int	ft_cd_no_args(int *error, t_env *infos)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = value_env("HOME", infos);
+	if (!tmp)
+	{
+		write(2, "minishell: cd: HOME not set\n", 29);
+		return (1);
+	}
+	else
+	{
+		*error = chdir(tmp);
+		free(tmp);
+		return (0);
+	}
 }
 
 int	ft_exec_cd(char **cmd, t_env *infos)
 {
 	char	*acces;
 	int		error;
-	char	*tmp;
 
-	tmp = NULL;
 	error = 0;
 	if (!cmd[1])
 	{
-		tmp = value_env("HOME", infos);
-		if (!tmp)
-		{
-			write(2, "minishell: cd: HOME not set\n", 29);
+		if (ft_cd_no_args(&error, infos))
 			return (1);
-		}
-		else
-		{
-			error = chdir(tmp);
-			free(tmp);
-		}
 	}
 	else
 	{
 		if (cmd[2])
-			return(ft_error_tm_args());
+			return (ft_error_tm_args());
 		error = chdir(cmd[1]);
 	}
 	if (error == -1)

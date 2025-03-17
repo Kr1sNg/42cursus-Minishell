@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 09:31:19 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/16 14:58:02 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 18:14:26 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	ft_manage_pipe_withpath(char **cmd, char **env)
 	{
 		if (execve(cmd[0], cmd, env) != 0)
 		{
-		ft_free_tab(cmd);
-		perror("error exec");
-		exit(127);
+			ft_free_tab(cmd);
+			perror("error exec");
+			exit(127);
 		}
 	}
 	else

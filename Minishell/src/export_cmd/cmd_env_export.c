@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:32:39 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 20:34:37 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 18:07:15 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	**cmd_add_env(char **env, char *cmd)
 	env_cpy[i + 1] = NULL;
 	return (env_cpy);
 }
+
 int	check_env_var(char *cmd, t_env *infos)
 {
 	int		i;
@@ -50,7 +51,8 @@ int	check_env_var(char *cmd, t_env *infos)
 	i = 0;
 	while (infos->env[i])
 	{
-		if (infos->env[i] && ft_strncmp(cmd, infos->env[i], ft_strlen_egal(cmd)) == 0)
+		if (infos->env[i]
+			&& ft_strncmp(cmd, infos->env[i], ft_strlen_egal(cmd)) == 0)
 		{
 			line = infos->env[i];
 			infos->env[i] = ft_strdup(cmd);

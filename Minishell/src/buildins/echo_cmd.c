@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:08:58 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/14 17:57:35 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:16:50 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_echodouble(char *str, t_env *infos)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '$' && isalpha(str[i + 1]))
 		{
@@ -46,7 +46,7 @@ void	ft_echosimple(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] != '\'')
 		{
@@ -64,13 +64,13 @@ int	ft_exec_echo(char **cmd, t_env *infos)
 
 	i = 1;
 	if (!cmd[1])
-	{	
+	{
 		printf("\n");
-		return(0);
+		return (0);
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen("-n0")) == 0)
 		i++;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i][0] == '\'')
 			ft_echosimple(cmd[i]);
@@ -84,5 +84,5 @@ int	ft_exec_echo(char **cmd, t_env *infos)
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen("-n0")) != 0)
 		printf("\n");
-	return(0);
+	return (0);
 }

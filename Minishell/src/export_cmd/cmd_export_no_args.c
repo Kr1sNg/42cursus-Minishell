@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_no_args.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:05:45 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
-
-
 
 void	ft_swap(char **str, char **str2)
 {
@@ -25,13 +23,11 @@ void	ft_swap(char **str, char **str2)
 
 char	**ft_sort_a(char **env)
 {
-	// int	check;
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	// check = 1;
 	while (env[i])
 	{
 		j = i;
@@ -50,9 +46,7 @@ char	*convert_line_export(char *line)
 {
 	char	*dest;
 	char	*src_mdf;
-	// int		i;
 
-	// i = 0;
 	src_mdf = var_export_only(line);
 	dest = ft_strjoin("declare -x ", src_mdf);
 	dest[ft_strlen(src_mdf) + 11] = '\0';

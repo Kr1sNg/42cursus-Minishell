@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:34:11 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 20:41:23 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 18:08:14 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	ft_check_valid_export(char *cmd)
 
 	i = 0;
 	if (!cmd || cmd[0] == '\0')
-		return(1);
+		return (1);
 	if (ft_isdigit(cmd[0]))
-		return(1);
+		return (1);
 	while (cmd[i] && cmd[i] != '=')
 	{
 		if (!ft_isalnum(cmd[i]) && cmd[i] != '_')
-			return(1);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -83,7 +83,7 @@ int	check_export_var(char *cmd, t_env *infos)
 		}
 		i++;
 	}
-	return(check);
+	return (check);
 }
 
 int	check_list_var(char *cmd, t_env *infos, int free_old)

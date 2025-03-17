@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_export_only.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:29:39 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:05:59 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*var_export_only_quote(int check, char *dest, int i, char *line)
 	if (check == 1)
 		dest[i] = '\"';
 	dest[i + check] = '\0';
-	return(dest);
+	return (dest);
 }
 
 char	*var_export_only(char *line)

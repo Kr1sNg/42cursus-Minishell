@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:12:13 by theo              #+#    #+#             */
-/*   Updated: 2025/03/14 01:10:28 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:23:15 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*value_env(char *name, t_env *infos)
 	{
 		if (ft_strncmp(infos->env[i], name, ft_strlen_egal(name) + 1) == '=')
 		{
-			while(infos->env[i][j] != '=')
+			while (infos->env[i][j] != '=')
 				j++;
 			j++;
 			line = ft_strdup(&infos->env[i][j]);
@@ -48,7 +48,7 @@ int	ft_limite(char str)
 
 void	ft_var_env(char *str, t_env *infos)
 {
-	int	len;
+	int		len;
 	char	*name;
 	char	*value;
 
@@ -59,7 +59,7 @@ void	ft_var_env(char *str, t_env *infos)
 	name = (char *)malloc((len + 1) * sizeof(char));
 	name[len] = '\0';
 	len--;
-	while(len >= 0)
+	while (len >= 0)
 	{
 		name[len] = str[len];
 		len--;

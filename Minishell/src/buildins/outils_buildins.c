@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outils_buildins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:02:29 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/11 13:44:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:24:51 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_display_export(char **env)
 	{
 		j = 0;
 		check = 0;
-		while(env[i][j])
+		while (env[i][j])
 		{
 			if (env[i][j] == '\"' && env[i][j + 1])
 			{

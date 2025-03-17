@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:46:56 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/13 20:44:33 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 18:07:48 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,18 @@ void	cmd_create_export(t_env *infos)
 int	ft_exec_export(char **cmd, t_env *infos)
 {
 	int	i;
-	
-	i = 1;
 
+	i = 1;
 	if (!cmd[1])
 		cmd_export(infos, NULL);
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (ft_check_valid_export(cmd[i]))
 		{
 			write(2, "minishell: export: `", 20);
 			ft_putstr_fd(cmd[i], 2);
 			write(2, "\': not a valid identifier\n", 26);
-			return(1);
+			return (1);
 		}
 		cmd_export(infos, cmd[i]);
 		i++;
