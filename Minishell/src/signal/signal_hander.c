@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_hander.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:59:37 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/17 18:17:29 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/17 21:08:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	ft_sigint_main(t_env *infos)
 void	sigquit_handler_child(int signum)
 {
 	(void)signum;
-	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	g_signal = SIGQUIT;
+	write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	exit(131);
@@ -44,7 +45,8 @@ void	sigquit_handler_child(int signum)
 void	sigint_handler_child(int signum)
 {
 	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
+	g_signal = SIGINT;
+	write(STDERR_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	exit(130);
@@ -54,6 +56,7 @@ void	sigint_handler_child(int signum)
 void	sigint_handler_heredoc(int signum)
 {
 	(void)signum;
+	g_signal = SIGINT;
 	write(STDERR_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
