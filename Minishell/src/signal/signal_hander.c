@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:59:37 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/03/17 21:08:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:09:36 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	sigint_handler_heredoc(int signum)
 {
 	(void)signum;
 	g_signal = SIGINT;
-	write(STDERR_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
 	exit(130);

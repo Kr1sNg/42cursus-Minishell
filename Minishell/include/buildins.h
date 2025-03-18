@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:59:06 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/17 17:58:59 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/18 12:04:41 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		check_egal(char *cmd);
 void	ft_swap(char **str, char **str2);
 char	*var_export_only(char *line);
 
+int		ft_check_buildins(char *cmd);
 int		ft_check_valide_cmd(char *cmd, t_env infos);
 void	ft_child(char **cmd, char **env);
 
