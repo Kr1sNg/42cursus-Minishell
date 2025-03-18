@@ -6,7 +6,7 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:12:41 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/17 17:13:53 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/18 17:20:04 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_cd_no_args(int *error, t_env *infos)
 	else
 	{
 		*error = chdir(tmp);
+		ft_exec_cd_export(infos);
 		free(tmp);
 		return (0);
 	}
@@ -80,6 +81,7 @@ int	ft_exec_cd(char **cmd, t_env *infos)
 		if (cmd[2])
 			return (ft_error_tm_args());
 		error = chdir(cmd[1]);
+		ft_exec_cd_export(infos);
 	}
 	if (error == -1)
 	{

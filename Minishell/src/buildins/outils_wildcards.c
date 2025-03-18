@@ -6,13 +6,13 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:57:03 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/18 16:41:30 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/18 16:46:58 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
-int ft_search(char *base, char *in)
+int	ft_search(char *base, char *in)
 {
 	int	i;
 	int	s;
@@ -51,7 +51,7 @@ int	ft_check_valid_wc(char *base, char *in)
 	while (base[i] == in[i])
 		i++;
 	if (base[i] == '*')
-		return(ft_search(&base[i], &in[i]));
+		return (ft_search(&base[i], &in[i]));
 	else
 		return (0);
 }
