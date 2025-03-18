@@ -6,88 +6,54 @@
 /*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:57:03 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/17 19:54:01 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/03/18 16:41:30 by tbahin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libraries.h"
 
-// int ft_search(char *base, char *in)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	k;
-// 	int	result;
+int ft_search(char *base, char *in)
+{
+	int	i;
+	int	s;
+	int	result;
 
-// 	i = 0;
-// 	j = 0;
-// 	k = 0;
-// 	result = 0;
-// 	while (base[i] == '*')
-// 		i++;
-// 	while (in[j] != '\0')
-// 	{
-// 		while (in[j + k] == base[i + k] && in[j + k] != '\0')
-// 			i++;
-// 		if (base[i] == '\0')
-// 			return (1);
-// 		else if (base[i + k] == '*')
-// 			return(ft_search(&base[i + k], &in[j]));
-// 		j++;
-// 		i = 0;
-// 	}
-// 	return (0);
-// }
-
-// int	ft_check_valid_wc(char *base, char *in)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (base[i] && in[j] && base[i] - in[j] != 0)
-// 	{
-// 		if (base[i] == '*')
-// 			return (ft_search());
-// 		else if (ft_strcmp(base, in) == '*')
-// 			return (ft_search());
-// 		else
-// 			return (0);
-// 	}
-// 	return (1);
-// }
+	i = 0;
+	s = 0;
+	result = 0;
+	while (*base == '*')
+		base++;
+	if (base[0] == '\0')
+		return (1);
+	while (in[s] != '\0')
+	{
+		while (in[s + i] && base[i] && in[s + i] == base[i])
+			i++;
+		if (!base[i] && !in[s + i])
+			return (1);
+		else if (base[i] == '*' )
+			result = ft_search(&base[i], &in[s + i]);
+		s++;
+		i = 0;
+	}
+	return (result);
+}
 
 int	ft_check_valid_wc(char *base, char *in)
 {
 	int	i;
 	int	j;
-	int	check;
 
 	i = 0;
 	j = 0;
-	check = 0;
-	while (base[i] && in[j] && base[i] - in[j] != 0)
-	{
-		while (base[i] && in[j] && base[i++] == '*')
-			check = 1;
-		if (check == 1)
-		{
-			if (!base[i])
-				break ;
-			while (base[i] && in[j] && base[i] != in[j])
-				j++;
-		}
-		else if ((!base[i] || !in[j]) || base[i] != in[j])
-			return (0);
-		else if (!base[i] && !in[j])
-			break ;
-		while (base[i] && in[j] && base[i] == in[j++])
-			j++;
-		if ((!base[i] || !in[j]) && (base[i] || in[j]))
-			return (0);
-	}
-	return (1);
+	if (base[i] == '*')
+		return (ft_search(base, in));
+	while (base[i] == in[i])
+		i++;
+	if (base[i] == '*')
+		return(ft_search(&base[i], &in[i]));
+	else
+		return (0);
 }
 
 int	ft_tablen_wc(char *cmd, char **wildcards)
