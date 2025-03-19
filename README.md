@@ -8,7 +8,7 @@ Made by [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/M
 
 # ☕ Introduction 
 
-## 1 - Bash / Shell
+## 1 - Bash / Shell 🌀
 
 - `Bash` (*Bourne-Again SHell*) is the shell, or command language interpreter, for the GNU operating system.
 	- to check which shell we are on, use `echo $0`
@@ -35,7 +35,7 @@ Made by [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/M
 - `word`: A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters. 
 
 
-## 2 - Understand the Project Requirements
+## 2 - Understand the Project Requirements 📖
 
 The Minishell should:
 
@@ -203,7 +203,7 @@ file.txt
 ---
 # 🍕 Functions
 
-## 1 - **The `readline`**
+## 1 - **The `readline`** 👓
 - `readline`: need to `free()` after using
 
 `readline()` reads a line from the terminal and return it, using `prompt` as prompt (`NULL` prompt is accepted). The line return has the final newline removed, so only the text remains.
@@ -262,7 +262,7 @@ void	add_history (const char *line);
 
 
 ---
-## 2 - File I/O
+## 2 - File I/O 🔄
 
 - `access`:
 
@@ -312,7 +312,7 @@ The `dup2()` system call performs the same task as `dup()`, but it uses the file
 
 
 ---
-## 3 - Processes
+## 3 - Processes 🤖
 
 - `fork`:
 
@@ -462,7 +462,7 @@ The `getenv()` function searches in the environment list to find the environment
 > *in C, the environment refers to a collection of* **environment variables** *that store configuration settings for processes. These variables provide system-wid information, such as paths, user details, language settings...*. 
 
 ---
-## 4 - Terminal
+## 4 - Terminal 📟
 
 - `isatty`:
 
@@ -536,7 +536,7 @@ These functions are part of the `termcap` library, used for handling *terminal c
 
 
 ---
-## 5 - Directory
+## 5 - Directory 📑
 
 - `getcwd`: (for `pwd`)
 
@@ -611,7 +611,7 @@ The `readdir()` function reads a directory, returns a pointer to a `dirent` stru
 The `closedir()` fuction closes the directory stream associated with `dirp`. A successful call to `closedir()` also closes the underlying file descriptor associated with `dirp`. The directory stream descriptor `dirp` is not available after this call.
 
 ---
-## 6 - The errors
+## 6 - The errors 🔥
 
 - `strerror()`:
 
@@ -635,7 +635,7 @@ The `perror()` function produces a message on standard error describing the last
 ---
 # 🍮 Planning
 
-## 1 - Parsing & Input Handling `Kr1sNg`
+## 1 - Parsing & Input Handling `Kr1sNg` 🚀
 
 ### Input & Parsing Module:
 
@@ -676,7 +676,7 @@ The `perror()` function produces a message on standard error describing the last
 - Setup appropriate signal handlers for `Ctr-D`, `Ctr-C`, `Ctr-\`, it returns the `exit` value (by `echo $?`) as the bash
 - Ensure proper error messaging and cleanup (avoid memory leaks, etc.).
 
-## 2 - Execution & Build-in Commands `Mileumm`
+## 2 - Execution & Build-in Commands `Mileumm` 🚤
 
 ### Execution Module:
 
@@ -690,14 +690,14 @@ The `perror()` function produces a message on standard error describing the last
 ---
 # 🍭 Testing the Minishell
 
-## 1 - Complile programme
+## 1 - Complile programme 🥉
 
 In the folder `Minishell`, run the command in terminal:
 ```bash
 make
 ```
 
-## 2 - Run programme
+## 2 - Run programme 🥈
 
 Then run the command `./minishell`
 ```bash
@@ -705,7 +705,7 @@ Then run the command `./minishell`
 minishell:~ $
 ```
 
-## 3 - Use programme
+## 3 - Use programme 🥇
 
 You can use, test our programme and compare it with the real `bash`
 Some suggested commands:
