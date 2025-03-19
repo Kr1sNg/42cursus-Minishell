@@ -1,36 +1,25 @@
-# Grammar for BaSh
+# Grammar for Minishell
 
-```go
-// [...] means None or once
-// {...} means Zero or more times
+Grammar with [Extended Backus-Naur Form (EBNF)](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
+	
+	```go
+	// [...] means None or once
+	// {...} means Zero or more times
 
-<COMMAND_LINE>    	::= <EXPRESSION>
+	<COMMAND_LINE>    	::= <LOGICAL>
+	<LOGICAL>       	::= <PIPEEXPR> { ("&&" | "||") <PIPEEXPR> } 
+	<PIPEEXPR>       	::= <EXPRESSION> { "|" <EXPRESSION> }
+	<EXPRESSION>     	::= <COMMAND>
+						| <SUBSHELL>
+						
+	<COMMAND>         	::= [ <REDIR_LIST> ] <CMD_WORDS> [ <REDIR_LIST> ]
+	<SUBSHELL>          ::= "(" <LOGICAL> ")" [ <REDIR_LIST> ]
 
-<EXPRESSION>      	::= <LOGICAL_EXPR>
+	<CMD_WORDS>       	::= <WORD> { <WORD> }
+	<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
 
-<LOGICAL_EXPR>    	::= <PIPE_EXPR> { ("&&" | "||") <PIPE_EXPR> } 
+	<REDIRECTION>     	::= (">" | "<" | ">>") <WORD>
+						| 	"<<" <WORD>
+	<WORD>				::= <WORD>
 
-<PIPE_EXPR>       	::= <SIMPLE_EXPR> { "|" <SIMPLE_EXPR> }
-
-<SIMPLE_EXPR>     	::= <COMMAND> 
-                    | "(" <EXPRESSION> ")"
-
-<COMMAND>         	::= <CMD_WORDS> [ <REDIR_LIST> ]
-
-<CMD_WORDS>       	::= <WORD> { <WORD> }
-                    | <ASSIGNMENT_WORD> { <WORD> }
-
-<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
-
-<REDIRECTION>     	::= ">"  <FILENAME>
-                    | "<"  <FILENAME>
-                    | ">>" <FILENAME>
-                    | "<<" <HERE_END>
-
-<ASSIGNMENT_WORD>	::= <WORD> "=" <WORD>
-
-<FILENAME>			::= <WORD>
-
-<HERE_END>			::= <WORD>
-
-```
+	```
