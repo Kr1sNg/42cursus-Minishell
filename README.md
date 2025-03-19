@@ -632,7 +632,7 @@ The `perror()` function produces a message on standard error describing the last
 ---
 ## 🍮 Planning
 
-### 1 - Parsing & Input Handling `<tat-hoang>`
+### 1 - Parsing & Input Handling `Kr1sNg`
 
 #### Input & Parsing Module:
 
@@ -673,7 +673,7 @@ The `perror()` function produces a message on standard error describing the last
 - Setup appropriate signal handlers for `Ctr-D`, `Ctr-C`, `Ctr-\`, it returns the `exit` value (by `echo $?`) as the bash
 - Ensure proper error messaging and cleanup (avoid memory leaks, etc.).
 
-### 2 - Execution & Build-in Commands `<theo>`
+### 2 - Execution & Build-in Commands `Mileumm`
 
 #### Execution Module:
 
@@ -721,6 +721,7 @@ minishell:~ $ exit
 exit
 ```
 
+---
 ## 🍻 Conslusion
 
 This project marks the first collaboration between [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm), and we are proud to have successfully implemented all the bonus features. Throughout this challenging journey, we gained a deep understanding of the inner workings of a shell, including Bash behavior, tokenization, lexing, parsing, and executing built-in commands.
@@ -729,7 +730,7 @@ Beyond the technical aspects, we also honed our skills in handling processes, ma
 
 Overall, this project was an invaluable learning experience, pushing us to write cleaner, more efficient code while gaining a comprehensive understanding of how a shell operates. We’re excited to apply these skills to future projects and continue refining our expertise in systems programming.
 
-
+---
 ## 🐛 Issues and Bugs
 
 Please feel free to create a new issue with the title and description on the issues page of this `42cursus-Minishell` repository.
@@ -740,3 +741,4 @@ Thank you in advance and Happy coding!
 ### References
 - [Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
 - [Minishell Memory Tester](https://github.com/dansylvain/minishell_memo_tester)
+- [More about Readline](https://github.com/JuliaAttic/readline)
