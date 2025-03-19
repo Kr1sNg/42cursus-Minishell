@@ -725,7 +725,7 @@ exit
 ```
 
 ---
-# 🍻 Conslusion
+# 🍻 Conclusion
 
 This project marks the first collaboration between [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm), and we are proud to have successfully implemented all the bonus features. Throughout this challenging journey, we gained a deep understanding of the inner workings of a shell, including Bash behavior, tokenization, lexing, parsing, and executing built-in commands.
 
