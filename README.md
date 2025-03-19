@@ -1,11 +1,14 @@
-# 🐚 Minishell 🐚
+<h1 align="center">
+	🐚 Minishell 🐚
+</h1>
 
 This is a 42's project of simulation the Shell command-line terminal, taking `Bash` as a reference.
+
 Made by [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm)
 
-## ☕ Introduction 
+# ☕ Introduction 
 
-### 1 - Bash / Shell
+## 1 - Bash / Shell
 
 - `Bash` (*Bourne-Again SHell*) is the shell, or command language interpreter, for the GNU operating system.
 	- to check which shell we are on, use `echo $0`
@@ -32,7 +35,7 @@ Made by [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/M
 - `word`: A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters. 
 
 
-### 2 - Understand the Project Requirements
+## 2 - Understand the Project Requirements
 
 The Minishell should:
 
@@ -198,9 +201,9 @@ file.txt
 	- handle the wildcard `*`
 
 ---
-## 🍕 Functions
+# 🍕 Functions
 
-### 1 - **The `readline`**
+## 1 - **The `readline`**
 - `readline`: need to `free()` after using
 
 `readline()` reads a line from the terminal and return it, using `prompt` as prompt (`NULL` prompt is accepted). The line return has the final newline removed, so only the text remains.
@@ -259,7 +262,7 @@ void	add_history (const char *line);
 
 
 ---
-### 2 - File I/O
+## 2 - File I/O
 
 - `access`:
 
@@ -309,7 +312,7 @@ The `dup2()` system call performs the same task as `dup()`, but it uses the file
 
 
 ---
-### 3 - Processes
+## 3 - Processes
 
 - `fork`:
 
@@ -459,7 +462,7 @@ The `getenv()` function searches in the environment list to find the environment
 > *in C, the environment refers to a collection of* **environment variables** *that store configuration settings for processes. These variables provide system-wid information, such as paths, user details, language settings...*. 
 
 ---
-### 4 - Terminal
+## 4 - Terminal
 
 - `isatty`:
 
@@ -533,7 +536,7 @@ These functions are part of the `termcap` library, used for handling *terminal c
 
 
 ---
-### 5 - Directory
+## 5 - Directory
 
 - `getcwd`: (for `pwd`)
 
@@ -608,7 +611,7 @@ The `readdir()` function reads a directory, returns a pointer to a `dirent` stru
 The `closedir()` fuction closes the directory stream associated with `dirp`. A successful call to `closedir()` also closes the underlying file descriptor associated with `dirp`. The directory stream descriptor `dirp` is not available after this call.
 
 ---
-### 6 - The errors
+## 6 - The errors
 
 - `strerror()`:
 
@@ -630,11 +633,11 @@ void	perror(const char *s);
 The `perror()` function produces a message on standard error describing the last error encountered during a call to a system or library function.
 
 ---
-## 🍮 Planning
+# 🍮 Planning
 
-### 1 - Parsing & Input Handling `Kr1sNg`
+## 1 - Parsing & Input Handling `Kr1sNg`
 
-#### Input & Parsing Module:
+### Input & Parsing Module:
 
 - Tokenizer/Lexer: Converts the raw input into tokens (words, operators, etc.).
 - Parser: Builds a data structure (like a command tree or a list of command structs) representing the commands, operations, arguments, redirections, and pipelines.
@@ -668,33 +671,33 @@ The `perror()` function produces a message on standard error describing the last
 		- Combine the parsed pieces into an AST (binary tree) where internal nodes represent operators and leaves represent simple commands.
 		- Use recursion to naturally capture the structure dictated by operator precedence and associativity.
 
-#### Signal Handling & Error Management Module:
+### Signal Handling & Error Management Module:
 
 - Setup appropriate signal handlers for `Ctr-D`, `Ctr-C`, `Ctr-\`, it returns the `exit` value (by `echo $?`) as the bash
 - Ensure proper error messaging and cleanup (avoid memory leaks, etc.).
 
-### 2 - Execution & Build-in Commands `Mileumm`
+## 2 - Execution & Build-in Commands `Mileumm`
 
-#### Execution Module:
+### Execution Module:
 
 - Command Executor: Determines whether a command is a built-in or an external command, then either executes it directly or uses fork/execve for external programs.
 - Pipes & Redirections: Set up inter-process communication and handle file descriptor redirections.
 
-#### Built-in Commands Module:
+### Built-in Commands Module:
 
 - Implement the logic for built-ins (e.g., handling directory changes for cd, managing environment variables for export/unset, etc.).
 
 ---
-## 🍭 Testing the Minishell
+# 🍭 Testing the Minishell
 
-### 1 - Complile programme
+## 1 - Complile programme
 
 In the folder `Minishell`, run the command in terminal:
 ```bash
 make
 ```
 
-### 2 - Run programme
+## 2 - Run programme
 
 Then run the command `./minishell`
 ```bash
@@ -702,7 +705,7 @@ Then run the command `./minishell`
 minishell:~ $
 ```
 
-### 3 - Use programme
+## 3 - Use programme
 
 You can use, test our programme and compare it with the real `bash`
 Some suggested commands:
@@ -722,7 +725,7 @@ exit
 ```
 
 ---
-## 🍻 Conslusion
+# 🍻 Conslusion
 
 This project marks the first collaboration between [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm), and we are proud to have successfully implemented all the bonus features. Throughout this challenging journey, we gained a deep understanding of the inner workings of a shell, including Bash behavior, tokenization, lexing, parsing, and executing built-in commands.
 
@@ -731,7 +734,7 @@ Beyond the technical aspects, we also honed our skills in handling processes, ma
 Overall, this project was an invaluable learning experience, pushing us to write cleaner, more efficient code while gaining a comprehensive understanding of how a shell operates. We’re excited to apply these skills to future projects and continue refining our expertise in systems programming.
 
 ---
-## 🐛 Issues and Bugs
+# 🐛 Issues and Bugs
 
 Please feel free to create a new issue with the title and description on the issues page of this `42cursus-Minishell` repository.
 If you have already found the solution to the problem, we would love to review your `pull request`!
