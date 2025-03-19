@@ -1,8 +1,9 @@
-# Minishell
+# 🐚 Minishell 🐚
 
 This is a 42's project of simulation the Shell command-line terminal, taking `Bash` as a reference.
+Made by [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm)
 
-## I - Introduction
+## ☕ Introduction 
 
 ### 1 - Bash / Shell
 
@@ -194,11 +195,10 @@ file.txt
 	>$ first
 	```
 
-
-
+	- handle the wildcard `*`
 
 ---
-## II - Functions
+## 🍕 Functions
 
 ### 1 - **The `readline`**
 - `readline`: need to `free()` after using
@@ -629,16 +629,15 @@ void	perror(const char *s);
 
 The `perror()` function produces a message on standard error describing the last error encountered during a call to a system or library function.
 
-
-
-## III - Planning
+---
+## 🍮 Planning
 
 ### 1 - Parsing & Input Handling `<tat-hoang>`
 
 #### Input & Parsing Module:
 
 - Tokenizer/Lexer: Converts the raw input into tokens (words, operators, etc.).
-- Parser: Builds a data structure (like a command tree or a list of command structs) representing the commands, arguments, redirections, and pipelines.
+- Parser: Builds a data structure (like a command tree or a list of command structs) representing the commands, operations, arguments, redirections, and pipelines.
 	- Grammar Design: Divides the command line into components where each operator has a defined precedence.
 	Grammar with [Extended Backus-Naur Form (EBNF)](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
 	
@@ -659,20 +658,19 @@ The `perror()` function produces a message on standard error describing the last
 	<REDIR_LIST>      	::= <REDIRECTION> { <REDIRECTION> }
 
 	<REDIRECTION>     	::= (">" | "<" | ">>") <WORD>
-						| "<<" <WORD>
+						| 	"<<" <WORD>
 	<WORD>				::= <WORD>
 
 	```
 
-	- Recursive Descent Parser: 
-		- Write a function for each non-terminal.
+	- Recursive Descent Parser:
+		- In each level from top to the bottom of AST (Abstract syntax tree), create nodes based on the their characteristics.
 		- Combine the parsed pieces into an AST (binary tree) where internal nodes represent operators and leaves represent simple commands.
 		- Use recursion to naturally capture the structure dictated by operator precedence and associativity.
 
-
 #### Signal Handling & Error Management Module:
 
-- Setup appropriate signal handlers.
+- Setup appropriate signal handlers for `Ctr-D`, `Ctr-C`, `Ctr-\`, it returns the `exit` value (by `echo $?`) as the bash
 - Ensure proper error messaging and cleanup (avoid memory leaks, etc.).
 
 ### 2 - Execution & Build-in Commands `<theo>`
@@ -686,12 +684,59 @@ The `perror()` function produces a message on standard error describing the last
 
 - Implement the logic for built-ins (e.g., handling directory changes for cd, managing environment variables for export/unset, etc.).
 
+---
+## 🍭 Testing the Minishell
 
-## IV - Testing
+### 1 - Complile programme
+
+In the folder `Minishell`, run the command in terminal:
+```bash
+make
+```
+
+### 2 - Run programme
+
+Then run the command `./minishell`
+```bash
+./minishell
+minishell:~ $
+```
+
+### 3 - Use programme
+
+You can use, test our programme and compare it with the real `bash`
+Some suggested commands:
+```bash
+minishell:~ $ true && false || (true) | pwd
+/home/Kr1sNg/42cursus-Minishell/Minishell
+minishell:~ $ cat | cat | ls
+include  libft	Makefile  minishell  src  valgrind.supp
+minishell:~ $ echo hello Theo > file1 | < file1 cat >> file2 > file3 && cat file3
+hello Theo
+minishell:~ $ echo *
+file1 file2 file3 include libft Makefile minishell src valgrind.supp
+minishell:~ $ echo M******************e
+Makefile
+minishell:~ $ exit
+exit
+```
+
+## 🍻 Conslusion
+
+This project marks the first collaboration between [@Kr1sNg](https://github.com/Kr1sNg) and [@Mileumm](https://github.com/Mileumm), and we are proud to have successfully implemented all the bonus features. Throughout this challenging journey, we gained a deep understanding of the inner workings of a shell, including Bash behavior, tokenization, lexing, parsing, and executing built-in commands.
+
+Beyond the technical aspects, we also honed our skills in handling processes, managing process signals, and ensuring robust error handling. Working as a team allowed us to improve our problem-solving abilities, code organization, and debugging strategies.
+
+Overall, this project was an invaluable learning experience, pushing us to write cleaner, more efficient code while gaining a comprehensive understanding of how a shell operates. We’re excited to apply these skills to future projects and continue refining our expertise in systems programming.
 
 
+## 🐛 Issues and Bugs
 
+Please feel free to create a new issue with the title and description on the issues page of this `42cursus-Minishell` repository.
+If you have already found the solution to the problem, we would love to review your `pull request`!
+Thank you in advance and Happy coding!
 
 ---
 ### References
 - [Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- [Minishell Memory Tester](https://github.com/dansylvain/minishell_memo_tester)
