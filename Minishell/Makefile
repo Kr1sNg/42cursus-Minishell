@@ -3,12 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+         #
+#    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:04:41 by tbahin            #+#    #+#              #
-#    Updated: 2025/03/17 22:10:25 by tbahin           ###   ########.fr        #
+#    Updated: 2025/07/08 11:34:52 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# ***** Color Definition ***** #
+
+RED 	= \033[91m
+YELLOW 	= \033[33m
+GREEN 	= \033[92m
+RESET 	= \033[0m
+
+# **************************** #
 
 NAME 		= minishell
 
@@ -36,20 +45,27 @@ RM			= rm -rf
 # Target
 all : $(LIBFT) $(NAME)
 
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR)
 
 $(NAME) : $(OBJS)
+	@echo "$(YELLOW) 🛠️  waiting for compilation...$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS)
+	@echo "$(GREEN) 🤖  Compiled successful ✴️  $(NAME) ✴️$(RESET)"
 
 # Clean
 clean:
 	@$(RM) $(OBJS)
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
+	@echo "$(RED) 🗑️  Deleted object files.$(RESET)"
 
 fclean:	clean
 	@$(RM) $(NAME)
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@echo "$(RED) 🚽  Deleted ❄️  $(NAME) ❄️$(RESET)"
 
 re: fclean all
 
