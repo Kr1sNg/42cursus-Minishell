@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outils_wildcards.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbahin <tbahin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:57:03 by tbahin            #+#    #+#             */
-/*   Updated: 2025/03/18 16:46:58 by tbahin           ###   ########.fr       */
+/*   Updated: 2025/07/08 11:24:56 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int	ft_search(char *base, char *in)
 int	ft_check_valid_wc(char *base, char *in)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (base[i] == '*')
 		return (ft_search(base, in));
 	while (base[i] == in[i])
