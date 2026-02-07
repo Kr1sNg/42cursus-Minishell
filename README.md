@@ -690,14 +690,61 @@ The `perror()` function produces a message on standard error describing the last
 ---
 # 🍭 Testing the Minishell
 
-## 1 - Complile programme 🥉
+## 0 - Prerequisites 🥉
 
-In the folder `Minishell`, run the command in terminal:
+### On Linux (Debian/Ubuntu)
+
+- `gcc`
+- Make
+
+### Other OS
+
+- docker
+- docker compose
+
+## 1 - Installation 🥉
+
+### On Linux:
+
+Clone this repo and enter folder `Minishell`:
+
 ```bash
-make
+git clone <repo_url> minishell
+cd minishell/Minishell
 ```
 
-## 2 - Run programme 🥈
+### On other OS
+
+Clone / copy this repo, enter folder `Minishell` then build image:
+
+```bash
+docker build -t minishell .
+```
+
+Run `bash` inside the environment of Docker:
+
+```bash
+docker run -it --rm minishell
+# or
+docker run -it --rm --env TERM=xterm minishell
+```
+
+To clean image (after testing):
+
+```bash
+docker images
+docker image rm minishell:latest
+```
+
+## 2 - Compile programme 🥉
+
+Run the command in terminal (or Docker image environment):
+```bash
+make
+make help
+```
+
+## 3 - Run programme 🥈
 
 Then run the command `./minishell`
 ```bash
@@ -705,7 +752,7 @@ Then run the command `./minishell`
 minishell:~ $
 ```
 
-## 3 - Use programme 🥇
+## 4 - Use programme 🥇
 
 You can use, test our programme and compare it with the real `bash`
 Some suggested commands:

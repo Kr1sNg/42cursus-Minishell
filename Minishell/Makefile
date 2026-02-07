@@ -71,4 +71,12 @@ re: fclean all
 
 bonus: re
 
-.PHONY : all clean fclean re bonus
+help:
+	@echo "\n\tℹ️  $(GREEN) COMMANDS $(RESET) ℹ️\n"
+	@echo "- $(YELLOW)make$(RESET) / $(YELLOW)make all$(RESET): build the program"
+	@echo "- $(YELLOW)make clean$(RESET): clean up object files"
+	@echo "- $(YELLOW)make fclean$(RESET): deep clean program and all files "
+	@echo "- $(YELLOW)make re$(RESET): clean all and rebuild program"
+	@echo "- $(YELLOW)make help$(RESET): helps with all commands\n"
+
+.PHONY : all clean fclean re bonus help
